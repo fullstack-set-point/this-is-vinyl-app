@@ -1,7 +1,7 @@
 {
-  "name": "boilermaker",
+  "name": "grace-shopper",
   "version": "1.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "set-point's grace shopper project",
   "engines": {
     "node": ">= 7.0.0"
   },
