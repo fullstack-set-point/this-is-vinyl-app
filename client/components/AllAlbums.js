@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchAlbums} from '../store'
-import AlbumCard from './AlbumCard'
+// import AlbumCard from './AlbumCard'
 
 class AllAlbums extends React.Component {
   componentDidMount() {
@@ -14,7 +14,19 @@ class AllAlbums extends React.Component {
       <div>
         <ul>
           {albums.map(album => (
-            <AlbumCard key={album.id} album={album} history={history} /> //making an AlbumCard component to render individual albums on the AllAlbums page (presentational)
+            <ul>
+              <img
+                src={album.photo}
+                onClick={() => history.push(`/api/albums/${album.id}`)}
+              />
+              <li onClick={() => history.push(`/api/albums/${album.id}`)}>
+                Name: {album.name}
+              </li>
+              <li>Artist: {album.artist}</li>
+              <li>Year: {album.year}</li>
+              <li>Price: {album.price}</li>
+            </ul>
+            // <AlbumCard key={album.id} album={album} history={history} /> //making an AlbumCard component to render individual albums on the AllAlbums page (presentational)
           ))}
         </ul>
       </div>
@@ -23,7 +35,7 @@ class AllAlbums extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {albums: state.albums}
+  return {albums: state.allAlbums}
 }
 
 const mapDispatchToProps = dispatch => {
