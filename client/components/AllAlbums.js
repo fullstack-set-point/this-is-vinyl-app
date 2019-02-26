@@ -1,12 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
-// import { fetchAlbums } from '../store';
-// import AlbumCard from './AlbumCard';
+import {fetchAlbums} from '../store'
+import AlbumCard from './AlbumCard'
 
-class AllALbums extends React.Component {
-  // componentDidMount() {
-  //   this.props.fetchAlbums();
-  // }
+class AllAlbums extends React.Component {
+  componentDidMount() {
+    this.props.fetchAlbums()
+  }
 
   render() {
     const {history, albums} = this.props
