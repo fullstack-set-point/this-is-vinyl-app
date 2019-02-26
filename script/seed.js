@@ -100,6 +100,59 @@ const productData = [
     quantity: 100,
     photo:
       'https://cdn.pastemagazine.com/www/articles/2018/08/21/shania-come-on-over.jpg'
+  },
+  {
+    album: 'Led Zeppelin IV',
+    artist: 'Led Zeppelin',
+    year: 1971,
+    price: 12,
+    quantity: 100,
+    photo:
+      'https://cdn.pastemagazine.com/www/blogs/lists/assets_c/2012/05/220px-LedZeppelinFourSymbols-thumb-250x250-67364.jpg'
+  },
+  {
+    album: 'Rumours',
+    artist: 'Fleetwood Mac',
+    year: 1977,
+    price: 11,
+    quantity: 100,
+    photo:
+      'https://cdn.pastemagazine.com/www/blogs/lists/assets_c/2012/05/220px-FMacRumours-thumb-250x250-67340.png'
+  },
+  {
+    album: 'Back in Black',
+    artist: 'AC/DC',
+    year: 1980,
+    price: 10,
+    quantity: 100,
+    photo:
+      'https://cdn.pastemagazine.com/www/blogs/lists/2012/01/30/20_80sAlbums_BackinBlack.jpeg'
+  },
+  {
+    album: 'Dark Aide of the Moon',
+    artist: 'Pink Floyd',
+    year: 1973,
+    price: 12,
+    quantity: 100,
+    photo:
+      'https://cdn.pastemagazine.com/www/articles/2018/08/21/pink-floyd-dark-side.jpg'
+  },
+  {
+    album: '1',
+    artist: 'The Beatles',
+    year: 2000,
+    price: 14,
+    quantity: 100,
+    photo: 'https://cdn.pastemagazine.com/www/articles/2018/08/21/beatles-1.jpg'
+  },
+  {
+    album: 'Legend',
+    artist: 'Bob Marley & The Wailers',
+    year: 1984,
+    price: 11,
+    quantity: 100,
+    photo:
+      'https://cdn.pastemagazine.com/www/articles/2018/08/21/bob-marley-legend.jpg'
   }
 ]
 
@@ -175,7 +228,17 @@ async function seed() {
   const [rock, classical, country, jazz, rap, electronic, pop] = category
   const [order1, order2] = order
   const [orderItem1, orderItem2, orderItem3] = orderItem
-  const [thriller, hotelCalifornia, comeOnOver] = product
+  const [
+    thriller,
+    hotelCalifornia,
+    comeOnOver,
+    zeppelin,
+    rumours,
+    backInBlack,
+    darkSide,
+    one,
+    legend
+  ] = product
   const [review1, review2, review3, review4] = review
   const [user1, user2] = user
 
