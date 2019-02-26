@@ -1,9 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 // import { fetchAlbums } from '../store';
-// import AlbumCard from './AlbumCard';
+import AlbumCard from './AlbumCard'
 
-class AllALbums extends React.Component {
+class AllAlbums extends React.Component {
   // componentDidMount() {
   //   this.props.fetchAlbums();
   // }
