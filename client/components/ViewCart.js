@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Table} from 'semantic-ui-react'
 import {connect} from 'react-redux'
-import {removeCartItem, fetchCartItems} from '../store/user'
+import {deleteCartItem, fetchCartItems} from '../store/user'
 
 class ViewCart extends Component {
   constructor(props) {
@@ -97,7 +97,8 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchCartItems: userId => dispatch(fetchCartItems(userId)),
     // changeQty: () => dispatch(changeQty()),
-    removeCartItem: () => dispatch(removeCartItem())
+    deleteCartItem: (userId, cartItemId) =>
+      dispatch(deleteCartItem(userId, cartItemId))
   }
 }
 

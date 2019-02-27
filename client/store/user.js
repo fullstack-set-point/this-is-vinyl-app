@@ -7,6 +7,8 @@ const FETCH_USER = 'FETCH_USER'
 const CREATE_USER = 'CREATE_USER'
 const UPDATE_USER = 'UPDATE_USER'
 const DELETE_USER = 'DELETE_USER'
+const FETCH_CART_ITEMS = 'FETCH_CART_ITEMS'
+const DELETE_CART_ITEM = 'DELETE_CART_ITEM'
 
 // ACTION CREATORS
 const fetchUsers = users => ({
@@ -33,6 +35,16 @@ const updateUser = (userId, user) => ({
 const deleteUser = userId => ({
   type: DELETE_USER,
   userId
+})
+
+const fetchCartItems = cartItems => ({
+  type: FETCH_CART_ITEMS,
+  cartItems
+})
+
+const deleteCartItem = cartItemId => ({
+  type: DELETE_CART_ITEM,
+  cartItemId
 })
 
 // THUNK CREATORS
@@ -91,6 +103,30 @@ export const deleteUserThunk = userId => {
   }
 }
 
+export const fetchCartItemsThunk = userId => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get(`/api/users/${userId}/cart`)
+      dispatch(fetchCartItems(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export const deleteCartItemThunk = (userId, cartItemId) => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.delete(
+        `/api/users/${userId}/cart/${cartItemId}`
+      )
+      dispatch(deleteCartItem(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
 // AUTHENTICATION THUNKS CREATORS
 export const me = () => async dispatch => {
   try {
@@ -130,7 +166,8 @@ export const logout = () => async dispatch => {
 // INITIAL STATE
 const initialState = {
   users: [],
-  user: {}
+  user: {},
+  cartItems: []
 }
 
 // REDUCER
@@ -156,6 +193,16 @@ export default (state = initialState, action) => {
           return user.id !== action.userId
         })
       }
+    case FETCH_CART_ITEMS:
+      return {...state, cartItems: action.cartItems}
+    case DELETE_CART_ITEM:
+      return {
+        ...state,
+        cartItems: [...state.cartItems].filter(cartItem => {
+          return cartItem.id !== action.cartItemId
+        })
+      }
+
     default:
       return state
   }
