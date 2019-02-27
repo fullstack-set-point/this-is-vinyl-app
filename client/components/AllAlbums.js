@@ -12,8 +12,6 @@ import {
 } from 'semantic-ui-react'
 import CategoryFilter from './CategoryFilter'
 
-
-
 class AllAlbums extends Component {
   constructor(props) {
     super(props)
@@ -40,7 +38,7 @@ class AllAlbums extends Component {
             <CategoryFilter handleCategoryClick={this.handleCategoryClick} />
           </Grid.Column>
           {albums ? (
-            <Grid.Column width={14}>
+            <Grid.Column width={13}>
               <Card.Group doubling itemsPerRow={4} stackable>
                 {_.map(albums, album => (
                   <Card key={album.id}>

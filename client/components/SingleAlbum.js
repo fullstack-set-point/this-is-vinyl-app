@@ -4,11 +4,11 @@ import {fetchAlbum} from '../store/album'
 import {
   Image,
   Segment,
-  Icon,
   Button,
   Divider,
   Header,
-  Rating
+  Rating,
+  Grid
 } from 'semantic-ui-react'
 
 class SingleAlbum extends Component {
@@ -19,11 +19,13 @@ class SingleAlbum extends Component {
   render() {
     return (
       <div>
-        <Segment.Group horizontal>
-          <Segment padded="very">
+        <Grid padding="very">
+          <Grid.Column width={1} />
+          <Grid.Column width={6}>
             <Image src={this.props.album.selectedAlbum.photo} rounded fluid />
-          </Segment>
-          <Segment padded="very">
+          </Grid.Column>
+          <Grid.Column width={2} />
+          <Grid.Column width={6}>
             <Header as="h2">
               {this.props.album.selectedAlbum.album} -{' '}
               {this.props.album.selectedAlbum.artist}
@@ -76,8 +78,9 @@ class SingleAlbum extends Component {
             ) : (
               <p>No Reviews</p>
             )}
-          </Segment>
-        </Segment.Group>
+          </Grid.Column>
+          <Grid.Column width={1} />
+        </Grid>
       </div>
     )
   }
