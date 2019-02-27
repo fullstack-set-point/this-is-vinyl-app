@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAlbum} from '../store/album'
+import {addToCart} from '../store/user'
 import {
   Image,
   Segment,
@@ -8,7 +9,8 @@ import {
   Divider,
   Header,
   Rating,
-  Grid
+  Grid,
+  Form
 } from 'semantic-ui-react'
 
 class SingleAlbum extends Component {
@@ -16,7 +18,32 @@ class SingleAlbum extends Component {
     this.props.fetchAlbum(this.props.match.params.albumId)
   }
 
+  handleSubmit(event) {
+    try {
+      event.preventDefault()
+      const productId = Number(this.props.match.params.albumId)
+      const quantity = event.target.quantity.value
+      this.props.addToCart(productId, quantity)
+    } catch (err) {
+      console.log(this.props.match.params.albumId)
+      console.error(err)
+    }
+  }
+
   render() {
+    const options = [
+      {key: 1, text: '1', value: 1},
+      {key: 2, text: '2', value: 2},
+      {key: 3, text: '3', value: 3},
+      {key: 4, text: '4', value: 4},
+      {key: 5, text: '5', value: 5},
+      {key: 6, text: '6', value: 6},
+      {key: 7, text: '7', value: 7},
+      {key: 8, text: '8', value: 8},
+      {key: 9, text: '9', value: 9},
+      {key: 10, text: '10', value: 10}
+    ]
+    console.log('SINGLE ALBUM PROPS', this.props)
     return (
       <div>
         <Grid padding="very">
@@ -31,12 +58,25 @@ class SingleAlbum extends Component {
               {this.props.album.selectedAlbum.artist}
             </Header>
             <Header as="h3">${this.props.album.selectedAlbum.price}</Header>
-            <Button
-              color="green"
-              content="Add to Cart"
-              icon="shopping cart"
-              fluid
-            />
+            <Form size="small" onSubmit={this.handleSubmit}>
+              <Form.Group>
+                <Form.Select
+                  options={options}
+                  placeholder="Quantity"
+                  name="quantity"
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+              <Form.Group widths="equal">
+                <Form.Button
+                  control={Button}
+                  color="green"
+                  content="Add to Cart"
+                  icon="shopping cart"
+                  fluid
+                />
+              </Form.Group>
+            </Form>
             <Divider />
             <Header as="h4">Details</Header>
             <p>Released: {this.props.album.selectedAlbum.year}</p>
@@ -94,7 +134,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchAlbum: id => dispatch(fetchAlbum(id))
+    fetchAlbum: id => dispatch(fetchAlbum(id)),
+    addToCart: (id, quantity) => dispatch(addToCart(id, quantity))
   }
 }
 
