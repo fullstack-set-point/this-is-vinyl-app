@@ -1,7 +1,15 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAlbum} from '../store/album'
-import {Image, Segment, Icon, Button, Divider, Header} from 'semantic-ui-react'
+import {
+  Image,
+  Segment,
+  Icon,
+  Button,
+  Divider,
+  Header,
+  Rating
+} from 'semantic-ui-react'
 
 class SingleAlbum extends Component {
   componentDidMount() {
@@ -50,45 +58,15 @@ class SingleAlbum extends Component {
                   <Segment.Group key={review.id}>
                     <Segment>
                       {review.rating === 5 ? (
-                        <div>
-                          <Icon name="star" />
-                          <Icon name="star" />
-                          <Icon name="star" />
-                          <Icon name="star" />
-                          <Icon name="star" />
-                        </div>
+                        <Rating icon="star" defaultRating={5} maxRating={5} />
                       ) : review.rating === 4 ? (
-                        <div>
-                          <Icon name="star" />
-                          <Icon name="star" />
-                          <Icon name="star" />
-                          <Icon name="star" />
-                          <Icon name="star outline" />
-                        </div>
+                        <Rating icon="star" defaultRating={4} maxRating={5} />
                       ) : review.rating === 3 ? (
-                        <div>
-                          <Icon name="star" />
-                          <Icon name="star" />
-                          <Icon name="star" />
-                          <Icon name="star outline" />
-                          <Icon name="star outline" />
-                        </div>
+                        <Rating icon="star" defaultRating={3} maxRating={5} />
                       ) : review.rating === 2 ? (
-                        <div>
-                          <Icon name="star" />
-                          <Icon name="star" />
-                          <Icon name="star outline" />
-                          <Icon name="star outline" />
-                          <Icon name="star outline" />
-                        </div>
+                        <Rating icon="star" defaultRating={2} maxRating={5} />
                       ) : (
-                        <div>
-                          <Icon name="star" />
-                          <Icon name="star outline" />
-                          <Icon name="star outline" />
-                          <Icon name="star outline" />
-                          <Icon name="star outline" />
-                        </div>
+                        <Rating icon="star" defaultRating={1} maxRating={5} />
                       )}
                     </Segment>
                     <Segment>Comment: {review.comment}</Segment>
