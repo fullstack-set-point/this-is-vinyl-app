@@ -1,26 +1,97 @@
 import axios from 'axios'
 import history from '../history'
 
-/**
- * ACTION TYPES
- */
-const GET_USER = 'GET_USER'
-const REMOVE_USER = 'REMOVE_USER'
+// ACTION TYPES
+const FETCH_USERS = 'FETCH_USERS'
+const FETCH_USER = 'FETCH_USER'
+const CREATE_USER = 'CREATE_USER'
+const UPDATE_USER = 'UPDATE_USER'
+const DELETE_USER = 'DELETE_USER'
 
-/**
- * INITIAL STATE
- */
-const defaultUser = {}
+// ACTION CREATORS
+const fetchUsers = users => ({
+  type: FETCH_USERS,
+  users
+})
 
-/**
- * ACTION CREATORS
- */
-const getUser = user => ({type: GET_USER, user})
-const removeUser = () => ({type: REMOVE_USER})
+const fetchUser = user => ({
+  type: FETCH_USER,
+  user
+})
 
-/**
- * THUNK CREATORS
- */
+const createUser = user => ({
+  type: CREATE_USER,
+  user
+})
+
+const updateUser = (userId, user) => ({
+  type: UPDATE_USER,
+  userId,
+  user
+})
+
+const deleteUser = userId => ({
+  type: DELETE_USER,
+  userId
+})
+
+// THUNK CREATORS
+export const fetchUsersThunk = () => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get('/api/users')
+      dispatch(fetchUsers(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export const fetchUserThunk = userId => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get(`/api/users/${userId}`)
+      dispatch(fetchUser(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export const createUserThunk = user => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.post('/api/users', user)
+      dispatch(createUser(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export const updateUserThunk = (userId, user) => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.put(`/api/users/${userId}`, user)
+      dispatch(updateUser(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export const deleteUserThunk = userId => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.delete(`/api/users/${userId}`)
+      dispatch(deleteUser(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+// AUTHENTICATION THUNKS CREATORS
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
@@ -56,15 +127,35 @@ export const logout = () => async dispatch => {
   }
 }
 
-/**
- * REDUCER
- */
-export default function(state = defaultUser, action) {
+// INITIAL STATE
+const initialState = {
+  users: [],
+  user: {}
+}
+
+// REDUCER
+export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_USER:
-      return action.user
-    case REMOVE_USER:
-      return defaultUser
+    case FETCH_USERS:
+      return {...state, users: action.users}
+    case FETCH_USER:
+      return {...state, user: action.user}
+    case CREATE_USER:
+      return {...state, users: [...state.users, action.user]}
+    case UPDATE_USER:
+      return {
+        ...state,
+        users: [...state.users].map(user => {
+          return user.id === action.userId ? (user = action.user) : user
+        })
+      }
+    case DELETE_USER:
+      return {
+        ...state,
+        users: [...state.users].filter(user => {
+          return user.id !== action.userId
+        })
+      }
     default:
       return state
   }

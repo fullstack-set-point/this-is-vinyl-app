@@ -6,6 +6,8 @@ import {Login, Signup, UserHome} from './components'
 import {me, fetchAlbums} from './store'
 import AllAlbums from './components/AllAlbums'
 import SingleAlbum from './components/SingleAlbum'
+import AllUsers from './components/AllUsers'
+import SingleUser from './components/SingleUser'
 
 /**
  * COMPONENT
@@ -22,7 +24,9 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/albums" component={AllAlbums} />
-        <Route path="/albums/:albumId" component={SingleAlbum} />
+        <Route exact path="/albums/:albumId" component={SingleAlbum} />
+        <Route exact path="/users" component={AllUsers} />
+        <Route exact path="/users/:userId" component={SingleUser} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         {isLoggedIn && (
