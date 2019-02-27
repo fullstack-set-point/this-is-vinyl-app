@@ -53,7 +53,7 @@ class AllAlbums extends Component {
                       <Fragment>
                         <Card.Header>{album.album}</Card.Header>
                         <Card.Meta>{album.artist}</Card.Meta>
-                        <Card.Description>{album.year}</Card.Description>
+                        <Card.Description>${album.price}</Card.Description>
                       </Fragment>
                     </Card.Content>
                   </Card>
