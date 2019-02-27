@@ -22,8 +22,8 @@ User.hasMany(Order)
 Review.belongsTo(User)
 User.hasMany(Review)
 
-Cart.belongsTo(User)
-User.hasOne(Cart)
+User.belongsTo(Cart)
+Cart.hasOne(User)
 
 CartItem.belongsTo(Cart)
 Cart.hasMany(CartItem)

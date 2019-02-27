@@ -16,7 +16,7 @@ const cartData = [{}]
 
 const cartItemData = [
   {
-    price: 10.5,
+    productId: 2,
     quantity: 1
   }
 ]
@@ -371,7 +371,7 @@ async function seed() {
     order2.setUser(user1),
     user1.setReviews([review1, review3, review4]),
     user2.setReviews(review2),
-    cart1.setUser(user1),
+    user1.setCart(cart1),
     cartItem1.setCart(cart1)
   ])
 
