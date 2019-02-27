@@ -58,6 +58,21 @@ router.delete('/:userId', async (req, res, next) => {
   }
 })
 
+router.post('/:userId/cart', async (req, res, next) => {
+  try {
+    const user = User.findById(req.params.userId)
+    const cart = await user.getCart()
+    const newCartItem = await CartItem.create(req.body, {
+      where: {
+        cartId: cart.id
+      }
+    })
+    res.json(newCartItem[0])
+   } catch (err) {
+      next(err)
+   }
+ })
+
 router.get('/:userId/cart', async (req, res, next) => {
   try {
     const user = await User.findById({
@@ -71,9 +86,9 @@ router.get('/:userId/cart', async (req, res, next) => {
       }
     })
     res.json(cartItems)
-  } catch (err) {
-    next(err)
-  }
-})
+   } catch (err) {
+      next(err)
+   }
+ })
 
 module.exports = router
