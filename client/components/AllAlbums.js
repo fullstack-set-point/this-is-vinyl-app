@@ -2,8 +2,7 @@ import React, {Component, Fragment} from 'react'
 import _ from 'lodash'
 import {connect} from 'react-redux'
 import {fetchAlbums} from '../store/album'
-import {Button, Card, Divider, Image, Placeholder} from 'semantic-ui-react'
-// import AlbumCard from './AlbumCard'
+import {Card, Image} from 'semantic-ui-react'
 
 class AllAlbums extends Component {
   componentDidMount() {
