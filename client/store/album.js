@@ -1,5 +1,4 @@
 import axios from 'axios'
-import history from '../history'
 
 /**
  * ACTION TYPES
@@ -54,7 +53,7 @@ export const fetchAlbum = id => {
 
 export const fetchAlbumsByCategory = categoryId => {
   return async dispatch => {
-    const {data} = await axios.get(`/api/albums/categories/:${categoryId}`)
+    const {data} = await axios.get(`/api/albums/categories/${categoryId}`)
     const action = gotAlbumsByCategory(data)
     dispatch(action)
   }
@@ -70,7 +69,7 @@ export default function(state = initialState, action) {
     case GET_ALBUM:
       return {...state, selectedAlbum: action.album}
     case GET_ALBUMS_BY_CATEGORY:
-      return {...state, allAlbums: action.albums}
+      return {...state, albums: action.albums}
     default:
       return state
   }
