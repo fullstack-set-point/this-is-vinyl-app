@@ -1,16 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {Header} from 'semantic-ui-react'
 
 /**
  * COMPONENT
  */
-export const UserHome = props => {
-  const {email} = props
+export const Home = props => {
+  const {user} = props
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
+      <Header>Welcome!</Header>
     </div>
   )
 }
@@ -20,15 +21,15 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    user: state.user.user
   }
 }
 
-export default connect(mapState)(UserHome)
+export default connect(mapState)(Home)
 
 /**
  * PROP TYPES
  */
-UserHome.propTypes = {
+Home.propTypes = {
   email: PropTypes.string
 }

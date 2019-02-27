@@ -4,10 +4,6 @@ import {fetchUserThunk} from '../store/user'
 import {Item} from 'semantic-ui-react'
 
 class SingleUser extends React.Component {
-  componentDidMount() {
-    this.props.fetchUser()
-  }
-
   render() {
     const {user} = this.props
 
@@ -36,8 +32,4 @@ const mapStateToProps = state => ({
   user: state.user.user
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchUser: () => dispatch(fetchUserThunk(ownProps.match.params.userId))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(SingleUser)
+export default connect(mapStateToProps)(SingleUser)
