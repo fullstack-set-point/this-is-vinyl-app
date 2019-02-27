@@ -2,12 +2,13 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome} from './components'
+import {Login, Signup, Home} from './components'
 import {me, fetchAlbums} from './store'
 import AllAlbums from './components/AllAlbums'
 import SingleAlbum from './components/SingleAlbum'
 import AllUsers from './components/AllUsers'
 import SingleUser from './components/SingleUser'
+import ViewCart from './components/ViewCart'
 
 /**
  * COMPONENT
@@ -25,23 +26,23 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/albums" component={AllAlbums} />
         <Route exact path="/albums/:albumId" component={SingleAlbum} />
-        <Route exact path="/users" component={AllUsers} />
         <Route exact path="/users/:userId" component={SingleUser} />
+        <Route exact path="/users/:userId/cart" component={ViewCart} />
         <Route
           exact
           path="/albums/categories/:categoryId"
           component={AllAlbums}
         />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={Signup} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route exact path="/users" component={AllUsers} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        <Route path="/" component={Home} />
       </Switch>
     )
   }

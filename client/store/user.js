@@ -3,10 +3,11 @@ import history from '../history'
 
 // ACTION TYPES
 const FETCH_USERS = 'FETCH_USERS'
-const FETCH_USER = 'FETCH_USER'
 const CREATE_USER = 'CREATE_USER'
 const UPDATE_USER = 'UPDATE_USER'
 const DELETE_USER = 'DELETE_USER'
+const LOGIN_USER = 'LOGIN_USER'
+const LOGOUT_USER = 'LOGOUT_USER'
 const FETCH_CART_ITEMS = 'FETCH_CART_ITEMS'
 const DELETE_CART_ITEM = 'DELETE_CART_ITEM'
 const CREATE_CART_ITEM = 'CREATE_CART_ITEM'
@@ -15,11 +16,6 @@ const CREATE_CART_ITEM = 'CREATE_CART_ITEM'
 const fetchUsers = users => ({
   type: FETCH_USERS,
   users
-})
-
-const fetchUser = user => ({
-  type: FETCH_USER,
-  user
 })
 
 const createUser = user => ({
@@ -36,6 +32,15 @@ const updateUser = (userId, user) => ({
 const deleteUser = userId => ({
   type: DELETE_USER,
   userId
+})
+
+const loginUser = user => ({
+  type: LOGIN_USER,
+  user
+})
+
+const logoutUser = () => ({
+  type: LOGOUT_USER
 })
 
 const fetchCartItems = cartItems => ({
@@ -59,17 +64,6 @@ export const fetchUsersThunk = () => {
     try {
       const {data} = await axios.get('/api/users')
       dispatch(fetchUsers(data))
-    } catch (err) {
-      console.error(err)
-    }
-  }
-}
-
-export const fetchUserThunk = userId => {
-  return async dispatch => {
-    try {
-      const {data} = await axios.get(`/api/users/${userId}`)
-      dispatch(fetchUser(data))
     } catch (err) {
       console.error(err)
     }
@@ -114,6 +108,7 @@ export const fetchCartItemsThunk = userId => {
     try {
       const {data} = await axios.get(`/api/users/${userId}/cart`)
       dispatch(fetchCartItems(data))
+      console.log('INSIDE FETCHCARTITEMSTHUNK: ', data)
     } catch (err) {
       console.error(err)
     }
@@ -144,7 +139,7 @@ export const addToCart = (userId, body) => {
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
-    dispatch(fetchUser(res.data || initialState.user))
+    dispatch(loginUser(res.data || initialState.user))
   } catch (err) {
     console.error(err)
   }
@@ -155,12 +150,12 @@ export const auth = (email, password, method) => async dispatch => {
   try {
     res = await axios.post(`/auth/${method}`, {email, password})
   } catch (authError) {
-    return dispatch(fetchUser({error: authError}))
+    return dispatch(loginUser({error: authError}))
   }
 
   try {
-    dispatch(fetchUser(res.data))
-    history.push('/home')
+    dispatch(loginUser(res.data))
+    history.push('/')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
@@ -169,8 +164,8 @@ export const auth = (email, password, method) => async dispatch => {
 export const logout = () => async dispatch => {
   try {
     await axios.post('/auth/logout')
-    dispatch(removeUser())
-    history.push('/login')
+    dispatch(logoutUser())
+    history.push('/')
   } catch (err) {
     console.error(err)
   }
@@ -188,8 +183,6 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case FETCH_USERS:
       return {...state, users: action.users}
-    case FETCH_USER:
-      return {...state, user: action.user}
     case CREATE_USER:
       return {...state, users: [...state.users, action.user]}
     case UPDATE_USER:
@@ -206,6 +199,10 @@ export default (state = initialState, action) => {
           return user.id !== action.userId
         })
       }
+    case LOGIN_USER:
+      return {...state, user: action.user}
+    case LOGOUT_USER:
+      return {...state, user: {}}
     case FETCH_CART_ITEMS:
       return {...state, cartItems: action.cartItems}
     case DELETE_CART_ITEM:

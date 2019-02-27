@@ -68,9 +68,27 @@ router.post('/:userId/cart', async (req, res, next) => {
       }
     })
     res.json(newCartItem[0])
-  } catch (err) {
-    next(err)
-  }
-})
+   } catch (err) {
+      next(err)
+   }
+ })
+
+router.get('/:userId/cart', async (req, res, next) => {
+  try {
+    const user = await User.findById({
+      where: {
+        id: req.params.userId
+      }
+    })
+    const cartItems = await CartItem.findAll({
+      where: {
+        cartId: user.cartId
+      }
+    })
+    res.json(cartItems)
+   } catch (err) {
+      next(err)
+   }
+ })
 
 module.exports = router
