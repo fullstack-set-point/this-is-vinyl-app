@@ -9,6 +9,10 @@ const User = db.define('user', {
   lastName: {
     type: Sequelize.STRING
   },
+  imgUrl: {
+    type: Sequelize.STRING,
+    defaultValue: 'https://robohash.org/1'
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,

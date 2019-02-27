@@ -17,23 +17,19 @@ class AllUsers extends React.Component {
           return (
             <Card key={user.id}>
               <Card.Content>
-                <Image
-                  floated="right"
-                  size="mini"
-                  src="https://react.semantic-ui.com/images/avatar/large/steve.jpg"
-                />
+                <Image floated="right" size="mini" src={user.imgUrl} />
                 <Card.Header>{`${user.firstName} ${
                   user.lastName
                 }`}</Card.Header>
                 <Card.Meta>{user.isAdmin ? 'Admin' : 'Customer'}</Card.Meta>
                 <Card.Description>
-                  <Icon name="shopping cart" />X items
+                  {/* <Icon name="shopping cart" />{user.cart.length} items */}
                 </Card.Description>
                 <Card.Description>
-                  <Icon name="dollar sign" />X orders
+                  {/* <Icon name="dollar sign" />{user.orders.length} orders */}
                 </Card.Description>
                 <Card.Description>
-                  <Icon name="thumbs up" />X reviews
+                  {/* <Icon name="thumbs up" />{user.reviews.length} reviews */}
                 </Card.Description>
               </Card.Content>
               <Card.Content extra>

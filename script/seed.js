@@ -179,6 +179,7 @@ const userData = [
   {
     firstName: 'Chancelor',
     lastName: 'Bennett',
+    imgUrl: 'https://robohash.org/2',
     email: 'acidrap@email.com',
     password: '123',
     isAdmin: false,
@@ -190,6 +191,7 @@ const userData = [
   {
     firstName: 'Anthony',
     lastName: 'Kiedis',
+    imgUrl: 'https://robohash.org/3',
     email: 'cantstop@email.com',
     password: '666',
     isAdmin: false,
@@ -201,6 +203,7 @@ const userData = [
   {
     firstName: 'Jerry',
     lastName: 'Garcia',
+    imgUrl: 'https://robohash.org/4',
     email: 'gratefuldead@email.com',
     password: '975',
     isAdmin: true,
@@ -212,6 +215,7 @@ const userData = [
   {
     firstName: 'Jack',
     lastName: 'White',
+    imgUrl: 'https://robohash.org/5',
     email: 'thirdman@email.com',
     password: 'password',
     isAdmin: false,
@@ -223,6 +227,7 @@ const userData = [
   {
     firstName: 'Jon',
     lastName: 'Bon Jovi',
+    imgUrl: 'https://robohash.org/6',
     email: 'livingonaprayer@email.com',
     password: 'idk',
     isAdmin: false,
@@ -234,6 +239,7 @@ const userData = [
   {
     firstName: 'Eddie',
     lastName: 'Vetter',
+    imgUrl: 'https://robohash.org/7',
     email: 'pearljam@email.com',
     password: 'secret',
     isAdmin: true,
@@ -245,6 +251,7 @@ const userData = [
   {
     firstName: 'Dave',
     lastName: 'Grohl',
+    imgUrl: 'https://robohash.org/8',
     email: 'learntofly@email.com',
     password: 'foobar',
     isAdmin: true,
@@ -256,6 +263,7 @@ const userData = [
   {
     firstName: 'Paul',
     lastName: 'McCartney',
+    imgUrl: 'https://robohash.org/9',
     email: 'beatles@email.com',
     password: 'ringosucks',
     isAdmin: false,

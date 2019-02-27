@@ -16,11 +16,11 @@ Category.belongsToMany(Product, {through: 'product_category'})
 OrderItem.belongsTo(Order)
 Order.hasMany(OrderItem)
 
-User.hasMany(Order)
 Order.belongsTo(User)
+User.hasMany(Order)
 
-User.hasMany(Review)
 Review.belongsTo(User)
+User.hasMany(Review)
 
 Cart.belongsTo(User)
 User.hasOne(Cart)
