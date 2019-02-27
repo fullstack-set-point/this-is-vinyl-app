@@ -20,7 +20,7 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route path="/albums" component={AllAlbums} />
+        <Route exact path="/api/albums" component={AllAlbums} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         {isLoggedIn && (

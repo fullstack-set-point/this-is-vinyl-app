@@ -4,15 +4,16 @@ import {fetchAlbums} from '../store'
 // import AlbumCard from './AlbumCard'
 
 class AllAlbums extends React.Component {
-  componentDidMount() {
-    this.props.fetchAlbums()
-  }
+  // componentDidMount() {
+  //   this.props.fetchAlbums()
+  // }
 
   render() {
     const {history, albums} = this.props
     return (
       <div>
-        <ul>
+        <h1>THIS SHOULD BE TEXT</h1>
+        {/* <ul>
           {albums.map(album => (
             <ul>
               <img
@@ -28,7 +29,7 @@ class AllAlbums extends React.Component {
             </ul>
             // <AlbumCard key={album.id} album={album} history={history} /> //making an AlbumCard component to render individual albums on the AllAlbums page (presentational)
           ))}
-        </ul>
+        </ul> */}
       </div>
     )
   }
