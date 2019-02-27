@@ -51,7 +51,7 @@ export const fetchAlbum = id => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_ALBUMS:
-      return {...state, albums: action.albums}
+      return {...state, allAlbums: action.albums}
     case GET_ALBUM:
       return {...state, selectedAlbum: action.album}
     default:
