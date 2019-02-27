@@ -1,17 +1,17 @@
 import axios from 'axios'
-import history from '../history'
 
 /**
  * ACTION TYPES
  */
 const GET_ALBUMS = 'GET_ALBUMS'
 const GET_ALBUM = 'GET_ALBUM'
+const GET_ALBUMS_BY_CATEGORY = 'GET_ALBUMS_BY_CATEGORY'
 
 /**
  * INITIAL STATE
  */
 const initialState = {
-  allAlbums: [],
+  albums: [],
   selectedAlbum: {}
 }
 
@@ -25,12 +25,18 @@ const gotAlbum = album => ({
   album
 })
 
+const gotAlbumsByCategory = albums => ({
+  type: GET_ALBUMS_BY_CATEGORY,
+  albums
+})
+
 /**
  * THUNK CREATORS
  */
 export const fetchAlbums = () => async dispatch => {
   try {
-    const {data} = await axios.get('api/albums')
+    const {data} = await axios.get('/api/albums')
+    console.log('DATA: ', data)
     dispatch(gotAlbums(data))
   } catch (err) {
     console.error(err)
@@ -45,15 +51,25 @@ export const fetchAlbum = id => {
   }
 }
 
+export const fetchAlbumsByCategory = categoryId => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/albums/categories/${categoryId}`)
+    const action = gotAlbumsByCategory(data)
+    dispatch(action)
+  }
+}
+
 /**
  * REDUCER
  */
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_ALBUMS:
-      return {...state, allAlbums: action.albums}
+      return {...state, albums: action.albums}
     case GET_ALBUM:
       return {...state, selectedAlbum: action.album}
+    case GET_ALBUMS_BY_CATEGORY:
+      return {...state, albums: action.albums}
     default:
       return state
   }

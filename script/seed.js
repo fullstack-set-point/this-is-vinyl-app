@@ -26,7 +26,7 @@ const categoryData = [
     name: 'Rock'
   },
   {
-    name: 'Classical'
+    name: 'Reggae'
   },
   {
     name: 'Country'
@@ -153,6 +153,33 @@ const productData = [
     quantity: 100,
     photo:
       'https://cdn.pastemagazine.com/www/articles/2018/08/21/bob-marley-legend.jpg'
+  },
+  {
+    album: 'American Gangster',
+    artist: 'Jay-Z',
+    year: 2007,
+    price: 10,
+    quantity: 100,
+    photo:
+      'https://img.discogs.com/cBMfQ_IUhOYzyw70lBHgSXoiPEI=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-1133742-1200816129.jpeg.jpg'
+  },
+  {
+    album: 'Freedom of Choice',
+    artist: 'Devo',
+    year: 1980,
+    price: 8,
+    quantity: 100,
+    photo:
+      'https://img.discogs.com/MCwJenZVU40HRlDUqUqQJAOPDRw=/fit-in/591x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-17377-1278376145.jpeg.jpg'
+  },
+  {
+    album: 'True Blue',
+    artist: 'Madonna',
+    year: 1986,
+    price: 9,
+    quantity: 100,
+    photo:
+      'https://img.discogs.com/cbJuSllK1fmn5bCO5OIjNVy4so8=/fit-in/600x597/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-597222-1290446870.jpeg.jpg'
   }
 ]
 
@@ -301,7 +328,7 @@ async function seed() {
   ] = await promiseForInsertedData
   const [cart1] = cart
   const [cartItem1] = cartItem
-  const [rock, classical, country, jazz, rap, electronic, pop] = category
+  const [rock, reggae, country, jazz, rap, electronic, pop] = category
   const [order1, order2] = order
   const [orderItem1, orderItem2, orderItem3] = orderItem
   const [
@@ -313,7 +340,10 @@ async function seed() {
     backInBlack,
     darkSide,
     one,
-    legend
+    legend,
+    gangster,
+    freedom,
+    trueBlue
   ] = product
   const [review1, review2, review3, review4] = review
   const [user1, user2] = user
@@ -325,6 +355,15 @@ async function seed() {
     thriller.setCategories([rock, pop]),
     hotelCalifornia.setCategories(rock),
     comeOnOver.setCategories([country, pop]),
+    zeppelin.setCategories(rock),
+    rumours.setCategories(rock),
+    backInBlack.setCategories(rock),
+    darkSide.setCategories(rock),
+    one.setCategories(rock),
+    legend.setCategories([reggae, jazz]),
+    gangster.setCategories(rap),
+    freedom.setCategories([rock, pop, electronic]),
+    trueBlue.setCategories([pop, electronic]),
     orderItem1.setOrder(order1),
     orderItem2.setOrder(order1),
     orderItem3.setOrder(order2),

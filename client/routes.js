@@ -27,6 +27,11 @@ class Routes extends Component {
         <Route exact path="/albums/:albumId" component={SingleAlbum} />
         <Route exact path="/users" component={AllUsers} />
         <Route exact path="/users/:userId" component={SingleUser} />
+        <Route
+          exact
+          path="/albums/categories/:categoryId"
+          component={AllAlbums}
+        />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         {isLoggedIn && (
