@@ -12,7 +12,7 @@ const GET_ALBUMS_BY_CATEGORY = 'GET_ALBUMS_BY_CATEGORY'
  * INITIAL STATE
  */
 const initialState = {
-  allAlbums: [],
+  albums: [],
   selectedAlbum: {}
 }
 
@@ -36,7 +36,8 @@ const gotAlbumsByCategory = albums => ({
  */
 export const fetchAlbums = () => async dispatch => {
   try {
-    const {data} = await axios.get('api/albums')
+    const {data} = await axios.get('/api/albums')
+    console.log('DATA: ', data)
     dispatch(gotAlbums(data))
   } catch (err) {
     console.error(err)
@@ -65,7 +66,7 @@ export const fetchAlbumsByCategory = categoryId => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_ALBUMS:
-      return {...state, allAlbums: action.albums}
+      return {...state, albums: action.albums}
     case GET_ALBUM:
       return {...state, selectedAlbum: action.album}
     case GET_ALBUMS_BY_CATEGORY:
