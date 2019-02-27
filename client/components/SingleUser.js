@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchUserThunk} from '../store/user'
-import {Header} from 'semantic-ui-react'
+import {Item} from 'semantic-ui-react'
 
 class SingleUser extends React.Component {
   componentDidMount() {
@@ -12,9 +12,22 @@ class SingleUser extends React.Component {
     const {user} = this.props
 
     return (
-      <div>
-        <Header>{user.email}</Header>
-      </div>
+      <Item>
+        <Item.Image size="tiny" src={user.imgUrl} />
+
+        <Item.Content>
+          <Item.Header>{`${user.firstName} ${user.lastName}`}</Item.Header>
+          <Item.Meta>Profile Info</Item.Meta>
+          <Item.Description>{user.email}</Item.Description>
+
+          <Item.Meta>Shipping Info</Item.Meta>
+          <Item.Description>{user.address}</Item.Description>
+          <Item.Description>{user.city}</Item.Description>
+          <Item.Description>{user.state}</Item.Description>
+          <Item.Description>{user.Zip}</Item.Description>
+          <Item.Extra>Additional Details</Item.Extra>
+        </Item.Content>
+      </Item>
     )
   }
 }
