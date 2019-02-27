@@ -11,7 +11,8 @@ import {
   Grid
 } from 'semantic-ui-react'
 import CategoryFilter from './CategoryFilter'
-// import AlbumCard from './AlbumCard'
+
+
 
 class AllAlbums extends Component {
   constructor(props) {
