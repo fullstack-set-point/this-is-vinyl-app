@@ -204,24 +204,100 @@ const reviewData = [
 
 const userData = [
   {
-    username: 'musicLover5',
-    email: 'musiclover5@email.com',
+    firstName: 'Chancelor',
+    lastName: 'Bennett',
+    imgUrl: 'https://robohash.org/2',
+    email: 'acidrap@email.com',
     password: '123',
     isAdmin: false,
-    addressStreet: '123 Main Street',
-    addressCity: 'Chicago',
-    addressState: 'IL',
-    addressZipcode: '60614'
+    address: '123 Clark St.',
+    city: 'Chicago',
+    state: 'IL',
+    zip: '60614'
   },
   {
-    username: 'musicAdmin',
-    email: 'musicAdmin@email.com',
-    password: '567',
+    firstName: 'Anthony',
+    lastName: 'Kiedis',
+    imgUrl: 'https://robohash.org/3',
+    email: 'cantstop@email.com',
+    password: '666',
+    isAdmin: false,
+    address: '88 Wilshire Blvd.',
+    city: 'Los Angeles',
+    state: 'CA',
+    zip: '90210'
+  },
+  {
+    firstName: 'Jerry',
+    lastName: 'Garcia',
+    imgUrl: 'https://robohash.org/4',
+    email: 'gratefuldead@email.com',
+    password: '975',
     isAdmin: true,
-    addressStreet: '567 Michigan Ave.',
-    addressCity: 'Chicago',
-    addressState: 'IL',
-    addressZipcode: '60614'
+    address: '145 S. Van Ness St.',
+    city: 'San Francisco',
+    state: 'CA',
+    zip: '94110'
+  },
+  {
+    firstName: 'Jack',
+    lastName: 'White',
+    imgUrl: 'https://robohash.org/5',
+    email: 'thirdman@email.com',
+    password: 'password',
+    isAdmin: false,
+    address: '456 Broadway Ave.',
+    city: 'Nashville',
+    state: 'TN',
+    zip: '32011'
+  },
+  {
+    firstName: 'Jon',
+    lastName: 'Bon Jovi',
+    imgUrl: 'https://robohash.org/6',
+    email: 'livingonaprayer@email.com',
+    password: 'idk',
+    isAdmin: false,
+    address: '900 Wall St.',
+    city: 'New York',
+    state: 'NY',
+    zip: '10001'
+  },
+  {
+    firstName: 'Eddie',
+    lastName: 'Vetter',
+    imgUrl: 'https://robohash.org/7',
+    email: 'pearljam@email.com',
+    password: 'secret',
+    isAdmin: true,
+    address: '22 Pike St.',
+    city: 'Seattle',
+    state: 'WA',
+    zip: '98101'
+  },
+  {
+    firstName: 'Dave',
+    lastName: 'Grohl',
+    imgUrl: 'https://robohash.org/8',
+    email: 'learntofly@email.com',
+    password: 'foobar',
+    isAdmin: true,
+    address: '1000 Pennsyvlania Blvd.',
+    city: 'Washington',
+    state: 'DC',
+    zip: '2019'
+  },
+  {
+    firstName: 'Paul',
+    lastName: 'McCartney',
+    imgUrl: 'https://robohash.org/9',
+    email: 'beatles@email.com',
+    password: 'ringosucks',
+    isAdmin: false,
+    address: '1 Abbey Rd.',
+    city: 'London',
+    state: 'UK',
+    zip: '93472'
   }
 ]
 

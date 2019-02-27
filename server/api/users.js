@@ -1,9 +1,14 @@
 const router = require('express').Router()
 const User = require('../db/models/User')
+const Cart = require('../db/models/Cart')
+const Order = require('../db/models/Order')
+const Review = require('../db/models/Review')
 
 router.get('/', async (req, res, next) => {
   try {
-    const users = await User.findAll({})
+    const users = await User.findAll({
+      include: [{model: Cart}, {model: Order}, {model: Review}]
+    })
     res.json(users)
   } catch (err) {
     next(err)
@@ -13,11 +18,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:userId', async (req, res, next) => {
   try {
     const user = await User.findById(req.params.userId, {
-      include: [
-        // { model: Cart, as: 'cart' },
-        // { model: Order, as: 'orders' },
-        // { model: Review, as: 'reviews' }
-      ]
+      include: [{model: Cart}, {model: Order}, {model: Review}]
     })
     res.json(user)
   } catch (err) {
