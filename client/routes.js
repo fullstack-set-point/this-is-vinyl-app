@@ -22,7 +22,12 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/albums" component={AllAlbums} />
-        <Route path="/albums/:albumId" component={SingleAlbum} />
+        <Route exact path="/albums/:albumId" component={SingleAlbum} />
+        <Route
+          exact
+          path="/albums/categories/:categoryId"
+          component={AllAlbums}
+        />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         {isLoggedIn && (
