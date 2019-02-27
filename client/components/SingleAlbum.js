@@ -30,7 +30,7 @@ class SingleAlbum extends Component {
             <Divider />
             <Header as="h4">Details</Header>
             <p>Released: {this.props.album.selectedAlbum.year}</p>
-            <p>
+            <div>
               Genres:
               {this.props.album.selectedAlbum.categories &&
               this.props.album.selectedAlbum.categories.length ? (
@@ -40,7 +40,7 @@ class SingleAlbum extends Component {
               ) : (
                 <p>N/A</p>
               )}
-            </p>
+            </div>
             <Divider />
             <Header as="h4">Reviews</Header>
             {this.props.album.selectedAlbum.reviews &&
