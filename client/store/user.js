@@ -95,7 +95,7 @@ export const deleteUserThunk = userId => {
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
-    dispatch(getUser(res.data || defaultUser))
+    dispatch(fetchUser(res.data || initialState.user))
   } catch (err) {
     console.error(err)
   }
@@ -106,11 +106,11 @@ export const auth = (email, password, method) => async dispatch => {
   try {
     res = await axios.post(`/auth/${method}`, {email, password})
   } catch (authError) {
-    return dispatch(getUser({error: authError}))
+    return dispatch(fetchUser({error: authError}))
   }
 
   try {
-    dispatch(getUser(res.data))
+    dispatch(fetchUser(res.data))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)

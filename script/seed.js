@@ -177,24 +177,92 @@ const reviewData = [
 
 const userData = [
   {
-    username: 'musicLover5',
-    email: 'musiclover5@email.com',
+    firstName: 'Chancelor',
+    lastName: 'Bennett',
+    email: 'acidrap@email.com',
     password: '123',
     isAdmin: false,
-    addressStreet: '123 Main Street',
-    addressCity: 'Chicago',
-    addressState: 'IL',
-    addressZipcode: '60614'
+    address: '123 Clark St.',
+    city: 'Chicago',
+    state: 'IL',
+    zip: '60614'
   },
   {
-    username: 'musicAdmin',
-    email: 'musicAdmin@email.com',
-    password: '567',
+    firstName: 'Anthony',
+    lastName: 'Kiedis',
+    email: 'cantstop@email.com',
+    password: '666',
+    isAdmin: false,
+    address: '88 Wilshire Blvd.',
+    city: 'Los Angeles',
+    state: 'CA',
+    zip: '90210'
+  },
+  {
+    firstName: 'Jerry',
+    lastName: 'Garcia',
+    email: 'gratefuldead@email.com',
+    password: '975',
     isAdmin: true,
-    addressStreet: '567 Michigan Ave.',
-    addressCity: 'Chicago',
-    addressState: 'IL',
-    addressZipcode: '60614'
+    address: '145 S. Van Ness St.',
+    city: 'San Francisco',
+    state: 'CA',
+    zip: '94110'
+  },
+  {
+    firstName: 'Jack',
+    lastName: 'White',
+    email: 'thirdman@email.com',
+    password: 'password',
+    isAdmin: false,
+    address: '456 Broadway Ave.',
+    city: 'Nashville',
+    state: 'TN',
+    zip: '32011'
+  },
+  {
+    firstName: 'Jon',
+    lastName: 'Bon Jovi',
+    email: 'livingonaprayer@email.com',
+    password: 'idk',
+    isAdmin: false,
+    address: '900 Wall St.',
+    city: 'New York',
+    state: 'NY',
+    zip: '10001'
+  },
+  {
+    firstName: 'Eddie',
+    lastName: 'Vetter',
+    email: 'pearljam@email.com',
+    password: 'secret',
+    isAdmin: true,
+    address: '22 Pike St.',
+    city: 'Seattle',
+    state: 'WA',
+    zip: '98101'
+  },
+  {
+    firstName: 'Dave',
+    lastName: 'Grohl',
+    email: 'learntofly@email.com',
+    password: 'foobar',
+    isAdmin: true,
+    address: '1000 Pennsyvlania Blvd.',
+    city: 'Washington',
+    state: 'DC',
+    zip: '2019'
+  },
+  {
+    firstName: 'Paul',
+    lastName: 'McCartney',
+    email: 'beatles@email.com',
+    password: 'ringosucks',
+    isAdmin: false,
+    address: '1 Abbey Rd.',
+    city: 'London',
+    state: 'UK',
+    zip: '93472'
   }
 ]
 
