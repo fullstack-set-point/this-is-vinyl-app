@@ -3,6 +3,7 @@ const User = require('../db/models/User')
 const Cart = require('../db/models/Cart')
 const Order = require('../db/models/Order')
 const Review = require('../db/models/Review')
+const CartItem = require('../db/models/CartItem')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -52,6 +53,24 @@ router.delete('/:userId', async (req, res, next) => {
   try {
     await User.destroy({where: {id: req.params.userId}})
     res.sendStatus(204)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:userId/cart', async (req, res, next) => {
+  try {
+    const user = await User.findById({
+      where: {
+        id: req.params.userId
+      }
+    })
+    const cartItems = await CartItem.findAll({
+      where: {
+        cartId: user.cartId
+      }
+    })
+    res.json(cartItems)
   } catch (err) {
     next(err)
   }
