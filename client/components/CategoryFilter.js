@@ -10,7 +10,7 @@ const CategoryFilter = props => {
           Rock
         </Button>
         <Button value={2} onClick={props.handleCategoryClick}>
-          Classical
+          Reggae
         </Button>
         <Button value={3} onClick={props.handleCategoryClick}>
           Country
