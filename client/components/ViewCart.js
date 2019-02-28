@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Table} from 'semantic-ui-react'
+import {Table, Container, Header, Divider} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {deleteCartItemThunk, fetchCartItemsThunk} from '../store/user'
 
@@ -23,38 +23,51 @@ class ViewCart extends Component {
   }
 
   render() {
+    let cartTotal = 0
     return (
-      <Table striped>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Artist Name</Table.HeaderCell>
-            <Table.HeaderCell>Album Title Joined</Table.HeaderCell>
-            <Table.HeaderCell>Quantity</Table.HeaderCell>
-            <Table.HeaderCell>Price</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+      <Container>
+        <Header as="h2">Your Cart</Header>
+        <Divider />
+        <Table striped>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Album</Table.HeaderCell>
+              <Table.HeaderCell>Artist</Table.HeaderCell>
+              <Table.HeaderCell>Quantity</Table.HeaderCell>
+              <Table.HeaderCell>Price</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
 
-        <Table.Body>
-          {this.props.user.cartItems && this.props.user.cartItems.length ? (
-            this.props.user.cartItems.map(cartItem => (
-              <Table.Row key={cartItem.id}>
-                <Table.Cell>{cartItem.product.artist}</Table.Cell>
-                <Table.Cell>{cartItem.product.album}</Table.Cell>
-                <Table.Cell>{cartItem.product.price}</Table.Cell>
-                <Table.Cell>{cartItem.quantity}</Table.Cell>
-              </Table.Row>
-            ))
-          ) : (
-            <Table.Row>Loading</Table.Row>
-          )}
-        </Table.Body>
-      </Table>
+          <Table.Body>
+            {this.props.cartItems && this.props.cartItems.length ? (
+              this.props.cartItems.map(cartItem => {
+                cartTotal += cartItem.quantity * cartItem.product.price
+                return (
+                  <Table.Row key={cartItem.id}>
+                    <Table.Cell>{cartItem.product.album}</Table.Cell>
+                    <Table.Cell>{cartItem.product.artist}</Table.Cell>
+                    <Table.Cell>{cartItem.quantity}</Table.Cell>
+                    <Table.Cell>
+                      ${cartItem.product.price} x {cartItem.quantity}
+                    </Table.Cell>
+                  </Table.Row>
+                )
+              })
+            ) : (
+              <Table.Row>Loading</Table.Row>
+            )}
+          </Table.Body>
+        </Table>
+        <Header as="h3">Subtotal: ${cartTotal}</Header>
+      </Container>
     )
   }
 }
 
 const mapStateToProps = state => {
-  return state
+  return {
+    cartItems: state.user.cartItems
+  }
 }
 
 const mapDispatchToProps = dispatch => {
