@@ -6,7 +6,7 @@ import {Login, Signup, Home} from './components'
 import {me, fetchAlbums} from './store'
 import AllAlbums from './components/AllAlbums'
 import SingleAlbum from './components/SingleAlbum'
-import AllUsers from './components/AllUsers'
+import Admin from './components/Admin'
 import SingleUser from './components/SingleUser'
 import ViewCart from './components/ViewCart'
 
@@ -38,7 +38,7 @@ class Routes extends Component {
         {isAdmin && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route exact path="/users" component={AllUsers} />
+            <Route exact path="/admin" component={Admin} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

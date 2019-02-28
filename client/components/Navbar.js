@@ -23,7 +23,7 @@ class NavBar extends React.Component {
 
         {user.isAdmin ? (
           <Menu.Item>
-            <NavLink to="/users">Admin Dashboard</NavLink>
+            <NavLink to="/admin">Admin</NavLink>
           </Menu.Item>
         ) : null}
 
