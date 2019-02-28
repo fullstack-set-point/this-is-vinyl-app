@@ -36,7 +36,6 @@ const gotAlbumsByCategory = albums => ({
 export const fetchAlbums = () => async dispatch => {
   try {
     const {data} = await axios.get('/api/albums')
-    console.log('DATA: ', data)
     dispatch(gotAlbums(data))
   } catch (err) {
     console.error(err)

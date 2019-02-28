@@ -2,12 +2,12 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {logout} from '../store'
 import PropTypes from 'prop-types'
-import {Input, Menu, Icon} from 'semantic-ui-react'
+import {Input, Menu, Icon, Label} from 'semantic-ui-react'
 import {NavLink} from 'react-router-dom'
 
 class NavBar extends React.Component {
   render() {
-    const {isLoggedIn, user, handleLogout} = this.props
+    const {isLoggedIn, user, handleLogout, userCartItems} = this.props
 
     return (
       <Menu>
@@ -33,6 +33,9 @@ class NavBar extends React.Component {
               <NavLink to={`/users/${user.id}/cart`}>
                 <Icon name="shopping cart" />
               </NavLink>
+              {userCartItems && userCartItems.length ? (
+                <Label>{userCartItems.length}</Label>
+              ) : null}
             </Menu.Item>
             <Menu.Item>
               <NavLink to="/login">Login</NavLink>
@@ -47,6 +50,10 @@ class NavBar extends React.Component {
               <NavLink to={`/users/${user.id}/cart`}>
                 <Icon name="shopping cart" />
               </NavLink>
+              {console.log(user)}
+              {userCartItems && userCartItems.length ? (
+                <Label>{userCartItems.length}</Label>
+              ) : null}
             </Menu.Item>
             <Menu.Item>
               <NavLink to={`/users/${user.id}`}>Account</NavLink>
@@ -66,7 +73,8 @@ class NavBar extends React.Component {
 const mapStateToProps = state => {
   return {
     isLoggedIn: !!state.user.user.id,
-    user: state.user.user
+    user: state.user.user,
+    userCartItems: state.user.cartItems
   }
 }
 
