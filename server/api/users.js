@@ -4,6 +4,7 @@ const Cart = require('../db/models/Cart')
 const Order = require('../db/models/Order')
 const Review = require('../db/models/Review')
 const CartItem = require('../db/models/CartItem')
+const Product = require('../db/models/Product')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -68,27 +69,24 @@ router.post('/:userId/cart', async (req, res, next) => {
       }
     })
     res.json(newCartItem[0])
-   } catch (err) {
-      next(err)
-   }
- })
+  } catch (err) {
+    next(err)
+  }
+})
 
 router.get('/:userId/cart', async (req, res, next) => {
   try {
-    const user = await User.findById({
-      where: {
-        id: req.params.userId
-      }
-    })
+    const user = await User.findById(req.params.userId)
     const cartItems = await CartItem.findAll({
       where: {
         cartId: user.cartId
-      }
+      },
+      include: [{model: Product}]
     })
     res.json(cartItems)
-   } catch (err) {
-      next(err)
-   }
- })
+  } catch (err) {
+    next(err)
+  }
+})
 
 module.exports = router
