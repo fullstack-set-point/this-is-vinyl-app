@@ -10,22 +10,53 @@ import {
   Header,
   Rating,
   Grid,
-  Form
+  Form,
+  Select
 } from 'semantic-ui-react'
 
 class SingleAlbum extends Component {
-  componentDidMount() {
-    this.props.fetchAlbum(this.props.match.params.albumId)
+  constructor(props) {
+    super(props)
+    this.state = {
+      album: this.props.album.selectedAlbum,
+      cartItem: {
+        albumId: this.props.album.selectedAlbum.id,
+        quantity: 1
+      }
+    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
-  handleSubmit(event) {
+  async componentDidMount() {
+    await this.props.fetchAlbum(this.props.match.params.albumId)
+    this.setState({
+      album: this.props.album.selectedAlbum,
+      cartItem: {
+        albumId: this.props.album.selectedAlbum.id,
+        quantity: 1
+      }
+    })
+  }
+
+  handleChange(event, {value}) {
+    console.log('VALUE', value)
+    this.setState({
+      cartItem: {
+        ...this.state.cartItem,
+        quantity: value
+      }
+    })
+  }
+
+  handleClick(event) {
     try {
       event.preventDefault()
-      const productId = Number(this.props.match.params.albumId)
-      const quantity = event.target.quantity.value
-      this.props.addToCart(productId, quantity)
+      const productId = this.props.match.params.albumId
+      const quantity = this.state.cartItem.quantity
+      const body = {productId, quantity}
+      this.props.addToCart(this.props.user.user.id, body)
     } catch (err) {
-      console.log(this.props.match.params.albumId)
       console.error(err)
     }
   }
@@ -43,7 +74,6 @@ class SingleAlbum extends Component {
       {key: 9, text: '9', value: 9},
       {key: 10, text: '10', value: 10}
     ]
-    console.log('SINGLE ALBUM PROPS', this.props)
     return (
       <div>
         <Grid padding="very">
@@ -58,24 +88,24 @@ class SingleAlbum extends Component {
               {this.props.album.selectedAlbum.artist}
             </Header>
             <Header as="h3">${this.props.album.selectedAlbum.price}</Header>
-            <Form size="small" onSubmit={this.handleSubmit}>
-              <Form.Group>
-                <Form.Select
+            <Form size="small">
+              <Form.Field>
+                <Select
                   options={options}
                   placeholder="Quantity"
-                  name="quantity"
                   onChange={this.handleChange}
                 />
-              </Form.Group>
-              <Form.Group widths="equal">
-                <Form.Button
-                  control={Button}
+              </Form.Field>
+              <Form.Field widths="equal">
+                <Button
                   color="green"
                   content="Add to Cart"
                   icon="shopping cart"
+                  type="submit"
                   fluid
+                  onClick={this.handleClick}
                 />
-              </Form.Group>
+              </Form.Field>
             </Form>
             <Divider />
             <Header as="h4">Details</Header>
@@ -128,14 +158,15 @@ class SingleAlbum extends Component {
 
 const mapStateToProps = state => {
   return {
-    album: state.album
+    album: state.album,
+    user: state.user
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchAlbum: id => dispatch(fetchAlbum(id)),
-    addToCart: (id, quantity) => dispatch(addToCart(id, quantity))
+    addToCart: (userId, body) => dispatch(addToCart(userId, body))
   }
 }
 
