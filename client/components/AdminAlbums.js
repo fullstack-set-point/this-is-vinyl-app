@@ -1,13 +1,16 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Table, Image, Button, Dropdown, Menu, Icon} from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
+import {
+  Table,
+  Image,
+  Button,
+  Dropdown,
+  Menu,
+  Icon,
+  Checkbox
+} from 'semantic-ui-react'
 import {fetchAlbums} from '../store/album'
-
-const options = [
-  {key: 'rock', text: 'Rock', value: 'rock'},
-  {key: 'rap', text: 'Rap', value: 'rap'},
-  {key: 'country', text: 'Country', value: 'country'}
-]
 
 class AdminAlbums extends React.Component {
   componentDidMount() {
@@ -16,6 +19,16 @@ class AdminAlbums extends React.Component {
 
   render() {
     const {albums} = this.props
+
+    const options = [
+      {key: 'rock', text: 'Rock', value: 'rock'},
+      {key: 'reggae', text: 'Reggae', value: 'reggae'},
+      {key: 'country', text: 'Country', value: 'country'},
+      {key: 'jazz', text: 'Jazz', value: 'jazz'},
+      {key: 'rap', text: 'Rap', value: 'rap'},
+      {key: 'electronic', text: 'Electronic', value: 'electronic'},
+      {key: 'pop', text: 'Pop', value: 'pop'}
+    ]
 
     return (
       <Table celled textAlign="center" verticalAlign="middle">
@@ -27,9 +40,9 @@ class AdminAlbums extends React.Component {
             <Table.HeaderCell>Year</Table.HeaderCell>
             <Table.HeaderCell>Price</Table.HeaderCell>
             <Table.HeaderCell>Inventory</Table.HeaderCell>
+            <Table.HeaderCell>Available</Table.HeaderCell>
             <Table.HeaderCell>Categories</Table.HeaderCell>
             <Table.HeaderCell>Edit</Table.HeaderCell>
-            <Table.HeaderCell>Delete</Table.HeaderCell>
             <Table.HeaderCell>View</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -47,8 +60,18 @@ class AdminAlbums extends React.Component {
                 <Table.Cell>${album.price}</Table.Cell>
                 <Table.Cell>{album.quantity}</Table.Cell>
                 <Table.Cell>
+                  <Checkbox toggle />
+                </Table.Cell>
+                <Table.Cell>
                   <Dropdown
-                    placeholder="Categories"
+                    // placeholder={album.categories.map(category => {
+                    //   return (
+                    //     <a key ={category.id} className='ui label' value={category.name}>
+                    //       {category.name}
+                    //       <i className='delete icon'></i>
+                    //     </a>
+                    //   )
+                    // })}
                     fluid
                     multiple
                     selection
@@ -59,10 +82,9 @@ class AdminAlbums extends React.Component {
                   <Button color="yellow">Edit</Button>
                 </Table.Cell>
                 <Table.Cell>
-                  <Button color="red">Delete</Button>
-                </Table.Cell>
-                <Table.Cell>
-                  <Button color="blue">View</Button>
+                  <Link to={`/albums/${album.id}`}>
+                    <Button color="blue">View</Button>
+                  </Link>
                 </Table.Cell>
               </Table.Row>
             )

@@ -1,14 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {Table, Button, Dropdown, Menu, Icon} from 'semantic-ui-react'
 import {fetchOrders} from '../store/order'
-
-const options = [
-  {text: 'Created', value: 'created'},
-  {text: 'Processing', value: 'processing'},
-  {text: 'Cancelled', value: 'cancelled'},
-  {text: 'Completed', value: 'completed'}
-]
 
 class AdminOrders extends React.Component {
   componentDidMount() {
@@ -17,6 +11,13 @@ class AdminOrders extends React.Component {
 
   render() {
     const {orders} = this.props
+
+    const options = [
+      {text: 'Created', value: 'created'},
+      {text: 'Processing', value: 'processing'},
+      {text: 'Cancelled', value: 'cancelled'},
+      {text: 'Completed', value: 'completed'}
+    ]
 
     return (
       <Table celled textAlign="center" verticalAlign="middle">
@@ -39,14 +40,16 @@ class AdminOrders extends React.Component {
                 <Table.Cell>${order.total}</Table.Cell>
                 <Table.Cell>
                   <Dropdown
-                    placeholder="status"
+                    placeholder={order.orderStatus}
                     fluid
                     selection
                     options={options}
                   />
                 </Table.Cell>
                 <Table.Cell>
-                  <Button color="blue">View</Button>
+                  <Link to={`/orders/${order.id}`}>
+                    <Button color="blue">View</Button>
+                  </Link>
                 </Table.Cell>
               </Table.Row>
             )
