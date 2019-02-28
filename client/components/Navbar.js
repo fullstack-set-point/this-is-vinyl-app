@@ -50,7 +50,6 @@ class NavBar extends React.Component {
               <NavLink to={`/users/${user.id}/cart`}>
                 <Icon name="shopping cart" />
               </NavLink>
-              {console.log(user)}
               {userCartItems && userCartItems.length ? (
                 <Label>{userCartItems.length}</Label>
               ) : null}
