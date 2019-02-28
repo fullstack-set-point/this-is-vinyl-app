@@ -6,16 +6,14 @@ a {
   text-decoration: none;
 }
 
-label {
-  display: block;
-}
-
 nav a {
   display: inline-block;
   margin: 1em;
 }
 
-form div {
-  margin: 1em;
-  display: inline-block;
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
 }

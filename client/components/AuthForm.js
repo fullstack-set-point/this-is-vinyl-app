@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
-import {Button, Checkbox, Form} from 'semantic-ui-react'
+import {Button, Divider, Form, Grid, Segment, Icon} from 'semantic-ui-react'
 
 /**
  * COMPONENT
@@ -11,23 +11,45 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div>
-      <Form onSubmit={handleSubmit} name={name}>
-        <Form.Field>
-          <label htmlFor="email">Email</label>
-          <input name="email" type="text" placeholder="Email" />
-        </Form.Field>
-        <Form.Field>
-          <label htmlFor="password">Password</label>
-          <input name="password" type="password" placeholder="Password" />
-        </Form.Field>
-        <Button type="submit">{displayName}</Button>
-        {error && error.response && <div> {error.response.data} </div>}
-      </Form>
-      <a href="/auth/google">
-        <Button>{displayName} with Google</Button>
-      </a>
-    </div>
+    <Segment compact={true} className="center">
+      <Grid columns={2} relaxed="very">
+        <Grid.Column>
+          <Form onSubmit={handleSubmit} name={name}>
+            <Form.Input
+              icon="user"
+              iconPosition="left"
+              label="Email"
+              name="email"
+              type="email"
+              placeholder="email"
+            />
+            <Form.Input
+              icon="lock"
+              iconPosition="left"
+              label="Password"
+              name="password"
+              type="password"
+              placeholder="password"
+            />
+
+            <Button primary type="submit">
+              {displayName}
+            </Button>
+            {error && error.response && <div> {error.response.data} </div>}
+          </Form>
+        </Grid.Column>
+
+        <Grid.Column verticalAlign="middle">
+          <a href="/auth/google">
+            <Button size="big" color="red">
+              <Icon name="google" />Google {displayName}
+            </Button>
+          </a>
+        </Grid.Column>
+      </Grid>
+
+      <Divider vertical>Or</Divider>
+    </Segment>
   )
 }
 
@@ -49,7 +71,7 @@ const mapLogin = state => {
 const mapSignup = state => {
   return {
     name: 'signup',
-    displayName: 'Sign Up',
+    displayName: 'Signup',
     error: state.user.error
   }
 }
