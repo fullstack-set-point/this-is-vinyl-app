@@ -4,7 +4,7 @@ import {Segment, Button, Header} from 'semantic-ui-react'
 const CategoryFilter = props => {
   return (
     <div>
-      <Header as="h4">Shop by Genre</Header>
+      <Header as="h5">Shop by Genre</Header>
       <Button.Group vertical>
         <Button value={1} onClick={props.handleCategoryClick}>
           Rock
