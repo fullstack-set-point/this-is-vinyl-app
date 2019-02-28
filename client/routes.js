@@ -9,6 +9,7 @@ import SingleAlbum from './components/SingleAlbum'
 import AllUsers from './components/AllUsers'
 import SingleUser from './components/SingleUser'
 import ViewCart from './components/ViewCart'
+import SingleUserOrders from './components/SingleUserOrders'
 
 /**
  * COMPONENT
@@ -28,6 +29,11 @@ class Routes extends Component {
         <Route exact path="/albums/:albumId" component={SingleAlbum} />
         <Route exact path="/users/:userId" component={SingleUser} />
         <Route exact path="/users/:userId/cart" component={ViewCart} />
+        <Route
+          exact
+          path="/users/:userId/orders"
+          component={SingleUserOrders}
+        />
         <Route
           exact
           path="/albums/categories/:categoryId"

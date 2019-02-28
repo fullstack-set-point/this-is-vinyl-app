@@ -4,6 +4,7 @@ import {logout} from '../store'
 import PropTypes from 'prop-types'
 import {Input, Menu, Icon, Label} from 'semantic-ui-react'
 import {NavLink} from 'react-router-dom'
+import {fetchCartItemsThunk} from '../store/user'
 
 class NavBar extends React.Component {
   render() {
