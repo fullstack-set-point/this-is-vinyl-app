@@ -4,10 +4,16 @@ import {logout} from '../store'
 import PropTypes from 'prop-types'
 import {Input, Menu, Icon, Label} from 'semantic-ui-react'
 import {NavLink} from 'react-router-dom'
-import {fetchCartItemsThunk} from '../store/user'
+import {fetchCartItemsThunk, createUnauthUserThunk} from '../store/user'
 import {fetchAlbums} from '../store/album'
 
 class NavBar extends React.Component {
+  componentDidMount() {
+    if (!this.props.user.isLoggedIn) {
+      this.props.createUnauthUser()
+    }
+  }
+
   render() {
     const {isLoggedIn, user, handleLogout, userCartItems} = this.props
 
@@ -86,7 +92,8 @@ const mapDispatchToProps = dispatch => {
     handleLogout() {
       dispatch(logout())
     },
-    fetchAlbums: () => dispatch(fetchAlbums())
+    fetchAlbums: () => dispatch(fetchAlbums()),
+    createUnauthUser: () => dispatch(createUnauthUserThunk())
   }
 }
 

@@ -13,6 +13,7 @@ const DELETE_CART_ITEM = 'DELETE_CART_ITEM'
 const CREATE_CART_ITEM = 'CREATE_CART_ITEM'
 const FETCH_ORDERS = 'FETCH_ORDERS'
 const FETCH_ORDER = 'FETCH_ORDER'
+const CREATE_UNAUTH_USER = 'CREATE_UNAUTH_USER'
 
 // INITIAL STATE
 const initialState = {
@@ -77,6 +78,11 @@ const fetchOrders = orders => ({
 const fetchOrder = order => ({
   type: FETCH_ORDER,
   order
+})
+
+const createUnauthUser = user => ({
+  type: CREATE_UNAUTH_USER,
+  user
 })
 
 // THUNK CREATORS
@@ -169,6 +175,17 @@ export const fetchOrderThunk = (userId, orderId) => {
   }
 }
 
+export const createUnauthUserThunk = () => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.post('/api/users')
+      dispatch(createUnauthUser(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
 // AUTHENTICATION THUNKS CREATORS
 export const me = () => async dispatch => {
   try {
@@ -245,6 +262,8 @@ export default (state = initialState, action) => {
       return {...state, orders: action.orders}
     case FETCH_ORDER:
       return {...state, order: action.order}
+    case CREATE_UNAUTH_USER:
+      return {...state, users: [...state.users, action.user], user: action.user}
     default:
       return state
   }
