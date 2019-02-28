@@ -10,6 +10,7 @@ const LOGIN_USER = 'LOGIN_USER'
 const LOGOUT_USER = 'LOGOUT_USER'
 const FETCH_CART_ITEMS = 'FETCH_CART_ITEMS'
 const DELETE_CART_ITEM = 'DELETE_CART_ITEM'
+const CREATE_CART_ITEM = 'CREATE_CART_ITEM'
 
 // ACTION CREATORS
 const fetchUsers = users => ({
@@ -50,6 +51,11 @@ const fetchCartItems = cartItems => ({
 const deleteCartItem = cartItemId => ({
   type: DELETE_CART_ITEM,
   cartItemId
+})
+
+const createCartItem = cartItem => ({
+  type: CREATE_CART_ITEM,
+  cartItem
 })
 
 // THUNK CREATORS
@@ -102,7 +108,6 @@ export const fetchCartItemsThunk = userId => {
     try {
       const {data} = await axios.get(`/api/users/${userId}/cart`)
       dispatch(fetchCartItems(data))
-      console.log('INSIDE FETCHCARTITEMSTHUNK: ', data)
     } catch (err) {
       console.error(err)
     }
@@ -119,6 +124,13 @@ export const deleteCartItemThunk = (userId, cartItemId) => {
     } catch (err) {
       console.error(err)
     }
+  }
+}
+
+export const addToCart = (userId, body) => {
+  return async dispatch => {
+    const {data} = await axios.post(`/api/users/${userId}/cart`, body)
+    dispatch(createCartItem(data))
   }
 }
 
@@ -199,6 +211,8 @@ export default (state = initialState, action) => {
           return cartItem.id !== action.cartItemId
         })
       }
+    case CREATE_CART_ITEM:
+      return {...state, cartItems: [...state.cartItems, action.cartItem]}
     default:
       return state
   }

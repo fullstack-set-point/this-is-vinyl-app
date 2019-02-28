@@ -4,6 +4,7 @@ const Cart = require('../db/models/Cart')
 const Order = require('../db/models/Order')
 const Review = require('../db/models/Review')
 const CartItem = require('../db/models/CartItem')
+const Product = require('../db/models/Product')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -58,17 +59,34 @@ router.delete('/:userId', async (req, res, next) => {
   }
 })
 
-router.get('/:userId/cart', async (req, res, next) => {
+router.post('/:userId/cart', async (req, res, next) => {
   try {
-    const user = await User.findById({
+    const user = await User.findById(req.params.userId)
+    const cartId = user.cartId
+    console.log('USER!!!', user)
+    const productId = req.body.productId
+    const quantity = req.body.quantity
+    const cartItem = {productId, quantity}
+    const newCartItem = await CartItem.create(cartItem, {
       where: {
-        id: req.params.userId
+        cartId
       }
     })
+    await newCartItem.setCart(cartId)
+    res.json(newCartItem[0])
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:userId/cart', async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.userId)
     const cartItems = await CartItem.findAll({
       where: {
         cartId: user.cartId
-      }
+      },
+      include: [{model: Product}]
     })
     res.json(cartItems)
   } catch (err) {
