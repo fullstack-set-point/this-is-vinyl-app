@@ -1,5 +1,5 @@
 import React from 'react'
-import {Tab} from 'semantic-ui-react'
+import {Tab, Button} from 'semantic-ui-react'
 import AdminAlbums from './AdminAlbums'
 import AdminOrders from './AdminOrders'
 import AdminUsers from './AdminUsers'
@@ -35,6 +35,7 @@ class Admin extends React.Component {
 
     return (
       <div>
+        {/* <Button color='green' floated='right'>Create</Button> */}
         <Tab panes={panes} />
       </div>
     )
