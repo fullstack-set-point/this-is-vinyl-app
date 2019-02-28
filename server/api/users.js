@@ -58,7 +58,6 @@ router.post('/:userId/cart', async (req, res, next) => {
   try {
     const user = await User.findById(req.params.userId)
     const cartId = user.cartId
-    console.log('USER!!!', user)
     const productId = req.body.productId
     const quantity = req.body.quantity
     const cartItem = {productId, quantity}
@@ -77,12 +76,36 @@ router.post('/:userId/cart', async (req, res, next) => {
 router.get('/:userId/cart', async (req, res, next) => {
   try {
     const user = await User.findById(req.params.userId)
-    const cartItems = await CartItem.findAll({
-      where: {
-        cartId: user.cartId
-      },
-      include: [{model: Product}]
-    })
+    let cartItems = []
+    if (user.cartId) {
+      cartItems = await CartItem.findAll({
+        where: {
+          cartId: user.cartId
+        },
+        include: [{model: Product}]
+      })
+    } else {
+      const newCart = await Cart.create()
+      const [numAffRows, affRows] = await User.update(
+        {
+          cartId: newCart.id
+        },
+        {
+          where: {
+            id: req.params.userId
+          },
+          returning: true,
+          plain: true
+        }
+      )
+    }
+    // const [numberOfAffectedRows, affectedRows] = await Pug.update({
+    //   adoptedStatus: true
+    // }, {
+    //   where: {age: 7},
+    //   returning: true, // needed for affectedRows to be populated
+    //   plain: true // makes sure that the returned instances are just plain objects
+    // })
     res.json(cartItems)
   } catch (err) {
     next(err)
