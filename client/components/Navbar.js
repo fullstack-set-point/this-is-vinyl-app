@@ -21,10 +21,16 @@ class NavBar extends React.Component {
           <Input icon="search" placeholder="Search..." />
         </Menu.Item>
 
+        {user.isAdmin ? (
+          <Menu.Item>
+            <NavLink to="/users">Admin Dashboard</NavLink>
+          </Menu.Item>
+        ) : null}
+
         {!isLoggedIn ? (
           <Menu.Menu position="right">
             <Menu.Item>
-              <NavLink to="/cart">
+              <NavLink to={`/users/${user.id}/cart`}>
                 <Icon name="shopping cart" />
               </NavLink>
             </Menu.Item>
@@ -38,7 +44,7 @@ class NavBar extends React.Component {
         ) : (
           <Menu.Menu position="right">
             <Menu.Item>
-              <NavLink to="/cart">
+              <NavLink to={`/users/${user.id}/cart`}>
                 <Icon name="shopping cart" />
               </NavLink>
             </Menu.Item>
