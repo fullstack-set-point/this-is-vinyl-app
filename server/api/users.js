@@ -139,7 +139,7 @@ router.get('/:userId/orders/:orderId', async (req, res, next) => {
   try {
     const orderId = req.params.orderId
     const order = await Order.findById(orderId, {
-      include: [{model: OrderItem}]
+      include: [{model: OrderItem}, {model: User}]
     })
     res.json(order)
   } catch (err) {

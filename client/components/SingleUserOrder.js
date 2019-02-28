@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchOrderThunk} from '../store/user'
+import {Container, Header, Divider} from 'semantic-ui-react'
 
 class SingleUserOrder extends Component {
   componentDidMount() {
@@ -9,7 +10,12 @@ class SingleUserOrder extends Component {
     this.props.fetchOrderThunk(userId, orderId)
   }
   render() {
-    return <div>Single Order Details</div>
+    return (
+      <Container>
+        <Header as="h2">Order Details</Header>
+        <Divider />
+      </Container>
+    )
   }
 }
 
