@@ -1,7 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Grid, Image, Header, Button} from 'semantic-ui-react'
+import {Grid, Image, Header, Button, Dropdown} from 'semantic-ui-react'
 import {fetchUsersThunk} from '../store/user'
+
+const options = [
+  {text: 'Admin', value: 'admin'},
+  {text: 'Customer', value: 'customer'}
+]
 
 class AdminUsers extends React.Component {
   componentDidMount() {
@@ -39,13 +44,17 @@ class AdminUsers extends React.Component {
               </Grid.Column>
               <Grid.Column>{`${user.firstName} ${user.lastName}`}</Grid.Column>
               <Grid.Column>{user.email}</Grid.Column>
-              <Grid.Column>{user.isAdmin ? 'Admin' : 'Customer'}</Grid.Column>
               <Grid.Column>
-                <div className="ui three buttons">
+                <Dropdown
+                  placeholder="Status"
+                  fluid
+                  selection
+                  options={options}
+                />
+              </Grid.Column>
+              <Grid.Column>
+                <div className="ui two buttons">
                   <Button basic color="green">
-                    Make Admin
-                  </Button>
-                  <Button basic color="yellow">
                     Reset Password
                   </Button>
                   <Button basic color="red">

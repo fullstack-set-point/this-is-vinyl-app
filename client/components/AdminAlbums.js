@@ -1,7 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Grid, Image, Header, Button} from 'semantic-ui-react'
+import {Grid, Image, Header, Button, Dropdown} from 'semantic-ui-react'
 import {fetchAlbums} from '../store/album'
+
+const options = [
+  {key: 'rock', text: 'Rock', value: 'rock'},
+  {key: 'rap', text: 'Rap', value: 'rap'},
+  {key: 'country', text: 'Country', value: 'country'}
+]
 
 class AdminAlbums extends React.Component {
   componentDidMount() {
@@ -12,7 +18,7 @@ class AdminAlbums extends React.Component {
     const {albums} = this.props
 
     return (
-      <Grid columns={7} celled textAlign="center" verticalAlign="middle">
+      <Grid columns={8} celled textAlign="center" verticalAlign="middle">
         <Grid.Row>
           <Grid.Column>
             <Header>Cover</Header>
@@ -33,6 +39,9 @@ class AdminAlbums extends React.Component {
             <Header>Inventory</Header>
           </Grid.Column>
           <Grid.Column>
+            <Header>Categories</Header>
+          </Grid.Column>
+          <Grid.Column>
             <Header>Management</Header>
           </Grid.Column>
         </Grid.Row>
@@ -48,6 +57,15 @@ class AdminAlbums extends React.Component {
               <Grid.Column>{album.year}</Grid.Column>
               <Grid.Column>${album.price}</Grid.Column>
               <Grid.Column>{album.quantity}</Grid.Column>
+              <Grid.Column>
+                <Dropdown
+                  placeholder="Categories"
+                  fluid
+                  multiple
+                  selection
+                  options={options}
+                />
+              </Grid.Column>
               <Grid.Column>
                 <Button>Edit</Button>
               </Grid.Column>

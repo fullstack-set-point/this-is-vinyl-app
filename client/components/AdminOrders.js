@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Grid, Image, Header, Button} from 'semantic-ui-react'
+import {Grid, Image, Header, Button, Dropdown} from 'semantic-ui-react'
 import {fetchOrders} from '../store/user'
 
 class AdminOrders extends React.Component {
