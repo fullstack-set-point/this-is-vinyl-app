@@ -11,8 +11,7 @@ class ViewCart extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchCartItems(this.props.match.params.userId)
-    console.log('PROPS!!!!', this.props)
+    this.props.fetchCartItems(this.props.match.params.userId) // this is returning user.cartItems as an array with productId and qty
   }
 
   // handleQuantityChange() {
@@ -36,26 +35,18 @@ class ViewCart extends Component {
         </Table.Header>
 
         <Table.Body>
-          <Table.Row>
-            <Table.Cell>dummy artist</Table.Cell>
-            <Table.Cell>dummy album title</Table.Cell>
-            <Table.Cell>dummy qty</Table.Cell>
-            <Table.Cell>dummy price</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>dummy artist</Table.Cell>
-            <Table.Cell>dummy album title</Table.Cell>
-            <Table.Cell>dummy qty</Table.Cell>
-            <Table.Cell>dummy price</Table.Cell>
-          </Table.Row>
-          {/* {this.props.cartItems.map(cartItem => (
-            <Table.Row>
-              <Table.Cell>artist</Table.Cell>
-              <Table.Cell>album title</Table.Cell>
-              <Table.Cell>qty</Table.Cell>
-              <Table.Cell>price</Table.Cell>
-            </Table.Row>
-          ))} */}
+          {this.props.user.cartItems && this.props.user.cartItems.length ? (
+            this.props.user.cartItems.map(cartItem => (
+              <Table.Row key={cartItem.id}>
+                <Table.Cell>{cartItem.product.album}</Table.Cell>
+                <Table.Cell>{cartItem.product.artist}</Table.Cell>
+                <Table.Cell>{cartItem.product.price}</Table.Cell>
+                <Table.Cell>{cartItem.quantity}</Table.Cell>
+              </Table.Row>
+            ))
+          ) : (
+            <Table.Row>Loading</Table.Row>
+          )}
         </Table.Body>
       </Table>
     )
@@ -63,7 +54,7 @@ class ViewCart extends Component {
 }
 
 const mapStateToProps = state => {
-  return {cartItems: state.cartItems}
+  return state
 }
 
 const mapDispatchToProps = dispatch => {

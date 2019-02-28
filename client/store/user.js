@@ -108,7 +108,6 @@ export const fetchCartItemsThunk = userId => {
     try {
       const {data} = await axios.get(`/api/users/${userId}/cart`)
       dispatch(fetchCartItems(data))
-      console.log('INSIDE FETCHCARTITEMSTHUNK: ', data)
     } catch (err) {
       console.error(err)
     }
