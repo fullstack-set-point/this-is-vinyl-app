@@ -40,7 +40,6 @@ class SingleAlbum extends Component {
   }
 
   handleChange(event, {value}) {
-    console.log('VALUE', value)
     this.setState({
       cartItem: {
         ...this.state.cartItem,
@@ -89,23 +88,20 @@ class SingleAlbum extends Component {
             </Header>
             <Header as="h3">${this.props.album.selectedAlbum.price}</Header>
             <Form size="small">
-              <Form.Field>
-                <Select
-                  options={options}
-                  placeholder="Quantity"
-                  onChange={this.handleChange}
-                />
-              </Form.Field>
-              <Form.Field widths="equal">
-                <Button
-                  color="green"
-                  content="Add to Cart"
-                  icon="shopping cart"
-                  type="submit"
-                  fluid
-                  onClick={this.handleClick}
-                />
-              </Form.Field>
+              <Select
+                options={options}
+                placeholder="Quantity"
+                onChange={this.handleChange}
+                compact
+              />
+              <Button
+                color="green"
+                content="Add to Cart"
+                icon="shopping cart"
+                type="submit"
+                fluid
+                onClick={this.handleClick}
+              />
             </Form>
             <Divider />
             <Header as="h4">Details</Header>

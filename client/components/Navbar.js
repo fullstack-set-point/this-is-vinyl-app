@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Input, Menu, Icon, Label} from 'semantic-ui-react'
 import {NavLink} from 'react-router-dom'
 import {fetchCartItemsThunk} from '../store/user'
+import {fetchAlbums} from '../store/album'
 
 class NavBar extends React.Component {
   render() {
@@ -16,7 +17,9 @@ class NavBar extends React.Component {
           <NavLink to="/">This is Vinyl App</NavLink>
         </Menu.Item>
         <Menu.Item>
-          <NavLink to="/albums">Albums</NavLink>
+          <NavLink to="/albums" onClick={this.props.fetchAlbums}>
+            Albums
+          </NavLink>
         </Menu.Item>
         <Menu.Item>
           <Input icon="search" placeholder="Search..." />
@@ -82,7 +85,8 @@ const mapDispatchToProps = dispatch => {
   return {
     handleLogout() {
       dispatch(logout())
-    }
+    },
+    fetchAlbums: () => dispatch(fetchAlbums())
   }
 }
 

@@ -1,6 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Item} from 'semantic-ui-react'
+import {
+  Container,
+  Divider,
+  Header,
+  Grid,
+  Image,
+  Segment,
+  Button
+} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 
 class SingleUser extends React.Component {
@@ -8,24 +16,38 @@ class SingleUser extends React.Component {
     const {user} = this.props
 
     return (
-      <Item>
-        <Item.Image size="tiny" src={user.imgUrl} />
-
-        <Item.Content>
-          <Item.Header>{`${user.firstName} ${user.lastName}`}</Item.Header>
-          <Item.Meta>Profile Info</Item.Meta>
-          <Item.Description>{user.email}</Item.Description>
-
-          <Item.Meta>Shipping Info</Item.Meta>
-          <Item.Description>{user.address}</Item.Description>
-          <Item.Description>{user.city}</Item.Description>
-          <Item.Description>{user.state}</Item.Description>
-          <Item.Description>{user.Zip}</Item.Description>
-          <Item.Extra>
-            <Link to={`/users/${user.id}/orders`}>View Past Orders</Link>
-          </Item.Extra>
-        </Item.Content>
-      </Item>
+      <Container>
+        <Header as="h2">Your Account</Header>
+        <Divider />
+        <Grid columns="three" divided>
+          <Grid.Row>
+            <Grid.Column>
+              <Header as="h3">Profile</Header>
+              <Segment>
+                <Image src={user.imgUrl} />
+              </Segment>
+              <Header as="h4">{`${user.firstName} ${user.lastName}`}</Header>
+              <p>{user.email}</p>
+            </Grid.Column>
+            <Grid.Column>
+              <Header as="h3">Shipping Information</Header>
+              <Segment>
+                <p>{`${user.firstName} ${user.lastName}`}</p>
+                <p>{user.address}</p>
+                <p>
+                  {user.city}, {user.state} {user.zip}
+                </p>
+              </Segment>
+            </Grid.Column>
+            <Grid.Column>
+              <Header as="h3">Orders</Header>
+              <Button>
+                <Link to={`/users/${user.id}/orders`}>View Past Orders</Link>
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
     )
   }
 }
