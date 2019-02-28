@@ -10,6 +10,7 @@ import AllUsers from './components/AllUsers'
 import SingleUser from './components/SingleUser'
 import ViewCart from './components/ViewCart'
 import SingleUserOrders from './components/SingleUserOrders'
+import SingleUserOrder from './components/SingleUserOrder'
 
 /**
  * COMPONENT
@@ -33,6 +34,11 @@ class Routes extends Component {
           exact
           path="/users/:userId/orders"
           component={SingleUserOrders}
+        />
+        <Route
+          exact
+          path="/users/:userId/orders/:orderId"
+          component={SingleUserOrder}
         />
         <Route
           exact

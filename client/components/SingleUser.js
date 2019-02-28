@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchUserThunk} from '../store/user'
 import {Item} from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
 
 class SingleUser extends React.Component {
   render() {
@@ -21,7 +21,9 @@ class SingleUser extends React.Component {
           <Item.Description>{user.city}</Item.Description>
           <Item.Description>{user.state}</Item.Description>
           <Item.Description>{user.Zip}</Item.Description>
-          <Item.Extra>Additional Details</Item.Extra>
+          <Item.Extra>
+            <Link to={`/users/${user.id}/orders`}>View Past Orders</Link>
+          </Item.Extra>
         </Item.Content>
       </Item>
     )
