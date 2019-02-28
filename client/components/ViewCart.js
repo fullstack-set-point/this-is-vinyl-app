@@ -12,6 +12,7 @@ class ViewCart extends Component {
 
   componentDidMount() {
     this.props.fetchCartItems(this.props.match.params.userId) // this is returning user.cartItems as an array with productId and qty
+    console.log('CARTITEMS.PRODUCT: >>>>', this.props.user.cartItems.product)
   }
 
   // handleQuantityChange() {
@@ -23,6 +24,8 @@ class ViewCart extends Component {
   }
 
   render() {
+    const {history} = this.props
+
     return (
       <Table striped>
         <Table.Header>
@@ -37,11 +40,14 @@ class ViewCart extends Component {
         <Table.Body>
           {this.props.user.cartItems && this.props.user.cartItems[0].product ? (
             this.props.user.cartItems.map(cartItem => (
-              <Table.Row key={cartItem.id}>
+              <Table.Row
+                key={cartItem.id}
+                onClick={() => history.push(`/albums/${cartItem.productId}`)}
+              >
                 <Table.Cell>{cartItem.product.artist}</Table.Cell>
                 <Table.Cell>{cartItem.product.album}</Table.Cell>
-                <Table.Cell>{cartItem.product.price}</Table.Cell>
                 <Table.Cell>{cartItem.quantity}</Table.Cell>
+                <Table.Cell>${cartItem.product.price.toFixed(2)}</Table.Cell>
               </Table.Row>
             ))
           ) : (
