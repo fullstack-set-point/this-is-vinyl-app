@@ -1,7 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Grid, Image, Header, Button, Dropdown} from 'semantic-ui-react'
-import {fetchOrders} from '../store/user'
+import {Grid, Header, Button, Dropdown} from 'semantic-ui-react'
+import {fetchOrders} from '../store/order'
+
+const options = [
+  {text: 'Created', value: 'created'},
+  {text: 'Processing', value: 'processing'},
+  {text: 'Cancelled', value: 'cancelled'},
+  {text: 'Completed', value: 'completed'}
+]
 
 class AdminOrders extends React.Component {
   componentDidMount() {
@@ -18,7 +25,7 @@ class AdminOrders extends React.Component {
             <Header>Date</Header>
           </Grid.Column>
           <Grid.Column>
-            <Header>Items</Header>
+            <Header>Customer</Header>
           </Grid.Column>
           <Grid.Column>
             <Header>Total</Header>
@@ -27,31 +34,30 @@ class AdminOrders extends React.Component {
             <Header>Status</Header>
           </Grid.Column>
           <Grid.Column>
-            <Header>Management</Header>
+            <Header>Details</Header>
           </Grid.Column>
         </Grid.Row>
 
-        {/* {orders.map(order => {
+        {orders.map(order => {
           return (
             <Grid.Row key={order.id}>
+              <Grid.Column>{order.orderDate}</Grid.Column>
+              <Grid.Column>Customer</Grid.Column>
+              <Grid.Column>${order.total}</Grid.Column>
               <Grid.Column>
-                {order.orderDate}
+                <Dropdown
+                  placeholder="status"
+                  fluid
+                  selection
+                  options={options}
+                />
               </Grid.Column>
               <Grid.Column>
-                {order.items}
-              </Grid.Column>
-              <Grid.Column>
-                {order.total}
-              </Grid.Column>
-              <Grid.Column>
-                {order.orderStatus}
-              </Grid.Column>
-              <Grid.Column>
-                <Button>Edit</Button>
+                <Button>View</Button>
               </Grid.Column>
             </Grid.Row>
           )
-        })} */}
+        })}
       </Grid>
     )
   }
