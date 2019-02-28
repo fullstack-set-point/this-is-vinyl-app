@@ -1,20 +1,25 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {Table, Image, Button, Dropdown, Menu, Icon} from 'semantic-ui-react'
-import {fetchUsersThunk} from '../store/user'
-
-const options = [
-  {text: 'Admin', value: 'admin'},
-  {text: 'Customer', value: 'customer'}
-]
+import {fetchUsersThunk, deleteUserThunk} from '../store/user'
 
 class AdminUsers extends React.Component {
   componentDidMount() {
     this.props.fetchUsers()
   }
 
+  handleDelete = userId => {
+    this.props.deleteUser(userId)
+  }
+
   render() {
     const {users} = this.props
+
+    const options = [
+      {text: 'Admin', value: 'admin'},
+      {text: 'Customer', value: 'customer'}
+    ]
 
     return (
       <Table celled textAlign="center" verticalAlign="middle">
@@ -41,7 +46,7 @@ class AdminUsers extends React.Component {
                 <Table.Cell>{user.email}</Table.Cell>
                 <Table.Cell>
                   <Dropdown
-                    placeholder="Status"
+                    placeholder={user.isAdmin ? 'Admin' : 'Customer'}
                     fluid
                     selection
                     options={options}
@@ -51,10 +56,17 @@ class AdminUsers extends React.Component {
                   <Button color="yellow">Reset</Button>
                 </Table.Cell>
                 <Table.Cell>
-                  <Button color="red">Delete</Button>
+                  <Button
+                    color="red"
+                    onClick={() => this.handleDelete(user.id)}
+                  >
+                    Delete
+                  </Button>
                 </Table.Cell>
                 <Table.Cell>
-                  <Button color="blue">View</Button>
+                  <Link to={`/users/${user.id}`}>
+                    <Button color="blue">View</Button>
+                  </Link>
                 </Table.Cell>
               </Table.Row>
             )
@@ -89,7 +101,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchUsers: () => dispatch(fetchUsersThunk())
+  fetchUsers: () => dispatch(fetchUsersThunk()),
+  deleteUser: userId => dispatch(deleteUserThunk(userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminUsers)
