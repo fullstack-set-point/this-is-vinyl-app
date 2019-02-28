@@ -11,6 +11,17 @@ const LOGOUT_USER = 'LOGOUT_USER'
 const FETCH_CART_ITEMS = 'FETCH_CART_ITEMS'
 const DELETE_CART_ITEM = 'DELETE_CART_ITEM'
 const CREATE_CART_ITEM = 'CREATE_CART_ITEM'
+const FETCH_ORDERS = 'FETCH_ORDERS'
+const FETCH_ORDER = 'FETCH_ORDER'
+
+// INITIAL STATE
+const initialState = {
+  users: [],
+  user: {},
+  cartItems: [],
+  orders: [],
+  order: {}
+}
 
 // ACTION CREATORS
 const fetchUsers = users => ({
@@ -56,6 +67,16 @@ const deleteCartItem = cartItemId => ({
 const createCartItem = cartItem => ({
   type: CREATE_CART_ITEM,
   cartItem
+})
+
+const fetchOrders = orders => ({
+  type: FETCH_ORDERS,
+  orders
+})
+
+const fetchOrder = order => ({
+  type: FETCH_ORDER,
+  order
 })
 
 // THUNK CREATORS
@@ -134,6 +155,20 @@ export const addToCart = (userId, body) => {
   }
 }
 
+export const fetchOrdersThunk = userId => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/users/${userId}/orders`)
+    dispatch(fetchOrders(data))
+  }
+}
+
+export const fetchOrderThunk = (userId, orderId) => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/users/${userId}/orders/${orderId}`)
+    dispatch(fetchOrder(data))
+  }
+}
+
 // AUTHENTICATION THUNKS CREATORS
 export const me = () => async dispatch => {
   try {
@@ -168,13 +203,6 @@ export const logout = () => async dispatch => {
   } catch (err) {
     console.error(err)
   }
-}
-
-// INITIAL STATE
-const initialState = {
-  users: [],
-  user: {},
-  cartItems: []
 }
 
 // REDUCER
@@ -213,6 +241,10 @@ export default (state = initialState, action) => {
       }
     case CREATE_CART_ITEM:
       return {...state, cartItems: [...state.cartItems, action.cartItem]}
+    case FETCH_ORDERS:
+      return {...state, orders: action.orders}
+    case FETCH_ORDER:
+      return {...state, order: action.order}
     default:
       return state
   }

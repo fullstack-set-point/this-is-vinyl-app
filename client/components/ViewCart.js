@@ -38,8 +38,8 @@ class ViewCart extends Component {
           {this.props.user.cartItems && this.props.user.cartItems.length ? (
             this.props.user.cartItems.map(cartItem => (
               <Table.Row key={cartItem.id}>
-                <Table.Cell>{cartItem.product.album}</Table.Cell>
                 <Table.Cell>{cartItem.product.artist}</Table.Cell>
+                <Table.Cell>{cartItem.product.album}</Table.Cell>
                 <Table.Cell>{cartItem.product.price}</Table.Cell>
                 <Table.Cell>{cartItem.quantity}</Table.Cell>
               </Table.Row>

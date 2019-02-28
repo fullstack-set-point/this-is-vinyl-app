@@ -1,10 +1,13 @@
 const router = require('express').Router()
-const User = require('../db/models/User')
-const Cart = require('../db/models/Cart')
-const Order = require('../db/models/Order')
-const Review = require('../db/models/Review')
-const CartItem = require('../db/models/CartItem')
-const Product = require('../db/models/Product')
+const {
+  User,
+  Cart,
+  Order,
+  OrderItem,
+  Review,
+  CartItem,
+  Product
+} = require('../db/models')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -63,7 +66,6 @@ router.post('/:userId/cart', async (req, res, next) => {
   try {
     const user = await User.findById(req.params.userId)
     const cartId = user.cartId
-    console.log('USER!!!', user)
     const productId = req.body.productId
     const quantity = req.body.quantity
     const cartItem = {productId, quantity}
@@ -82,13 +84,64 @@ router.post('/:userId/cart', async (req, res, next) => {
 router.get('/:userId/cart', async (req, res, next) => {
   try {
     const user = await User.findById(req.params.userId)
-    const cartItems = await CartItem.findAll({
-      where: {
-        cartId: user.cartId
-      },
-      include: [{model: Product}]
-    })
+    let cartItems = []
+    if (user.cartId) {
+      cartItems = await CartItem.findAll({
+        where: {
+          cartId: user.cartId
+        },
+        include: [{model: Product}]
+      })
+    } else {
+      const newCart = await Cart.create()
+      const [numAffRows, affRows] = await User.update(
+        {
+          cartId: newCart.id
+        },
+        {
+          where: {
+            id: req.params.userId
+          },
+          returning: true,
+          plain: true
+        }
+      )
+    }
+    // const [numberOfAffectedRows, affectedRows] = await Pug.update({
+    //   adoptedStatus: true
+    // }, {
+    //   where: {age: 7},
+    //   returning: true, // needed for affectedRows to be populated
+    //   plain: true // makes sure that the returned instances are just plain objects
+    // })
     res.json(cartItems)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:userId/orders', async (req, res, next) => {
+  try {
+    const userId = req.params.userId
+    const orders = await Order.findAll({
+      where: {
+        userId
+      },
+      include: [{model: OrderItem}]
+    })
+    res.json(orders)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:userId/orders/:orderId', async (req, res, next) => {
+  try {
+    const orderId = req.params.orderId
+    const order = await Order.findById(orderId, {
+      include: [{model: OrderItem}]
+    })
+    res.json(order)
   } catch (err) {
     next(err)
   }

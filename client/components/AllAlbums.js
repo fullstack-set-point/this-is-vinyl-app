@@ -2,14 +2,7 @@ import React, {Component, Fragment} from 'react'
 import _ from 'lodash'
 import {connect} from 'react-redux'
 import {fetchAlbums, fetchAlbumsByCategory} from '../store/album'
-import {
-  Button,
-  Card,
-  Divider,
-  Image,
-  Placeholder,
-  Grid
-} from 'semantic-ui-react'
+import {Card, Image, Grid} from 'semantic-ui-react'
 import CategoryFilter from './CategoryFilter'
 
 class AllAlbums extends Component {
@@ -30,7 +23,6 @@ class AllAlbums extends Component {
   render() {
     const {history} = this.props
     const {albums} = this.props.album
-    console.log('THIS PROPS', this.props)
     return (
       <Fragment>
         <Grid>
