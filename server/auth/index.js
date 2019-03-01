@@ -44,7 +44,8 @@ router.post('/signup', async (req, res, next) => {
 router.post('/logout', (req, res) => {
   req.logout()
   req.session.destroy()
-  //logging out destroys the session, but the cart is still maintaining contents
+  // req.session.regenerate()
+  // console.log('REQ. SESSION IS THIS A THING OR WHAT I DONT KNOW: >>>>>>>>>>>>', req.session)
   res.redirect('/')
 })
 
