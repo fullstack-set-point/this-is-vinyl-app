@@ -1,6 +1,14 @@
 import React, {Component} from 'react'
-import {Table, Container, Header, Divider, Select} from 'semantic-ui-react'
+import {
+  Table,
+  Container,
+  Header,
+  Divider,
+  Select,
+  Button
+} from 'semantic-ui-react'
 import {connect} from 'react-redux'
+import {NavLink} from 'react-router-dom'
 import {deleteCartItemThunk, fetchCartItemsThunk} from '../store/user'
 
 class ViewCart extends Component {
@@ -19,7 +27,7 @@ class ViewCart extends Component {
   // }
 
   async handleRemove(event) {
-    const userId = this.props.userId
+    const userId = this.props.match.params.userId
     const cartItemId = event.target.value
     await this.props.deleteCartItemThunk(userId, cartItemId)
     this.props.fetchCartItems(this.props.match.params.userId)
@@ -92,6 +100,13 @@ class ViewCart extends Component {
           </Table.Body>
         </Table>
         <Header as="h3">Subtotal: ${cartTotal.toFixed(2)}</Header>
+        <Button>
+          <NavLink
+            to={`/users/${this.props.match.params.userId}/cart/checkout`}
+          >
+            Checkout
+          </NavLink>
+        </Button>
       </Container>
     )
   }

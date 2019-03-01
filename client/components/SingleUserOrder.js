@@ -31,7 +31,6 @@ class SingleUserOrder extends Component {
 
   render() {
     const {user, order} = this.props
-    console.log('ORDER PROPS', order)
     return (
       <Container>
         <Header as="h2">Order Details</Header>

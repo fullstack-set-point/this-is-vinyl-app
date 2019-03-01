@@ -11,6 +11,7 @@ import SingleUser from './components/SingleUser'
 import ViewCart from './components/ViewCart'
 import SingleUserOrders from './components/SingleUserOrders'
 import SingleUserOrder from './components/SingleUserOrder'
+import Checkout from './components/Checkout'
 
 /**
  * COMPONENT
@@ -45,6 +46,7 @@ class Routes extends Component {
           path="/albums/categories/:categoryId"
           component={AllAlbums}
         />
+        <Route exact path="/users/:userId/cart/checkout" component={Checkout} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
         {isAdmin && (
