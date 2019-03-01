@@ -3,6 +3,7 @@ import history from '../history'
 
 // ACTION TYPES
 const FETCH_USERS = 'FETCH_USERS'
+const FETCH_USER = 'FETCH_USER'
 const CREATE_USER = 'CREATE_USER'
 const UPDATE_USER = 'UPDATE_USER'
 const DELETE_USER = 'DELETE_USER'
@@ -13,6 +14,7 @@ const DELETE_CART_ITEM = 'DELETE_CART_ITEM'
 const CREATE_CART_ITEM = 'CREATE_CART_ITEM'
 const FETCH_ORDERS = 'FETCH_ORDERS'
 const FETCH_ORDER = 'FETCH_ORDER'
+const CREATE_UNAUTH_USER = 'CREATE_UNAUTH_USER'
 
 // INITIAL STATE
 const initialState = {
@@ -27,6 +29,11 @@ const initialState = {
 const fetchUsers = users => ({
   type: FETCH_USERS,
   users
+})
+
+const fetchUser = user => ({
+  type: FETCH_USER,
+  user
 })
 
 const createUser = user => ({
@@ -79,12 +86,28 @@ const fetchOrder = order => ({
   order
 })
 
+const createUnauthUser = user => ({
+  type: CREATE_UNAUTH_USER,
+  user
+})
+
 // THUNK CREATORS
 export const fetchUsersThunk = () => {
   return async dispatch => {
     try {
       const {data} = await axios.get('/api/users')
       dispatch(fetchUsers(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export const fetchUserThunk = user => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get(`/api/users/${user.id}`)
+      dispatch(fetchUser(data))
     } catch (err) {
       console.error(err)
     }
@@ -169,6 +192,17 @@ export const fetchOrderThunk = (userId, orderId) => {
   }
 }
 
+export const createUnauthUserThunk = () => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.post('/api/users')
+      dispatch(createUnauthUser(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
 // AUTHENTICATION THUNKS CREATORS
 export const me = () => async dispatch => {
   try {
@@ -210,6 +244,8 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case FETCH_USERS:
       return {...state, users: action.users}
+    case FETCH_USER:
+      return {...state, user: action.user}
     case CREATE_USER:
       return {...state, users: [...state.users, action.user]}
     case UPDATE_USER:
@@ -245,6 +281,8 @@ export default (state = initialState, action) => {
       return {...state, orders: action.orders}
     case FETCH_ORDER:
       return {...state, order: action.order}
+    case CREATE_UNAUTH_USER:
+      return {...state, users: [...state.users, action.user], user: action.user}
     default:
       return state
   }

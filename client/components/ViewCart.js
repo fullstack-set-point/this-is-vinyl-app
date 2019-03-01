@@ -26,6 +26,7 @@ class ViewCart extends Component {
   }
 
   render() {
+    const {history} = this.props
     let cartTotal = 0
     const options = [
       {key: 1, text: '1', value: 1},
@@ -54,6 +55,24 @@ class ViewCart extends Component {
             </Table.Row>
           </Table.Header>
 
+          {/* <Table.Body>
+            {this.props.cartItems && this.props.cartItems[0].product ? (
+              this.props.cartItems.map(cartItem => (
+                <Table.Row
+                  key={cartItem.id}
+                  onClick={() => history.push(`/albums/${cartItem.productId}`)}
+                >
+                  <Table.Cell>{cartItem.product.artist}</Table.Cell>
+                  <Table.Cell>{cartItem.product.album}</Table.Cell>
+                  <Table.Cell>{cartItem.quantity}</Table.Cell>
+                  <Table.Cell>${cartItem.product.price.toFixed(2)}</Table.Cell>
+                </Table.Row>
+              ))
+            ) : (
+              <Table.Row>Loading</Table.Row>
+            )}
+          </Table.Body>
+        </Table> */}
           <Table.Body>
             {this.props.cartItems.product && this.props.cartItems.product.length
               ? this.props.cartItems.map(cartItem => {
@@ -89,7 +108,7 @@ class ViewCart extends Component {
               : null}
           </Table.Body>
         </Table>
-        <Header as="h3">Subtotal: ${cartTotal}</Header>
+        <Header as="h3">Subtotal: ${cartTotal.toFixed(2)}</Header>
       </Container>
     )
   }
