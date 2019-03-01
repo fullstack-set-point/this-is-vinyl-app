@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Table} from 'semantic-ui-react'
+import {Table, Container, Header, Divider} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {deleteCartItemThunk, fetchCartItemsThunk} from '../store/user'
 
@@ -12,7 +12,6 @@ class ViewCart extends Component {
 
   componentDidMount() {
     this.props.fetchCartItems(this.props.match.params.userId) // this is returning user.cartItems as an array with productId and qty
-    console.log('CARTITEMS.PRODUCT: >>>>', this.props.user.cartItems.product)
   }
 
   // handleQuantityChange() {
@@ -25,42 +24,75 @@ class ViewCart extends Component {
 
   render() {
     const {history} = this.props
+    let cartTotal = 0
 
     return (
-      <Table striped>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Artist Name</Table.HeaderCell>
-            <Table.HeaderCell>Album Title Joined</Table.HeaderCell>
-            <Table.HeaderCell>Quantity</Table.HeaderCell>
-            <Table.HeaderCell>Price</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+      <Container>
+        <Header as="h2">Your Cart</Header>
+        <Divider />
+        <Table striped>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Album</Table.HeaderCell>
+              <Table.HeaderCell>Artist</Table.HeaderCell>
+              <Table.HeaderCell>Quantity</Table.HeaderCell>
+              <Table.HeaderCell>Price</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
 
-        <Table.Body>
-          {this.props.user.cartItems && this.props.user.cartItems[0].product ? (
-            this.props.user.cartItems.map(cartItem => (
-              <Table.Row
-                key={cartItem.id}
-                onClick={() => history.push(`/albums/${cartItem.productId}`)}
-              >
-                <Table.Cell>{cartItem.product.artist}</Table.Cell>
-                <Table.Cell>{cartItem.product.album}</Table.Cell>
-                <Table.Cell>{cartItem.quantity}</Table.Cell>
-                <Table.Cell>${cartItem.product.price.toFixed(2)}</Table.Cell>
-              </Table.Row>
-            ))
-          ) : (
-            <Table.Row>Loading</Table.Row>
-          )}
-        </Table.Body>
-      </Table>
+          {/* <Table.Body>
+            {this.props.cartItems && this.props.cartItems[0].product ? (
+              this.props.cartItems.map(cartItem => (
+                <Table.Row
+                  key={cartItem.id}
+                  onClick={() => history.push(`/albums/${cartItem.productId}`)}
+                >
+                  <Table.Cell>{cartItem.product.artist}</Table.Cell>
+                  <Table.Cell>{cartItem.product.album}</Table.Cell>
+                  <Table.Cell>{cartItem.quantity}</Table.Cell>
+                  <Table.Cell>${cartItem.product.price.toFixed(2)}</Table.Cell>
+                </Table.Row>
+              ))
+            ) : (
+              <Table.Row>Loading</Table.Row>
+            )}
+          </Table.Body>
+        </Table> */}
+          <Table.Body>
+            {this.props.cartItems && this.props.cartItems[0].product ? (
+              this.props.cartItems.map(cartItem => {
+                cartTotal += cartItem.quantity * cartItem.product.price
+                return (
+                  <Table.Row
+                    key={cartItem.id}
+                    onClick={() =>
+                      history.push(`/albums/${cartItem.productId}`)
+                    }
+                  >
+                    <Table.Cell>{cartItem.product.album}</Table.Cell>
+                    <Table.Cell>{cartItem.product.artist}</Table.Cell>
+                    <Table.Cell>{cartItem.quantity}</Table.Cell>
+                    <Table.Cell>
+                      ${cartItem.product.price.toFixed(2)} x {cartItem.quantity}
+                    </Table.Cell>
+                  </Table.Row>
+                )
+              })
+            ) : (
+              <Table.Row>Loading</Table.Row>
+            )}
+          </Table.Body>
+        </Table>
+        <Header as="h3">Subtotal: ${cartTotal.toFixed(2)}</Header>
+      </Container>
     )
   }
 }
 
 const mapStateToProps = state => {
-  return state
+  return {
+    cartItems: state.user.cartItems
+  }
 }
 
 const mapDispatchToProps = dispatch => {

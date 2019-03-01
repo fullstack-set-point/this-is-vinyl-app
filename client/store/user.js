@@ -3,6 +3,7 @@ import history from '../history'
 
 // ACTION TYPES
 const FETCH_USERS = 'FETCH_USERS'
+const FETCH_USER = 'FETCH_USER'
 const CREATE_USER = 'CREATE_USER'
 const UPDATE_USER = 'UPDATE_USER'
 const DELETE_USER = 'DELETE_USER'
@@ -28,6 +29,11 @@ const initialState = {
 const fetchUsers = users => ({
   type: FETCH_USERS,
   users
+})
+
+const fetchUser = user => ({
+  type: FETCH_USER,
+  user
 })
 
 const createUser = user => ({
@@ -91,6 +97,17 @@ export const fetchUsersThunk = () => {
     try {
       const {data} = await axios.get('/api/users')
       dispatch(fetchUsers(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export const fetchUserThunk = user => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get(`/api/users/${user.id}`)
+      dispatch(fetchUser(data))
     } catch (err) {
       console.error(err)
     }
@@ -227,6 +244,8 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case FETCH_USERS:
       return {...state, users: action.users}
+    case FETCH_USER:
+      return {...state, user: action.user}
     case CREATE_USER:
       return {...state, users: [...state.users, action.user]}
     case UPDATE_USER:

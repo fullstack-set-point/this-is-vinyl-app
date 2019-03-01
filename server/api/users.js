@@ -41,7 +41,8 @@ router.post('/', async (req, res, next) => {
         password: password
       })
       const newCart = await Cart.create()
-      const [numAffRows, affRows] = await User.update(
+      console.log('NEWCART ID : >>>> ', newCart.id)
+      const updateUser = await User.update(
         {
           cartId: newCart.id
         },
@@ -58,7 +59,7 @@ router.post('/', async (req, res, next) => {
       const {email, password} = req.body
       const user = await User.create(email, password)
       const newCart = await Cart.create()
-      const [numAffRows, affRows] = await User.update(
+      const updateUser = await User.update(
         {
           cartId: newCart.id
         },
@@ -104,14 +105,13 @@ router.post('/:userId/cart', async (req, res, next) => {
     const cartId = user.cartId
     const productId = req.body.productId
     const quantity = req.body.quantity
-    const cartItem = {productId, quantity}
-    const newCartItem = await CartItem.create(cartItem, {
-      where: {
-        cartId
-      }
+    const newCartItem = await CartItem.create({
+      productId,
+      quantity,
+      cartId
     })
-    await newCartItem.setCart(cartId)
-    res.json(newCartItem[0])
+    // await newCartItem.setCart(cartId)
+    res.json(newCartItem)
   } catch (err) {
     next(err)
   }

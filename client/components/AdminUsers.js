@@ -1,71 +1,97 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Grid, Image, Header, Button, Dropdown} from 'semantic-ui-react'
-import {fetchUsersThunk} from '../store/user'
-
-const options = [
-  {text: 'Admin', value: 'admin'},
-  {text: 'Customer', value: 'customer'}
-]
+import {Link} from 'react-router-dom'
+import {Table, Image, Button, Dropdown, Menu, Icon} from 'semantic-ui-react'
+import {fetchUsersThunk, deleteUserThunk} from '../store/user'
 
 class AdminUsers extends React.Component {
   componentDidMount() {
     this.props.fetchUsers()
   }
 
+  handleDelete = userId => {
+    this.props.deleteUser(userId)
+  }
+
   render() {
     const {users} = this.props
 
-    return (
-      <Grid columns={5} celled textAlign="center" verticalAlign="middle">
-        <Grid.Row>
-          <Grid.Column>
-            <Header>Profile</Header>
-          </Grid.Column>
-          <Grid.Column>
-            <Header>Name</Header>
-          </Grid.Column>
-          <Grid.Column>
-            <Header>Email</Header>
-          </Grid.Column>
-          <Grid.Column>
-            <Header>Status</Header>
-          </Grid.Column>
-          <Grid.Column>
-            <Header>Management</Header>
-          </Grid.Column>
-        </Grid.Row>
+    const options = [
+      {text: 'Admin', value: 'admin'},
+      {text: 'Customer', value: 'customer'}
+    ]
 
-        {users.map(user => {
-          return (
-            <Grid.Row key={user.id}>
-              <Grid.Column>
-                <Image centered size="mini" src={user.imgUrl} />
-              </Grid.Column>
-              <Grid.Column>{`${user.firstName} ${user.lastName}`}</Grid.Column>
-              <Grid.Column>{user.email}</Grid.Column>
-              <Grid.Column>
-                <Dropdown
-                  placeholder="Status"
-                  fluid
-                  selection
-                  options={options}
-                />
-              </Grid.Column>
-              <Grid.Column>
-                <div className="ui two buttons">
-                  <Button basic color="green">
-                    Reset Password
+    return (
+      <Table celled textAlign="center" verticalAlign="middle">
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Profile</Table.HeaderCell>
+            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>Email</Table.HeaderCell>
+            <Table.HeaderCell>Status</Table.HeaderCell>
+            <Table.HeaderCell>Password</Table.HeaderCell>
+            <Table.HeaderCell>Delete</Table.HeaderCell>
+            <Table.HeaderCell>View</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>
+          {users.map(user => {
+            return (
+              <Table.Row key={user.id}>
+                <Table.Cell>
+                  <Image centered size="mini" src={user.imgUrl} />
+                </Table.Cell>
+                <Table.Cell>{`${user.firstName} ${user.lastName}`}</Table.Cell>
+                <Table.Cell>{user.email}</Table.Cell>
+                <Table.Cell>
+                  <Dropdown
+                    placeholder={user.isAdmin ? 'Admin' : 'Customer'}
+                    fluid
+                    selection
+                    options={options}
+                  />
+                </Table.Cell>
+                <Table.Cell>
+                  <Button color="yellow">Reset</Button>
+                </Table.Cell>
+                <Table.Cell>
+                  <Button
+                    color="red"
+                    onClick={() => this.handleDelete(user.id)}
+                  >
+                    Delete
                   </Button>
-                  <Button basic color="red">
-                    Delete User
-                  </Button>
-                </div>
-              </Grid.Column>
-            </Grid.Row>
-          )
-        })}
-      </Grid>
+                </Table.Cell>
+                <Table.Cell>
+                  <Link to={`/users/${user.id}`}>
+                    <Button color="blue">View</Button>
+                  </Link>
+                </Table.Cell>
+              </Table.Row>
+            )
+          })}
+        </Table.Body>
+
+        <Table.Footer>
+          <Table.Row>
+            <Table.HeaderCell colSpan="7">
+              <Menu floated="right" pagination>
+                <Menu.Item as="a" icon>
+                  <Icon name="chevron left" />
+                </Menu.Item>
+                <Menu.Item as="a">1</Menu.Item>
+                <Menu.Item as="a">2</Menu.Item>
+                <Menu.Item as="a">3</Menu.Item>
+                <Menu.Item as="a">4</Menu.Item>
+                <Menu.Item as="a" icon>
+                  <Icon name="chevron right" />
+                </Menu.Item>
+              </Menu>
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Footer>
+      </Table>
     )
   }
 }
@@ -75,7 +101,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchUsers: () => dispatch(fetchUsersThunk())
+  fetchUsers: () => dispatch(fetchUsersThunk()),
+  deleteUser: userId => dispatch(deleteUserThunk(userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminUsers)
