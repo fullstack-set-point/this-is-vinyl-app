@@ -14,7 +14,6 @@ class AllAlbums extends Component {
 
   componentDidMount() {
     this.props.fetchAlbums()
-    console.log('THIS PROPS: >>>>>>', this.props)
     const user = this.props.user.user
     this.props.fetchUser(user)
   }
@@ -64,7 +63,11 @@ class AllAlbums extends Component {
 }
 
 const mapStateToProps = state => {
-  return {album: state.album, user: state.user}
+  return {
+    album: state.album,
+    user: state.user,
+    cart: state.user.cartItems
+  }
 }
 
 const mapDispatchToProps = dispatch => {
