@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Table, Container, Header, Divider} from 'semantic-ui-react'
+import {Table, Container, Header, Divider, Select} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {deleteCartItemThunk, fetchCartItemsThunk} from '../store/user'
 
@@ -18,14 +18,28 @@ class ViewCart extends Component {
   //   this.props.changeQty()
   // }
 
-  handleRemove() {
-    this.props.removeCartItem()
+  async handleRemove(event) {
+    const userId = this.props.userId
+    const cartItemId = event.target.value
+    await this.props.deleteCartItemThunk(userId, cartItemId)
+    this.props.fetchCartItems(this.props.match.params.userId)
   }
 
   render() {
     const {history} = this.props
     let cartTotal = 0
-
+    const options = [
+      {key: 1, text: '1', value: 1},
+      {key: 2, text: '2', value: 2},
+      {key: 3, text: '3', value: 3},
+      {key: 4, text: '4', value: 4},
+      {key: 5, text: '5', value: 5},
+      {key: 6, text: '6', value: 6},
+      {key: 7, text: '7', value: 7},
+      {key: 8, text: '8', value: 8},
+      {key: 9, text: '9', value: 9},
+      {key: 10, text: '10', value: 10}
+    ]
     return (
       <Container>
         <Header as="h2">Your Cart</Header>
@@ -37,43 +51,37 @@ class ViewCart extends Component {
               <Table.HeaderCell>Artist</Table.HeaderCell>
               <Table.HeaderCell>Quantity</Table.HeaderCell>
               <Table.HeaderCell>Price</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
-
-          {/* <Table.Body>
-            {this.props.cartItems && this.props.cartItems[0].product ? (
-              this.props.cartItems.map(cartItem => (
-                <Table.Row
-                  key={cartItem.id}
-                  onClick={() => history.push(`/albums/${cartItem.productId}`)}
-                >
-                  <Table.Cell>{cartItem.product.artist}</Table.Cell>
-                  <Table.Cell>{cartItem.product.album}</Table.Cell>
-                  <Table.Cell>{cartItem.quantity}</Table.Cell>
-                  <Table.Cell>${cartItem.product.price.toFixed(2)}</Table.Cell>
-                </Table.Row>
-              ))
-            ) : (
-              <Table.Row>Loading</Table.Row>
-            )}
-          </Table.Body>
-        </Table> */}
           <Table.Body>
             {this.props.cartItems && this.props.cartItems[0].product ? (
               this.props.cartItems.map(cartItem => {
                 cartTotal += cartItem.quantity * cartItem.product.price
                 return (
-                  <Table.Row
-                    key={cartItem.id}
-                    onClick={() =>
-                      history.push(`/albums/${cartItem.productId}`)
-                    }
-                  >
-                    <Table.Cell>{cartItem.product.album}</Table.Cell>
+                  <Table.Row key={cartItem.id}>
+                    <Table.Cell
+                      onClick={() =>
+                        history.push(`/albums/${cartItem.productId}`)
+                      }
+                    >
+                      {cartItem.product.album}
+                    </Table.Cell>
+
                     <Table.Cell>{cartItem.product.artist}</Table.Cell>
                     <Table.Cell>{cartItem.quantity}</Table.Cell>
                     <Table.Cell>
                       ${cartItem.product.price.toFixed(2)} x {cartItem.quantity}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <button
+                        type="button"
+                        className="btn-danger"
+                        onClick={this.handleRemove}
+                        value={cartItem.id}
+                      >
+                        Remove
+                      </button>
                     </Table.Cell>
                   </Table.Row>
                 )
@@ -99,7 +107,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchCartItems: userId => dispatch(fetchCartItemsThunk(userId)),
     // changeQty: () => dispatch(changeQty())
-    deleteCartItem: (userId, cartItemId) =>
+    deleteCartItemThunk: (userId, cartItemId) =>
       dispatch(deleteCartItemThunk(userId, cartItemId))
   }
 }
