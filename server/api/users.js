@@ -120,6 +120,20 @@ router.get('/:userId/cart', async (req, res, next) => {
   }
 })
 
+router.delete('/:userId/cart/:cartItemId', async (req, res, next) => {
+  try {
+    const cartItemId = req.params.cartItemId
+    await CartItem.destroy({
+      where: {
+        id: cartItemId
+      }
+    })
+    res.sendStatus(204)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:userId/orders', async (req, res, next) => {
   try {
     const userId = req.params.userId
