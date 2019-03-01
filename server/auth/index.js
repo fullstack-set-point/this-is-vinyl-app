@@ -12,6 +12,15 @@ router.post('/login', async (req, res, next) => {
       console.log('Incorrect password for user:', req.body.email)
       res.status(401).send('Wrong username and/or password')
     } else {
+      const loggedInUser = await User.update(
+        {
+          isAuth: true
+        },
+        {
+          where: {id: user.id},
+          returning: true
+        }
+      )
       req.login(user, err => (err ? next(err) : res.json(user)))
     }
   } catch (err) {
@@ -35,6 +44,7 @@ router.post('/signup', async (req, res, next) => {
 router.post('/logout', (req, res) => {
   req.logout()
   req.session.destroy()
+  //logging out destroys the session, but the cart is still maintaining contents
   res.redirect('/')
 })
 
