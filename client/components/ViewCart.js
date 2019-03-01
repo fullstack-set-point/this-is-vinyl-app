@@ -96,7 +96,7 @@ class ViewCart extends Component {
                 )
               })
             ) : (
-              <Table.Row> WOW, SUCH EMPTY :( </Table.Row>
+              <Table.Row />
             )}
           </Table.Body>
         </Table>
