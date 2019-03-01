@@ -41,7 +41,7 @@ export const fetchOrders = () => async dispatch => {
 
 export const createOrderThunk = body => async dispatch => {
   try {
-    const {data} = await axios.get('api/charge', body)
+    const {data} = await axios.post('/api/orders', body)
     dispatch(createOrder(data))
   } catch (err) {
     console.error(err)
