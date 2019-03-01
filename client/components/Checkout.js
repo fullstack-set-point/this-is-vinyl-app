@@ -4,6 +4,7 @@ import {Elements, StripeProvider} from 'react-stripe-elements'
 import CheckoutForm from './CheckoutForm'
 import {Container, Divider, Header} from 'semantic-ui-react'
 import {fetchCartItemsThunk} from '../store/user'
+import {createOrderThunk} from '../store/order'
 
 const Checkout = props => {
   return (
@@ -16,6 +17,8 @@ const Checkout = props => {
             <CheckoutForm
               cartItems={props.cartItems}
               fetchCartItemsThunk={props.fetchCartItemsThunk}
+              createOrderThunk={props.createOrderThunk}
+              userId={props.userId}
             />
           </Elements>
         </div>
@@ -26,13 +29,15 @@ const Checkout = props => {
 
 const mapStateToProps = state => {
   return {
-    cartItems: state.user.cartItems
+    cartItems: state.user.cartItems,
+    userId: state.user.user.id
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchCartItemsThunk: () => dispatch(fetchCartItemsThunk())
+    fetchCartItemsThunk: userId => dispatch(fetchCartItemsThunk(userId)),
+    createOrderThunk: body => dispatch(createOrderThunk(body))
   }
 }
 

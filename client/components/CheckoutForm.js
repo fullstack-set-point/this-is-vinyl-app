@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {CardElement, injectStripe} from 'react-stripe-elements'
-import {Button, Form, Divider, Header} from 'semantic-ui-react'
+import {Form, Divider, Header} from 'semantic-ui-react'
 
 class CheckoutForm extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class CheckoutForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   async componentDidMount() {
-    await this.props.fetchCartItemsThunk()
+    await this.props.fetchCartItemsThunk(this.props.userId)
   }
 
   handleChange(event, {name, value}) {
@@ -29,26 +29,29 @@ class CheckoutForm extends Component {
 
   async handleSubmit(event) {
     const {name, email, address, city, state, zip} = this.state
+    const cartIems = this.props.cartItems
     let {token} = await this.props.stripe.createToken({
-      name,
-      email,
-      address,
-      city,
-      state,
-      zip
+      name: name,
+      email: email,
+      address: address,
+      city: city,
+      state: state,
+      zip: zip,
+      cartItems: cartIems
     })
 
     let response = await fetch('/charge', {
       method: 'POST',
       headers: {'Content-Type': 'text/plain'},
-      body: token
+      body: token.id
     })
+
+    // let response = await this.props.createOrderThunk(token)
 
     if (response.ok) this.setState({complete: true})
   }
 
   render() {
-    console.log(this.props)
     let subtotal = 0
     const {name, email, address, city, state, zip} = this.state
     if (this.state.complete) return <h3>Purchase Complete</h3>
@@ -98,10 +101,14 @@ class CheckoutForm extends Component {
           {this.props.cartItems && this.props.cartItems.length
             ? this.props.cartItems.map(item => {
                 subtotal += item.product.price * item.quantity
-                return <p key={item.id}>{item.product.album}</p>
+                return (
+                  <p key={item.id}>
+                    {item.product.album} x {item.quantity}
+                  </p>
+                )
               })
             : null}
-          <Header as="h3">Subtotal: ${subtotal.toFixed(2)}</Header>
+          <Header as="h4">Subtotal: ${subtotal.toFixed(2)}</Header>
           <Form.Button content="Submit" />
           <Divider />
         </Form>
