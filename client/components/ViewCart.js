@@ -63,7 +63,8 @@ class ViewCart extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.props.cartItems && this.props.cartItems[0].product ? (
+            {this.props.cartItems.length !== 0 &&
+            this.props.cartItems[0].product ? (
               this.props.cartItems.map(cartItem => {
                 cartTotal += cartItem.quantity * cartItem.product.price
                 return (
@@ -95,7 +96,7 @@ class ViewCart extends Component {
                 )
               })
             ) : (
-              <Table.Row>Loading</Table.Row>
+              <Table.Row> WOW, SUCH EMPTY :( </Table.Row>
             )}
           </Table.Body>
         </Table>

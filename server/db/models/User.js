@@ -42,6 +42,10 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
+  isAuth: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   address: {
     type: Sequelize.STRING
   },

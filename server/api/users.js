@@ -41,7 +41,6 @@ router.post('/', async (req, res, next) => {
         password: password
       })
       const newCart = await Cart.create()
-      console.log('NEWCART ID : >>>> ', newCart.id)
       const updateUser = await User.update(
         {
           cartId: newCart.id

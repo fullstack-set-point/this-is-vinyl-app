@@ -9,8 +9,11 @@ import {fetchAlbums} from '../store/album'
 
 class NavBar extends React.Component {
   componentDidMount() {
-    if (!this.props.user.isLoggedIn) {
+    if (!this.props.isLoggedIn) {
       this.props.createUnauthUser()
+    }
+    if (this.props.user.id) {
+      this.props.fetchCartItems(this.props.user.id)
     }
   }
 
@@ -40,7 +43,10 @@ class NavBar extends React.Component {
         {!isLoggedIn ? (
           <Menu.Menu position="right">
             <Menu.Item>
-              <NavLink to={`/users/${user.id}/cart`}>
+              <NavLink
+                to={`/users/${user.id}/cart`}
+                onClick={() => this.props.fetchCartItems(user.id)}
+              >
                 <Icon name="shopping cart" />
               </NavLink>
               {userCartItems && userCartItems.length ? (
@@ -81,7 +87,7 @@ class NavBar extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    isLoggedIn: !!state.user.user.id,
+    isLoggedIn: !!state.user.user.isAuth,
     user: state.user.user,
     userCartItems: state.user.cartItems
   }
@@ -93,6 +99,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(logout())
     },
     fetchAlbums: () => dispatch(fetchAlbums()),
+    fetchCartItems: userId => dispatch(fetchCartItemsThunk(userId)),
     createUnauthUser: () => dispatch(createUnauthUserThunk())
   }
 }
