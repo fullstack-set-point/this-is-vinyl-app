@@ -51,9 +51,11 @@ class SingleAlbum extends Component {
   handleClick(event) {
     try {
       event.preventDefault()
-      const productId = this.props.match.params.albumId
+      let productId = this.props.match.params.albumId
+      productId = Number(productId)
       const quantity = this.state.cartItem.quantity
       const body = {productId, quantity}
+      console.log('BODY: ', body)
       this.props.addToCart(this.props.user.user.id, body)
     } catch (err) {
       console.error(err)

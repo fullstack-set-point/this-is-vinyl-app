@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react'
 import _ from 'lodash'
 import {connect} from 'react-redux'
 import {fetchAlbums, fetchAlbumsByCategory} from '../store/album'
+import {fetchUserThunk} from '../store/user'
 import {Card, Image, Grid, Container} from 'semantic-ui-react'
 import CategoryFilter from './CategoryFilter'
 
@@ -13,6 +14,9 @@ class AllAlbums extends Component {
 
   componentDidMount() {
     this.props.fetchAlbums()
+    console.log('THIS PROPS: >>>>>>', this.props)
+    const user = this.props.user.user
+    this.props.fetchUser(user)
   }
 
   async handleCategoryClick(event) {
@@ -60,12 +64,13 @@ class AllAlbums extends Component {
 }
 
 const mapStateToProps = state => {
-  return {album: state.album}
+  return {album: state.album, user: state.user}
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchAlbums: () => dispatch(fetchAlbums()),
+    fetchUser: user => dispatch(fetchUserThunk(user)),
     fetchAlbumsByCategory: id => dispatch(fetchAlbumsByCategory(id))
   }
 }

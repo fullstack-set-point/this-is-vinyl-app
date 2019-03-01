@@ -33,9 +33,46 @@ router.get('/:userId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const {email, password} = req.body
-    const user = await User.create(email, password)
-    res.json(user)
+    if (!req.body.email) {
+      const email = req.sessionID
+      const password = req.sessionID
+      const user = await User.create({
+        email: email,
+        password: password
+      })
+      const newCart = await Cart.create()
+      console.log('NEWCART ID : >>>> ', newCart.id)
+      const updateUser = await User.update(
+        {
+          cartId: newCart.id
+        },
+        {
+          where: {
+            id: user.id
+          },
+          returning: true,
+          plain: true
+        }
+      )
+      res.json(user)
+    } else {
+      const {email, password} = req.body
+      const user = await User.create(email, password)
+      const newCart = await Cart.create()
+      const updateUser = await User.update(
+        {
+          cartId: newCart.id
+        },
+        {
+          where: {
+            id: user.id
+          },
+          returning: true,
+          plain: true
+        }
+      )
+      res.json(user)
+    }
   } catch (err) {
     next(err)
   }
@@ -68,14 +105,13 @@ router.post('/:userId/cart', async (req, res, next) => {
     const cartId = user.cartId
     const productId = req.body.productId
     const quantity = req.body.quantity
-    const cartItem = {productId, quantity}
-    const newCartItem = await CartItem.create(cartItem, {
-      where: {
-        cartId
-      }
+    const newCartItem = await CartItem.create({
+      productId,
+      quantity,
+      cartId
     })
-    await newCartItem.setCart(cartId)
-    res.json(newCartItem[0])
+    // await newCartItem.setCart(cartId)
+    res.json(newCartItem)
   } catch (err) {
     next(err)
   }
@@ -85,35 +121,12 @@ router.get('/:userId/cart', async (req, res, next) => {
   try {
     const user = await User.findById(req.params.userId)
     let cartItems = []
-    if (user.cartId) {
-      cartItems = await CartItem.findAll({
-        where: {
-          cartId: user.cartId
-        },
-        include: [{model: Product}]
-      })
-    } else {
-      const newCart = await Cart.create()
-      const [numAffRows, affRows] = await User.update(
-        {
-          cartId: newCart.id
-        },
-        {
-          where: {
-            id: req.params.userId
-          },
-          returning: true,
-          plain: true
-        }
-      )
-    }
-    // const [numberOfAffectedRows, affectedRows] = await Pug.update({
-    //   adoptedStatus: true
-    // }, {
-    //   where: {age: 7},
-    //   returning: true, // needed for affectedRows to be populated
-    //   plain: true // makes sure that the returned instances are just plain objects
-    // })
+    cartItems = await CartItem.findAll({
+      where: {
+        cartId: user.cartId
+      },
+      include: [{model: Product}]
+    })
     res.json(cartItems)
   } catch (err) {
     next(err)
