@@ -49,7 +49,13 @@ class CheckoutForm extends Component {
   render() {
     let subtotal = 0
     const {name, email, address, city, state, zip} = this.state
-    if (this.state.complete) return <h3>Purchase Complete</h3>
+    if (this.state.complete)
+      return (
+        <div>
+          <h4>Purchase Complete</h4>
+          <p>An order confirmation email will be sent to {this.state.email}.</p>
+        </div>
+      )
     return (
       <div className="checkout">
         <Form onSubmit={this.handleSubmit}>
