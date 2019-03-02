@@ -29,15 +29,10 @@ class CheckoutForm extends Component {
 
   async handleSubmit(event) {
     const {name, email, address, city, state, zip} = this.state
-    const cartIems = this.props.cartItems
+    const cartItems = this.props.cartItems
+    const body = {name, email, address, city, state, zip, cartItems}
     let {token} = await this.props.stripe.createToken({
-      name: name,
-      email: email,
-      address: address,
-      city: city,
-      state: state,
-      zip: zip,
-      cartItems: cartIems
+      name
     })
 
     let response = await fetch('/charge', {
@@ -46,9 +41,9 @@ class CheckoutForm extends Component {
       body: token.id
     })
 
-    // let response = await this.props.createOrderThunk(token)
-
     if (response.ok) this.setState({complete: true})
+
+    this.props.createOrderThunk(body)
   }
 
   render() {
