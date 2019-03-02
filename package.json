@@ -47,6 +47,7 @@
     "js-search": "^1.4.2",
     "lodash": "^4.17.11",
     "morgan": "^1.9.1",
+    "nodemailer": "^5.1.1",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
     "pg": "^6.1.2",
@@ -64,7 +65,8 @@
     "sequelize": "^4.38.0",
     "socket.io": "^2.1.1",
     "stripe": "^6.25.1",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "xoauth2": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
