@@ -94,8 +94,10 @@ class SingleUserOrder extends Component {
               ? order.order_items.map(item => {
                   return (
                     <Table.Row key={item.id}>
-                      <Table.Cell singleLine>ITEM NAME</Table.Cell>
-                      <Table.Cell singleLine>${item.price}</Table.Cell>
+                      <Table.Cell singleLine>{item.productName}</Table.Cell>
+                      <Table.Cell singleLine>
+                        ${item.price.toFixed(2)}
+                      </Table.Cell>
                       <Table.Cell singleLine>{item.quantity}</Table.Cell>
                     </Table.Row>
                   )
@@ -115,14 +117,16 @@ class SingleUserOrder extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            <Table.Row>
-              <Table.Cell singleLine>${order.total}</Table.Cell>
-              <Table.Cell singleLine>$0</Table.Cell>
-              <Table.Cell singleLine>$0</Table.Cell>
-              <Table.Cell>
-                <Header as="h5">${order.total}</Header>
-              </Table.Cell>
-            </Table.Row>
+            {order.total ? (
+              <Table.Row>
+                <Table.Cell singleLine>${order.total.toFixed(2)}</Table.Cell>
+                <Table.Cell singleLine>$0.00</Table.Cell>
+                <Table.Cell singleLine>$0.00</Table.Cell>
+                <Table.Cell>
+                  <Header as="h5">${order.total.toFixed(2)}</Header>
+                </Table.Cell>
+              </Table.Row>
+            ) : null}
           </Table.Body>
         </Table>
       </Container>
