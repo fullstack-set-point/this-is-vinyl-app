@@ -7,7 +7,8 @@ class CheckoutForm extends Component {
     super(props)
     this.state = {
       complete: false,
-      name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       address: '',
       city: '',
@@ -28,9 +29,20 @@ class CheckoutForm extends Component {
   }
 
   async handleSubmit(event) {
-    const {name, email, address, city, state, zip} = this.state
+    const {firstName, lastName, email, address, city, state, zip} = this.state
     const cartItems = this.props.cartItems
-    const body = {name, email, address, city, state, zip, cartItems}
+    const userId = this.props.userId
+    const body = {
+      firstName,
+      lastName,
+      email,
+      address,
+      city,
+      state,
+      zip,
+      cartItems,
+      userId
+    }
     let {token} = await this.props.stripe.createToken({
       name
     })
@@ -48,7 +60,7 @@ class CheckoutForm extends Component {
 
   render() {
     let subtotal = 0
-    const {name, email, address, city, state, zip} = this.state
+    const {firstName, lastName, email, address, city, state, zip} = this.state
     if (this.state.complete)
       return (
         <div>
@@ -60,9 +72,15 @@ class CheckoutForm extends Component {
       <div className="checkout">
         <Form onSubmit={this.handleSubmit}>
           <Form.Input
-            placeholder="Full Name"
-            name="name"
-            value={name}
+            placeholder="First Name"
+            name="firstName"
+            value={firstName}
+            onChange={this.handleChange}
+          />
+          <Form.Input
+            placeholder="Last Name"
+            name="lastName"
+            value={lastName}
             onChange={this.handleChange}
           />
           <Form.Input
