@@ -6,16 +6,15 @@ const password = process.env.GOOGLE_PASSWORD
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'toricpope@gmail.com',
+    user: 'thisisvinylapp@gmail.com',
     pass: password
   }
 })
 
 const sendConfirmationEmail = (email, orderId, ...args) => {
   const info = args
-  console.log('INFO', info)
   const mailOptions = {
-    from: '"This Is Vinyl App" <toricpope@gmail.com>',
+    from: '"This Is Vinyl App" <thisisvinylapp@gmail.com>',
     to: email,
     subject: `This is Vinyl App: Order #${orderId}`,
     html: `
