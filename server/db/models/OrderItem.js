@@ -9,6 +9,9 @@ const OrderItem = db.define('order_item', {
   quantity: {
     type: Sequelize.INTEGER,
     allowNull: false
+  },
+  productName: {
+    type: Sequelize.STRING
   }
 })
 
