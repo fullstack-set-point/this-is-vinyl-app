@@ -63,7 +63,7 @@ const createApp = () => {
       resave: false,
       saveUninitialized: false,
       cookie: {
-        name: 'session_id_cookie',
+        cookieName: 'session_id_cookie',
         value: '',
         maxAge: 259200000
       }
@@ -75,24 +75,28 @@ const createApp = () => {
   // cookie setup
 
   // need cookieParser middleware before we can do anything with cookies
-  // app.use(cookieParser());
+  app.use(cookieParser())
 
   // set a cookie
-  // app.use(function (req, res, next) {
-  //   // check if client sent cookie
-  //   const cookie = req.cookies.name;
-  //   if (cookie === undefined) {
-  //     // if no cookie: set a new cookie
-  //     res.cookie('session_id_cookie', req.sessionID, { maxAge: 259200000, httpOnly: true }).send();
-  //     console.log('cookie created successfully');
-  //   }
-  //   else {
-  //     // yes, cookie was already present
-  //     session.id = cookie.value;
-  //     console.log('cookie exists', cookie);
-  //   }
-  //   next(); // <-- important!
-  // });
+  app.use(function(req, res, next) {
+    // check if client sent cookie
+    const cookie = req.cookies.session_id_cookie
+    if (cookie === undefined) {
+      // if no cookie: set a new cookie
+      res
+        .cookie('session_id_cookie', req.sessionID, {
+          maxAge: 259200000,
+          httpOnly: true
+        })
+        .send()
+      console.log('cookie created successfully')
+    } else {
+      // yes, cookie was already present
+      req.sessionID = cookie
+      console.log('cookie exists', cookie)
+    }
+    next() // <-- important!
+  })
 
   // auth and api routes
   app.use('/auth', require('./auth'))
