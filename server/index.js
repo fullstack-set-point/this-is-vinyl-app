@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const compression = require('compression')
 const session = require('express-session')
 const passport = require('passport')
+const cookieParser = require('cookie-parser')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
 const sessionStore = new SequelizeStore({db})
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
 const genuuid = require('uuid/v4')
+
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -53,6 +55,7 @@ const createApp = () => {
   app.use(compression())
 
   // session middleware with passport
+
   app.use(
     session({
       secret: process.env.SESSION_SECRET || 'my best friend is Cody',
@@ -60,12 +63,40 @@ const createApp = () => {
       resave: false,
       saveUninitialized: false,
       cookie: {
+        cookieName: 'session_id_cookie',
+        value: '',
         maxAge: 259200000
       }
     })
   )
   app.use(passport.initialize())
   app.use(passport.session())
+
+  // cookie setup
+
+  // need cookieParser middleware before we can do anything with cookies
+  app.use(cookieParser())
+
+  // set a cookie
+  app.use(function(req, res, next) {
+    // check if client sent cookie
+    const cookie = req.cookies.session_id_cookie
+    if (cookie === undefined) {
+      // if no cookie: set a new cookie
+      res
+        .cookie('session_id_cookie', req.sessionID, {
+          maxAge: 259200000,
+          httpOnly: true
+        })
+        .send()
+      console.log('cookie created successfully')
+    } else {
+      // yes, cookie was already present
+      req.sessionID = cookie
+      console.log('cookie exists', cookie)
+    }
+    next() // <-- important!
+  })
 
   // auth and api routes
   app.use('/auth', require('./auth'))

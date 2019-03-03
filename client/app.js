@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {withCookies} from 'react-cookie'
 import {Navbar} from './components'
 import Routes from './routes'
 

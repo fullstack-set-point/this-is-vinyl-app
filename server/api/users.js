@@ -33,7 +33,16 @@ router.get('/:userId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    if (!req.body.email) {
+    console.log('REQBODY: >>>>>>>>>>>>>>>>>>>', req.body)
+    console.log('REQ SESSIONID: >>>>>>>>>>>>>>>>>>', req.sessionID)
+    const userExists = await User.find({
+      where: {
+        email: req.sessionID
+      }
+    })
+    if (userExists) {
+      res.json(userExists)
+    } else if (!req.body.email) {
       const email = req.sessionID
       const password = req.sessionID
       const user = await User.create({
