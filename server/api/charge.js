@@ -1,5 +1,6 @@
 const router = require('express').Router()
-const stripe = require('stripe')('sk_test_Lu7bb9GMM75KgXnrqHK0oWZD')
+const STRIPE_SECRET = process.env.STRIPE_SECRET_KEY
+const stripe = require('stripe')(STRIPE_SECRET)
 
 router.post('/', async (req, res) => {
   try {
