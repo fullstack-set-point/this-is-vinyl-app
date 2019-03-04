@@ -52,10 +52,10 @@ class AdminAlbums extends React.Component {
             return (
               <Table.Row key={album.id}>
                 <Table.Cell>
-                  <Image centered size="mini" src={album.photo} />
+                  <Image centered size="mini" src={album.image} />
                 </Table.Cell>
-                <Table.Cell>{album.album}</Table.Cell>
-                <Table.Cell>{album.artist}</Table.Cell>
+                <Table.Cell>{album.title}</Table.Cell>
+                <Table.Cell>{album.description}</Table.Cell>
                 <Table.Cell>{album.year}</Table.Cell>
                 <Table.Cell>${album.price}</Table.Cell>
                 <Table.Cell>{album.quantity}</Table.Cell>

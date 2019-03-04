@@ -1,11 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 import {logout} from '../store'
 import PropTypes from 'prop-types'
-import {Input, Menu, Icon, Label} from 'semantic-ui-react'
+import {Menu, Icon, Label} from 'semantic-ui-react'
 import {NavLink} from 'react-router-dom'
 import {fetchCartItemsThunk, createUnauthUserThunk} from '../store/user'
-import {fetchAlbums} from '../store/album'
+import SearchBar from './SearchBar'
 
 class NavBar extends React.Component {
   componentDidMount() {
@@ -23,15 +24,10 @@ class NavBar extends React.Component {
     return (
       <Menu>
         <Menu.Item>
-          <NavLink to="/">This is Vinyl App</NavLink>
+          <NavLink to="/albums">This is Vinyl App</NavLink>
         </Menu.Item>
         <Menu.Item>
-          <NavLink to="/albums" onClick={this.props.fetchAlbums}>
-            Albums
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item>
-          <Input icon="search" placeholder="Search..." />
+          <SearchBar />
         </Menu.Item>
 
         {user.isAdmin ? (
@@ -98,13 +94,12 @@ const mapDispatchToProps = dispatch => {
     handleLogout() {
       dispatch(logout())
     },
-    fetchAlbums: () => dispatch(fetchAlbums()),
     fetchCartItems: userId => dispatch(fetchCartItemsThunk(userId))
     // createUnauthUser: () => dispatch(createUnauthUserThunk())
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBar))
 
 NavBar.propTypes = {
   handleLogout: PropTypes.func.isRequired,

@@ -2,11 +2,11 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Product = db.define('product', {
-  album: {
+  title: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  artist: {
+  description: {
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -22,7 +22,7 @@ const Product = db.define('product', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
-  photo: {
+  image: {
     type: Sequelize.STRING,
     defaultValue: 'noimgavail'
   }

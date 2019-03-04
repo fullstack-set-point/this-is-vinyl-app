@@ -79,13 +79,13 @@ class SingleAlbum extends Component {
         <Grid padding="very">
           <Grid.Column width={1} />
           <Grid.Column width={6}>
-            <Image src={this.props.album.selectedAlbum.photo} rounded fluid />
+            <Image src={this.props.album.selectedAlbum.image} rounded fluid />
           </Grid.Column>
           <Grid.Column width={2} />
           <Grid.Column width={6}>
             <Header as="h2">
-              {this.props.album.selectedAlbum.album} -{' '}
-              {this.props.album.selectedAlbum.artist}
+              {this.props.album.selectedAlbum.title} -{' '}
+              {this.props.album.selectedAlbum.description}
             </Header>
             <Header as="h3">${this.props.album.selectedAlbum.price}</Header>
             <Form size="small">

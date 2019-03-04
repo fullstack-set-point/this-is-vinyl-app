@@ -48,121 +48,121 @@ const categories = [
 
 const products = [
   {
-    album: 'Thriller',
-    artist: 'Michael Jackson',
+    title: 'Thriller',
+    description: 'Michael Jackson',
     year: 1982,
     price: 8,
     quantity: 100,
-    photo:
+    image:
       'https://cdn.pastemagazine.com/www/blogs/lists/2012/01/30/3_80sAlbums_Thriller.jpeg'
   },
   {
-    album: 'Hotel California',
-    artist: 'Eagles',
+    title: 'Hotel California',
+    description: 'Eagles',
     year: 1976,
     price: 9,
     quantity: 100,
-    photo:
+    image:
       'https://cdn.pastemagazine.com/www/articles/2018/08/21/eagles-hotel-ca.jpg'
   },
   {
-    album: 'Come on Over',
-    artist: 'Shania Twain',
+    title: 'Come on Over',
+    description: 'Shania Twain',
     year: 1997,
     price: 10,
     quantity: 100,
-    photo:
+    image:
       'https://cdn.pastemagazine.com/www/articles/2018/08/21/shania-come-on-over.jpg'
   },
   {
-    album: 'Led Zeppelin IV',
-    artist: 'Led Zeppelin',
+    title: 'Led Zeppelin IV',
+    description: 'Led Zeppelin',
     year: 1971,
     price: 12,
     quantity: 100,
-    photo:
+    image:
       'https://cdn.pastemagazine.com/www/blogs/lists/assets_c/2012/05/220px-LedZeppelinFourSymbols-thumb-250x250-67364.jpg'
   },
   {
-    album: 'Rumours',
-    artist: 'Fleetwood Mac',
+    title: 'Rumours',
+    description: 'Fleetwood Mac',
     year: 1977,
     price: 11,
     quantity: 100,
-    photo:
+    image:
       'https://cdn.pastemagazine.com/www/blogs/lists/assets_c/2012/05/220px-FMacRumours-thumb-250x250-67340.png'
   },
   {
-    album: 'Back in Black',
-    artist: 'AC/DC',
+    title: 'Back in Black',
+    description: 'AC/DC',
     year: 1980,
     price: 10,
     quantity: 100,
-    photo:
+    image:
       'https://cdn.pastemagazine.com/www/blogs/lists/2012/01/30/20_80sAlbums_BackinBlack.jpeg'
   },
   {
-    album: 'Dark Side of the Moon',
-    artist: 'Pink Floyd',
+    title: 'Dark Side of the Moon',
+    description: 'Pink Floyd',
     year: 1973,
     price: 12,
     quantity: 100,
-    photo:
+    image:
       'https://cdn.pastemagazine.com/www/articles/2018/08/21/pink-floyd-dark-side.jpg'
   },
   {
-    album: '1',
-    artist: 'The Beatles',
+    title: '1',
+    description: 'The Beatles',
     year: 2000,
     price: 14,
     quantity: 100,
-    photo: 'https://cdn.pastemagazine.com/www/articles/2018/08/21/beatles-1.jpg'
+    image: 'https://cdn.pastemagazine.com/www/articles/2018/08/21/beatles-1.jpg'
   },
   {
-    album: 'Legend',
-    artist: 'Bob Marley & The Wailers',
+    title: 'Legend',
+    description: 'Bob Marley & The Wailers',
     year: 1984,
     price: 11,
     quantity: 100,
-    photo:
+    image:
       'https://cdn.pastemagazine.com/www/articles/2018/08/21/bob-marley-legend.jpg'
   },
   {
-    album: 'American Gangster',
-    artist: 'Jay-Z',
+    title: 'American Gangster',
+    description: 'Jay-Z',
     year: 2007,
     price: 10,
     quantity: 100,
-    photo:
+    image:
       'https://img.discogs.com/cBMfQ_IUhOYzyw70lBHgSXoiPEI=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-1133742-1200816129.jpeg.jpg'
   },
   {
-    album: 'Freedom of Choice',
-    artist: 'Devo',
+    title: 'Freedom of Choice',
+    description: 'Devo',
     year: 1980,
     price: 8,
     quantity: 100,
-    photo:
+    image:
       'https://img.discogs.com/MCwJenZVU40HRlDUqUqQJAOPDRw=/fit-in/591x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-17377-1278376145.jpeg.jpg'
   },
   {
-    album: 'True Blue',
-    artist: 'Madonna',
+    title: 'True Blue',
+    description: 'Madonna',
     year: 1986,
     price: 9,
     quantity: 100,
-    photo:
+    image:
       'https://img.discogs.com/cbJuSllK1fmn5bCO5OIjNVy4so8=/fit-in/600x597/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-597222-1290446870.jpeg.jpg'
   }
 ]
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < 20; i++) {
   let product = {
-    album: faker.lorem.words(),
-    artist: faker.name.findName(),
+    title: faker.lorem.words(),
+    description: faker.name.findName(),
     year: faker.random.number({min: 1920, max: 2020}),
     price: faker.finance.amount(10, 30, 2),
     quantity: faker.random.number(100),
-    photo: faker.image.image()
+    image: faker.image.image()
   }
   products.push(product)
 }

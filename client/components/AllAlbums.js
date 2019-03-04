@@ -25,7 +25,8 @@ class AllAlbums extends Component {
 
   render() {
     const {history} = this.props
-    const {albums} = this.props.album
+    const {albums} = this.props
+
     return (
       <Container>
         <Grid>
@@ -41,13 +42,13 @@ class AllAlbums extends Component {
                       size="medium"
                       bordered
                       centered
-                      src={album.photo}
+                      src={album.image}
                       onClick={() => history.push(`/albums/${album.id}`)}
                     />
                     <Card.Content>
                       <Fragment>
-                        <Card.Header>{album.album}</Card.Header>
-                        <Card.Meta>{album.artist}</Card.Meta>
+                        <Card.Header>{album.title}</Card.Header>
+                        <Card.Meta>{album.description}</Card.Meta>
                         <Card.Description>${album.price}</Card.Description>
                       </Fragment>
                     </Card.Content>
@@ -64,7 +65,7 @@ class AllAlbums extends Component {
 
 const mapStateToProps = state => {
   return {
-    album: state.album,
+    albums: state.album.albums,
     user: state.user,
     cart: state.user.cartItems
   }

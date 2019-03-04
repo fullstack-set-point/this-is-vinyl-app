@@ -1,30 +1,21 @@
 import _ from 'lodash'
-// import js-search from 'js-search'
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Search, Grid, Header, Segment} from 'semantic-ui-react'
+import {Search} from 'semantic-ui-react'
 
-export default class SearchExampleStandard extends Component {
-  constructor() {
-    super()
-    this.state = {
-      isLoading: false,
-      value: '',
-      results: []
-    }
-    this.resetComponent = this.resetComponent.bind(this)
-    this.handleResultSelect = this.handleResultSelect.bind(this)
-    this.handleSearchChange = this.handleSearchChange.bind(this)
-  }
-
+class SearchBar extends Component {
   componentWillMount() {
     this.resetComponent()
   }
 
-  resetComponent = () =>
-    this.setState({isLoading: false, results: [], value: ''}) // resets prior to mount
+  resetComponent = () => {
+    this.setState({isLoading: false, results: [], value: ''})
+  }
 
-  handleResultSelect = (e, {result}) => this.setState({value: result.title})
+  handleResultSelect = (e, {result}) => {
+    this.setState({value: result.title})
+    this.props.history.push(`/albums/${result.id}`)
+  }
 
   handleSearchChange = (e, {value}) => {
     this.setState({isLoading: true, value})
@@ -37,13 +28,14 @@ export default class SearchExampleStandard extends Component {
 
       this.setState({
         isLoading: false,
-        results: _.filter(source, isMatch) // need to use js-search to create the "source"
+        results: _.filter(this.props.albums, isMatch)
       })
     }, 300)
   }
 
   render() {
     const {isLoading, value, results} = this.state
+    console.log(this.props)
 
     return (
       <Search
@@ -54,8 +46,17 @@ export default class SearchExampleStandard extends Component {
         })}
         results={results}
         value={value}
+        placeholder="Search..."
         {...this.props}
       />
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    albums: state.album.albums
+  }
+}
+
+export default connect(mapStateToProps)(SearchBar)
