@@ -39,7 +39,6 @@ router.post('/login', async (req, res, next) => {
             cartId: user.cartId
           }
         })
-
         //map through existingCartItems and update the cartId to currentGuest.cartId
         const updateItems = async () => {
           await asyncForEach(existingCartItems, async cartItem => {
