@@ -46,7 +46,115 @@ const categories = [
   }
 ]
 
-const products = []
+const products = [
+  {
+    album: 'Thriller',
+    artist: 'Michael Jackson',
+    year: 1982,
+    price: 8,
+    quantity: 100,
+    photo:
+      'https://cdn.pastemagazine.com/www/blogs/lists/2012/01/30/3_80sAlbums_Thriller.jpeg'
+  },
+  {
+    album: 'Hotel California',
+    artist: 'Eagles',
+    year: 1976,
+    price: 9,
+    quantity: 100,
+    photo:
+      'https://cdn.pastemagazine.com/www/articles/2018/08/21/eagles-hotel-ca.jpg'
+  },
+  {
+    album: 'Come on Over',
+    artist: 'Shania Twain',
+    year: 1997,
+    price: 10,
+    quantity: 100,
+    photo:
+      'https://cdn.pastemagazine.com/www/articles/2018/08/21/shania-come-on-over.jpg'
+  },
+  {
+    album: 'Led Zeppelin IV',
+    artist: 'Led Zeppelin',
+    year: 1971,
+    price: 12,
+    quantity: 100,
+    photo:
+      'https://cdn.pastemagazine.com/www/blogs/lists/assets_c/2012/05/220px-LedZeppelinFourSymbols-thumb-250x250-67364.jpg'
+  },
+  {
+    album: 'Rumours',
+    artist: 'Fleetwood Mac',
+    year: 1977,
+    price: 11,
+    quantity: 100,
+    photo:
+      'https://cdn.pastemagazine.com/www/blogs/lists/assets_c/2012/05/220px-FMacRumours-thumb-250x250-67340.png'
+  },
+  {
+    album: 'Back in Black',
+    artist: 'AC/DC',
+    year: 1980,
+    price: 10,
+    quantity: 100,
+    photo:
+      'https://cdn.pastemagazine.com/www/blogs/lists/2012/01/30/20_80sAlbums_BackinBlack.jpeg'
+  },
+  {
+    album: 'Dark Side of the Moon',
+    artist: 'Pink Floyd',
+    year: 1973,
+    price: 12,
+    quantity: 100,
+    photo:
+      'https://cdn.pastemagazine.com/www/articles/2018/08/21/pink-floyd-dark-side.jpg'
+  },
+  {
+    album: '1',
+    artist: 'The Beatles',
+    year: 2000,
+    price: 14,
+    quantity: 100,
+    photo: 'https://cdn.pastemagazine.com/www/articles/2018/08/21/beatles-1.jpg'
+  },
+  {
+    album: 'Legend',
+    artist: 'Bob Marley & The Wailers',
+    year: 1984,
+    price: 11,
+    quantity: 100,
+    photo:
+      'https://cdn.pastemagazine.com/www/articles/2018/08/21/bob-marley-legend.jpg'
+  },
+  {
+    album: 'American Gangster',
+    artist: 'Jay-Z',
+    year: 2007,
+    price: 10,
+    quantity: 100,
+    photo:
+      'https://img.discogs.com/cBMfQ_IUhOYzyw70lBHgSXoiPEI=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-1133742-1200816129.jpeg.jpg'
+  },
+  {
+    album: 'Freedom of Choice',
+    artist: 'Devo',
+    year: 1980,
+    price: 8,
+    quantity: 100,
+    photo:
+      'https://img.discogs.com/MCwJenZVU40HRlDUqUqQJAOPDRw=/fit-in/591x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-17377-1278376145.jpeg.jpg'
+  },
+  {
+    album: 'True Blue',
+    artist: 'Madonna',
+    year: 1986,
+    price: 9,
+    quantity: 100,
+    photo:
+      'https://img.discogs.com/cbJuSllK1fmn5bCO5OIjNVy4so8=/fit-in/600x597/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-597222-1290446870.jpeg.jpg'
+  }
+]
 for (let i = 0; i < 1000; i++) {
   let product = {
     album: faker.lorem.words(),
@@ -104,7 +212,40 @@ for (let i = 0; i < 50; i++) {
   users.push(user)
 }
 
-const reviews = []
+const reviews = [
+  {
+    rating: 4,
+    comment: 'Great album.'
+  },
+  {
+    rating: 1,
+    comment: 'Horrible.'
+  },
+  {
+    rating: 5,
+    comment: 'Amazing.'
+  },
+  {
+    rating: 2,
+    comment: 'Meh.'
+  },
+  {
+    rating: 4,
+    comment: 'One of the best.'
+  },
+  {
+    rating: 5,
+    comment: 'My favorite album of all time!'
+  },
+  {
+    rating: 1,
+    comment: 'Such a disappointment.'
+  },
+  {
+    rating: 3,
+    comment: 'They have better albums.'
+  }
+]
 for (let i = 0; i < 50; i++) {
   let review = {
     rating: faker.random.number(5),
@@ -147,6 +288,77 @@ async function seed() {
     Product.bulkCreate(products, {returning: true}),
     Review.bulkCreate(reviews, {returning: true}),
     User.bulkCreate(users, {returning: true})
+  ])
+
+  const [
+    cart,
+    cartItem,
+    category,
+    order,
+    orderItem,
+    product,
+    review,
+    user
+  ] = promiseForInsertedData
+  const [
+    rock,
+    reggae,
+    country,
+    jazz,
+    rap,
+    electronic,
+    pop,
+    metal,
+    folk,
+    classical
+  ] = category
+  const [
+    thriller,
+    hotelCalifornia,
+    comeOnOver,
+    zeppelin,
+    rumours,
+    backInBlack,
+    darkSide,
+    one,
+    legend,
+    gangster,
+    freedom,
+    trueBlue
+  ] = product
+  const [
+    review1,
+    review2,
+    review3,
+    review4,
+    review5,
+    review6,
+    review7,
+    review8
+  ] = review
+  const [user1, user2] = user
+
+  await Promise.all([
+    thriller.setReviews([review1, review2]),
+    hotelCalifornia.setReviews(review3),
+    comeOnOver.setReviews(review4, review5),
+    zeppelin.setReviews(review6),
+    rumours.setReviews(review7),
+    backInBlack.setReviews(review8),
+    thriller.setCategories([rock, pop]),
+    hotelCalifornia.setCategories(rock),
+    comeOnOver.setCategories([country, pop]),
+    zeppelin.setCategories(rock),
+    rumours.setCategories([rock, pop]),
+    backInBlack.setCategories(rock),
+    darkSide.setCategories(rock),
+    one.setCategories(rock),
+    legend.setCategories([reggae, jazz]),
+    gangster.setCategories(rap),
+    freedom.setCategories([rock, pop, electronic]),
+    trueBlue.setCategories([pop, electronic]),
+    user1.setReviews([review1, review3, review4]),
+    user2.setReviews(review2, review5, review6, review7, review8)
   ])
 
   console.log(`seeded ${promiseForInsertedData.length} tables`)
