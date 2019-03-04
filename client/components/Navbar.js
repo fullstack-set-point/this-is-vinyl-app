@@ -9,9 +9,9 @@ import {fetchAlbums} from '../store/album'
 
 class NavBar extends React.Component {
   componentDidMount() {
-    if (!this.props.isLoggedIn) {
-      this.props.createUnauthUser()
-    }
+    // if (!this.props.isLoggedIn) {
+    //   this.props.createUnauthUser()
+    // }
     if (this.props.user.id) {
       this.props.fetchCartItems(this.props.user.id)
     }
@@ -99,8 +99,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(logout())
     },
     fetchAlbums: () => dispatch(fetchAlbums()),
-    fetchCartItems: userId => dispatch(fetchCartItemsThunk(userId)),
-    createUnauthUser: () => dispatch(createUnauthUserThunk())
+    fetchCartItems: userId => dispatch(fetchCartItemsThunk(userId))
+    // createUnauthUser: () => dispatch(createUnauthUserThunk())
   }
 }
 

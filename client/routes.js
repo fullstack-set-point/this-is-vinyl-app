@@ -56,7 +56,7 @@ class Routes extends Component {
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route path="/" component={Home} />
+        <Route exact path="/" component={Home} />
       </Switch>
     )
   }
@@ -69,7 +69,7 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.user.id,
+    isLoggedIn: !!state.user.user.isAuth,
     isAdmin: state.user.user.isAdmin
   }
 }

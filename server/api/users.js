@@ -33,8 +33,6 @@ router.get('/:userId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    console.log('REQBODY: >>>>>>>>>>>>>>>>>>>', req.body)
-    console.log('REQ SESSIONID: >>>>>>>>>>>>>>>>>>', req.sessionID)
     const userExists = await User.find({
       where: {
         email: req.sessionID
