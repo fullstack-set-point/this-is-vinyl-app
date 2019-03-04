@@ -26,18 +26,22 @@ class SingleUser extends React.Component {
               <Segment>
                 <Image src={user.imgUrl} />
               </Segment>
-              <Header as="h4">{`${user.firstName} ${user.lastName}`}</Header>
-              <p>{user.email}</p>
+              {user.firstName ? (
+                <Header as="h4">{`${user.firstName} ${user.lastName}`}</Header>
+              ) : null}
+              {user.firstName ? <p>{user.email}</p> : null}
             </Grid.Column>
             <Grid.Column>
               <Header as="h3">Shipping Information</Header>
-              <Segment>
-                <p>{`${user.firstName} ${user.lastName}`}</p>
-                <p>{user.address}</p>
-                <p>
-                  {user.city}, {user.state} {user.zip}
-                </p>
-              </Segment>
+              {user.address ? (
+                <Segment>
+                  <p>{`${user.firstName} ${user.lastName}`}</p>
+                  <p>{user.address}</p>
+                  <p>
+                    {user.city}, {user.state} {user.zip}
+                  </p>
+                </Segment>
+              ) : null}
             </Grid.Column>
             <Grid.Column>
               <Header as="h3">Orders</Header>

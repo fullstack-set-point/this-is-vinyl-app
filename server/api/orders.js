@@ -40,7 +40,14 @@ const sendConfirmationEmail = (email, orderId, ...args) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const orders = await Order.findAll({})
+    const orders = await Order.findAll({
+      order: [['id', 'DESC']],
+      include: [
+        {
+          model: User
+        }
+      ]
+    })
     res.json(orders)
   } catch (err) {
     next(err)
@@ -94,10 +101,12 @@ router.post('/', async (req, res, next) => {
         // get product price
         const price = item.product.price
         const productName = item.product.album
+        const productId = item.product.id
         return OrderItem.create({
           price,
           quantity: item.quantity,
           productName,
+          productId,
           orderId: newOrder.id
         })
       })

@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {fetchOrderThunk} from '../store/user'
-import {Container, Header, Divider, Grid, Table} from 'semantic-ui-react'
+import {Container, Header, Divider, Table, Button} from 'semantic-ui-react'
 
 class SingleUserOrder extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class SingleUserOrder extends Component {
   }
 
   render() {
-    const {user, order} = this.props
+    const {order} = this.props
     return (
       <Container>
         <Header as="h2">Order Details</Header>
@@ -68,13 +69,15 @@ class SingleUserOrder extends Component {
                 <Header as="h4">Shipping To:</Header>
               </Table.Cell>
               <Table.Cell singleLine>
-                <div>
-                  <p>{`${user.firstName} ${user.lastName}`}</p>
-                  <p>{user.address}</p>
-                  <p>
-                    {user.city}, {user.state} {user.zip}
-                  </p>
-                </div>
+                {order.user ? (
+                  <div>
+                    <p>{`${order.user.firstName} ${order.user.lastName}`}</p>
+                    <p>{order.user.address}</p>
+                    <p>
+                      {order.user.city}, {order.user.state} {order.user.zip}
+                    </p>
+                  </div>
+                ) : null}
               </Table.Cell>
             </Table.Row>
           </Table.Body>
@@ -87,6 +90,7 @@ class SingleUserOrder extends Component {
               <Table.HeaderCell singleLine>Item</Table.HeaderCell>
               <Table.HeaderCell singleLine>Item Price</Table.HeaderCell>
               <Table.HeaderCell singleLine>Quantity</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -99,6 +103,15 @@ class SingleUserOrder extends Component {
                         ${item.price.toFixed(2)}
                       </Table.Cell>
                       <Table.Cell singleLine>{item.quantity}</Table.Cell>
+                      <Table.Cell>
+                        <Link to={`/albums/${item.productId}/review`}>
+                          <Button
+                            content="Add a Review"
+                            icon="comment alternate outline"
+                            labelPosition="right"
+                          />
+                        </Link>
+                      </Table.Cell>
                     </Table.Row>
                   )
                 })
