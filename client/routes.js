@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {withRouter, Route, Switch} from 'react-router-dom'
+import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, Home} from './components'
-import {me, fetchAlbums} from './store'
+import {Login, Signup} from './components'
+import {me} from './store'
 import AllAlbums from './components/AllAlbums'
 import SingleAlbum from './components/SingleAlbum'
 import Admin from './components/Admin'
@@ -58,7 +58,7 @@ class Routes extends Component {
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route exact path="/" component={Home} />
+        <Redirect from="/" to="/albums" />
       </Switch>
     )
   }
@@ -78,8 +78,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    loadInitialData: () => dispatch(me()),
-    fetchAlbums: () => dispatch(fetchAlbums())
+    loadInitialData: () => dispatch(me())
   }
 }
 

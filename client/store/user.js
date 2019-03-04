@@ -238,7 +238,7 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(loginUser(res.data))
-    history.push('/')
+    history.push('/albums')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
@@ -248,7 +248,7 @@ export const logout = () => async dispatch => {
   try {
     await axios.post('/auth/logout')
     dispatch(logoutUser())
-    history.push('/')
+    history.push('/albums')
   } catch (err) {
     console.error(err)
   }
