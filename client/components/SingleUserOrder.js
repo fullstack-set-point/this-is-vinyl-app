@@ -30,7 +30,7 @@ class SingleUserOrder extends Component {
   }
 
   render() {
-    const {user, order} = this.props
+    const {order} = this.props
     return (
       <Container>
         <Header as="h2">Order Details</Header>
@@ -68,13 +68,15 @@ class SingleUserOrder extends Component {
                 <Header as="h4">Shipping To:</Header>
               </Table.Cell>
               <Table.Cell singleLine>
-                <div>
-                  <p>{`${user.firstName} ${user.lastName}`}</p>
-                  <p>{user.address}</p>
-                  <p>
-                    {user.city}, {user.state} {user.zip}
-                  </p>
-                </div>
+                {order.user ? (
+                  <div>
+                    <p>{`${order.user.firstName} ${order.user.lastName}`}</p>
+                    <p>{order.user.address}</p>
+                    <p>
+                      {order.user.city}, {order.user.state} {order.user.zip}
+                    </p>
+                  </div>
+                ) : null}
               </Table.Cell>
             </Table.Row>
           </Table.Body>
