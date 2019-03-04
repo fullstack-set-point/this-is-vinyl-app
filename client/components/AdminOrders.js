@@ -5,8 +5,18 @@ import {Table, Button, Dropdown, Menu, Icon} from 'semantic-ui-react'
 import {fetchOrders} from '../store/order'
 
 class AdminOrders extends React.Component {
+  constructor(props) {
+    super(props)
+    this.formatDate = this.formatDate.bind(this)
+  }
+
   componentDidMount() {
     this.props.fetchOrders()
+  }
+
+  formatDate(date) {
+    const formattedDate = date.split('T')
+    return formattedDate[0]
   }
 
   render() {
@@ -24,6 +34,7 @@ class AdminOrders extends React.Component {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Date</Table.HeaderCell>
+            <Table.HeaderCell>Order Number</Table.HeaderCell>
             <Table.HeaderCell>Customer</Table.HeaderCell>
             <Table.HeaderCell>Total</Table.HeaderCell>
             <Table.HeaderCell>Status</Table.HeaderCell>
@@ -35,9 +46,10 @@ class AdminOrders extends React.Component {
           {orders.map(order => {
             return (
               <Table.Row key={order.id}>
-                <Table.Cell>{order.orderDate}</Table.Cell>
+                <Table.Cell>{this.formatDate(order.orderDate)}</Table.Cell>
+                <Table.Cell>{order.id}</Table.Cell>
                 <Table.Cell>Name</Table.Cell>
-                <Table.Cell>${order.total}</Table.Cell>
+                <Table.Cell>${order.total.toFixed(2)}</Table.Cell>
                 <Table.Cell>
                   <Dropdown
                     placeholder={order.orderStatus}
@@ -47,7 +59,7 @@ class AdminOrders extends React.Component {
                   />
                 </Table.Cell>
                 <Table.Cell>
-                  <Link to={`/orders/${order.id}`}>
+                  <Link to={`/users/${order.userId}/orders/${order.id}`}>
                     <Button color="blue">View</Button>
                   </Link>
                 </Table.Cell>
