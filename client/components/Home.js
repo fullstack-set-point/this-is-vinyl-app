@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Header} from 'semantic-ui-react'
+import {Header, Container} from 'semantic-ui-react'
 
 /**
  * COMPONENT
@@ -10,9 +10,9 @@ export const Home = props => {
   const {user} = props
 
   return (
-    <div>
+    <Container>
       <Header>Welcome!</Header>
-    </div>
+    </Container>
   )
 }
 
