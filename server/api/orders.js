@@ -40,7 +40,14 @@ const sendConfirmationEmail = (email, orderId, ...args) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const orders = await Order.findAll({})
+    const orders = await Order.findAll({
+      order: [['id', 'DESC']],
+      include: [
+        {
+          model: User
+        }
+      ]
+    })
     res.json(orders)
   } catch (err) {
     next(err)
