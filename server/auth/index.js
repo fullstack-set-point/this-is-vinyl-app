@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const User = require('../db/models/User')
+const CartItem = require('../db/models/CartItem')
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -18,10 +19,17 @@ router.post('/login', async (req, res, next) => {
         },
         attributes: ['cartId']
       })
-      console.log('CARTID?? >>>>>>>>>>>>>', currentGuest.cartId)
       const updatedVals = {
         isAuth: true,
         cartId: currentGuest.cartId
+      }
+      if (user.cartId) {
+        const existingCartItems = CartItem.findAll({
+          where: {
+            cardId: user.cartId
+          }
+        })
+        console.log('EXISTING CART ITEMS: >>>>>>>>> ', existingCartItems)
       }
       const loggedInUser = await User.update(updatedVals, {
         where: {
