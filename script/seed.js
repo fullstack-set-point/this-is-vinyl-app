@@ -203,7 +203,7 @@ for (let i = 0; i < 50; i++) {
     email: faker.internet.email(),
     password: faker.internet.password(),
     isAdmin: faker.random.boolean(),
-    isAuth: faker.random.boolean(),
+    isAuth: true,
     address: faker.address.streetAddress(),
     city: faker.address.city(),
     state: faker.address.state(),
@@ -257,7 +257,7 @@ for (let i = 0; i < 50; i++) {
 }
 
 const orders = []
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 10; i++) {
   let order = {
     total: faker.finance.amount(10, 200, 2),
     orderDate: faker.date.past(),
@@ -313,6 +313,18 @@ async function seed() {
     classical
   ] = category
   const [
+    order1,
+    order2,
+    order3,
+    order4,
+    order5,
+    order6,
+    order7,
+    order8,
+    order9,
+    order10
+  ] = order
+  const [
     thriller,
     hotelCalifornia,
     comeOnOver,
@@ -358,7 +370,17 @@ async function seed() {
     freedom.setCategories([rock, pop, electronic]),
     trueBlue.setCategories([pop, electronic]),
     user1.setReviews([review1, review3, review4]),
-    user2.setReviews(review2, review5, review6, review7, review8)
+    user2.setReviews(review2, review5, review6, review7, review8),
+    order1.setUser(user2),
+    order2.setUser(user2),
+    order3.setUser(user2),
+    order4.setUser(user2),
+    order5.setUser(user2),
+    order6.setUser(user2),
+    order7.setUser(user2),
+    order8.setUser(user2),
+    order9.setUser(user2),
+    order10.setUser(user2)
   ])
 
   console.log(`seeded ${promiseForInsertedData.length} tables`)

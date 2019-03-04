@@ -35,7 +35,8 @@ class AdminOrders extends React.Component {
           <Table.Row>
             <Table.HeaderCell>Date</Table.HeaderCell>
             <Table.HeaderCell>Order Number</Table.HeaderCell>
-            <Table.HeaderCell>Customer</Table.HeaderCell>
+            <Table.HeaderCell>Customer Name</Table.HeaderCell>
+            <Table.HeaderCell>Customer ID</Table.HeaderCell>
             <Table.HeaderCell>Total</Table.HeaderCell>
             <Table.HeaderCell>Status</Table.HeaderCell>
             <Table.HeaderCell>View</Table.HeaderCell>
@@ -48,7 +49,10 @@ class AdminOrders extends React.Component {
               <Table.Row key={order.id}>
                 <Table.Cell>{this.formatDate(order.orderDate)}</Table.Cell>
                 <Table.Cell>{order.id}</Table.Cell>
-                <Table.Cell>Name</Table.Cell>
+                <Table.Cell>
+                  {order.user.firstName} {order.user.lastName}
+                </Table.Cell>
+                <Table.Cell>{order.user.id}</Table.Cell>
                 <Table.Cell>${order.total.toFixed(2)}</Table.Cell>
                 <Table.Cell>
                   <Dropdown
