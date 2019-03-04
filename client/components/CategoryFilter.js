@@ -27,6 +27,15 @@ const CategoryFilter = props => {
         <Button value={7} onClick={props.handleCategoryClick}>
           Pop
         </Button>
+        <Button value={8} onClick={props.handleCategoryClick}>
+          Metal
+        </Button>
+        <Button value={9} onClick={props.handleCategoryClick}>
+          Folk
+        </Button>
+        <Button value={10} onClick={props.handleCategoryClick}>
+          Classical
+        </Button>
       </Button.Group>
     </div>
   )
