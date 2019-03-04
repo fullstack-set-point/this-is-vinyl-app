@@ -192,26 +192,41 @@ export const fetchOrderThunk = (userId, orderId) => {
   }
 }
 
-export const createUnauthUserThunk = () => {
-  return async dispatch => {
-    try {
-      const {data} = await axios.post('/api/users')
-      dispatch(createUnauthUser(data))
-    } catch (err) {
-      console.error(err)
-    }
-  }
-}
+// export const createUnauthUserThunk = () => {
+//   return async dispatch => {
+//     try {
+//       const { data } = await axios.post('/api/users')
+//       dispatch(createUnauthUser(data))
+//     } catch (err) {
+//       console.error(err)
+//     }
+//   }
+// }
 
 // AUTHENTICATION THUNKS CREATORS
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
-    dispatch(loginUser(res.data || initialState.user))
+    if (res.data) {
+      dispatch(loginUser(res.data))
+    } else {
+      const {data} = await axios.post('/api/users')
+      dispatch(createUnauthUser(data))
+    }
   } catch (err) {
     console.error(err)
   }
 }
+
+// ATTEMPTING TO FIX THE CREATE UNAUTH USER
+// export const me = () => async dispatch => {
+//   try {
+//     const res = await axios.get('/auth/me')
+//     dispatch(loginUser(res.data || initialState.user))
+//   } catch (err) {
+//     console.error(err)
+//   }
+// }
 
 export const auth = (email, password, method) => async dispatch => {
   let res

@@ -12,15 +12,23 @@ router.post('/login', async (req, res, next) => {
       console.log('Incorrect password for user:', req.body.email)
       res.status(401).send('Wrong username and/or password')
     } else {
-      const loggedInUser = await User.update(
-        {
-          isAuth: true
+      const currentGuest = await User.findOne({
+        where: {
+          email: req.sessionID
         },
-        {
-          where: {id: user.id},
-          returning: true
-        }
-      )
+        attributes: ['cartId']
+      })
+      console.log('CARTID?? >>>>>>>>>>>>>', currentGuest.cartId)
+      const updatedVals = {
+        isAuth: true,
+        cartId: currentGuest.cartId
+      }
+      const loggedInUser = await User.update(updatedVals, {
+        where: {
+          id: user.id
+        },
+        returning: true
+      })
       req.login(user, err => (err ? next(err) : res.json(user)))
     }
   } catch (err) {
