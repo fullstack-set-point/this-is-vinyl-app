@@ -4,14 +4,11 @@ import {logout} from '../store'
 import PropTypes from 'prop-types'
 import {Input, Menu, Icon, Label} from 'semantic-ui-react'
 import {NavLink} from 'react-router-dom'
-import {fetchCartItemsThunk, createUnauthUserThunk} from '../store/user'
+import {fetchCartItemsThunk} from '../store/user'
 import {fetchAlbums} from '../store/album'
 
 class NavBar extends React.Component {
   componentDidMount() {
-    // if (!this.props.isLoggedIn) {
-    //   this.props.createUnauthUser()
-    // }
     if (this.props.user.id) {
       this.props.fetchCartItems(this.props.user.id)
     }
@@ -19,6 +16,7 @@ class NavBar extends React.Component {
 
   render() {
     const {isLoggedIn, user, handleLogout, userCartItems} = this.props
+    console.log('ISLOGGEDIN: >>>>>>>>>>>>>>>>>>>>>>>>> ', isLoggedIn) // using this to see if this value changes
 
     return (
       <Menu>
@@ -87,7 +85,7 @@ class NavBar extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    isLoggedIn: !!state.user.user.isAuth,
+    isLoggedIn: !!state.user.user.id, // I changed this back to "...user.id" from "...user.isAuth"
     user: state.user.user,
     userCartItems: state.user.cartItems
   }
@@ -100,7 +98,6 @@ const mapDispatchToProps = dispatch => {
     },
     fetchAlbums: () => dispatch(fetchAlbums()),
     fetchCartItems: userId => dispatch(fetchCartItemsThunk(userId))
-    // createUnauthUser: () => dispatch(createUnauthUserThunk())
   }
 }
 

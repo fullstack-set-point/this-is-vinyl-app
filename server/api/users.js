@@ -32,22 +32,25 @@ router.get('/:userId', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
+  //create a new user route
   try {
-    const userExists = await User.find({
+    const guestUserExists = await User.find({
       where: {
         email: req.sessionID
       }
     })
-    if (userExists) {
-      res.json(userExists)
+    if (guestUserExists) {
+      // if guest user already has cookie, return user
+      res.json(guestUserExists)
     } else if (!req.body.email) {
-      const email = req.sessionID
-      const password = req.sessionID
+      //else if there's no email/user, create a guest user with sessionID as email
+      const email = req.sessionID //they'll also get a cookie
+      // const password = req.sessionID
       const user = await User.create({
-        email: email,
-        password: password
+        email: email
+        // password: password
       })
-      const newCart = await Cart.create()
+      const newCart = await Cart.create() // and give them a new cart
       const updateUser = await User.update(
         {
           cartId: newCart.id
@@ -62,9 +65,11 @@ router.post('/', async (req, res, next) => {
       )
       res.json(user)
     } else {
+      //else if given an email and password, create a user instance with this info
       const {email, password} = req.body
-      const user = await User.create(email, password)
-      const newCart = await Cart.create()
+      const isAuth = true
+      const user = await User.create(email, password, isAuth)
+      const newCart = await Cart.create() // and give them a cart
       const updateUser = await User.update(
         {
           cartId: newCart.id

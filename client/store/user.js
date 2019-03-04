@@ -86,11 +86,6 @@ const fetchOrder = order => ({
   order
 })
 
-const createUnauthUser = user => ({
-  type: CREATE_UNAUTH_USER,
-  user
-})
-
 // THUNK CREATORS
 export const fetchUsersThunk = () => {
   return async dispatch => {
@@ -192,41 +187,21 @@ export const fetchOrderThunk = (userId, orderId) => {
   }
 }
 
-// export const createUnauthUserThunk = () => {
-//   return async dispatch => {
-//     try {
-//       const { data } = await axios.post('/api/users')
-//       dispatch(createUnauthUser(data))
-//     } catch (err) {
-//       console.error(err)
-//     }
-//   }
-// }
-
 // AUTHENTICATION THUNKS CREATORS
 export const me = () => async dispatch => {
   try {
-    const res = await axios.get('/auth/me')
+    const res = await axios.get('/auth/me') // this isn't currently returning anything as of 3:47 3/4/2019
     if (res.data) {
-      dispatch(loginUser(res.data))
-    } else {
-      const {data} = await axios.post('/api/users')
-      dispatch(createUnauthUser(data))
+      dispatch(loginUser(res.data || initialState.user)) // Sandy had taken out the '|| initialState.user' for createUnauthUser
     }
+    // else {
+    //   const { data } = await axios.post('/api/users')
+    //   dispatch(createUnauthUser(data))
+    // }
   } catch (err) {
     console.error(err)
   }
 }
-
-// ATTEMPTING TO FIX THE CREATE UNAUTH USER
-// export const me = () => async dispatch => {
-//   try {
-//     const res = await axios.get('/auth/me')
-//     dispatch(loginUser(res.data || initialState.user))
-//   } catch (err) {
-//     console.error(err)
-//   }
-// }
 
 export const auth = (email, password, method) => async dispatch => {
   let res

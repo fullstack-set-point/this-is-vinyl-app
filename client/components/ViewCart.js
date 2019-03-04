@@ -92,6 +92,16 @@ class ViewCart extends Component {
                         Remove
                       </button>
                     </Table.Cell>
+                    {/* <Table.Cell>
+                      <button
+                        type="button"
+                        className="btn-danger"
+                        onClick={this.handleRemove}
+                        value={cartItem.id}
+                      >
+                        Update
+                      </button>
+                    </Table.Cell> */}
                   </Table.Row>
                 )
               })

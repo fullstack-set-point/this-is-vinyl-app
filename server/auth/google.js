@@ -33,12 +33,13 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
       const googleId = profile.id
       const name = profile.displayName
       const email = profile.emails[0].value
+      const isAuth = true
 
       User.findOrCreate({
         where: {googleId},
-        defaults: {name, email}
+        defaults: {name, email, isAuth}
       })
-        .then(([user]) => done(null, user))
+        .then(([user]) => done(null, user)) // console is complaining that this is returning an unfulfilled promise, but there's a db entry created.
         .catch(done)
     }
   )
