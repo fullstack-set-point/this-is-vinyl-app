@@ -28,8 +28,8 @@ Cart.hasOne(User)
 CartItem.belongsTo(Cart)
 Cart.hasMany(CartItem)
 
-CartItem.belongsTo(Product) // comment these lines out
-Product.hasMany(CartItem) // when seeding the DB
+// CartItem.belongsTo(Product) // comment these lines out
+// Product.hasMany(CartItem) // when seeding the DB
 
 module.exports = {
   Cart,

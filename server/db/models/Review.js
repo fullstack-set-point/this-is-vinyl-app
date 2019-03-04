@@ -9,8 +9,14 @@ const Review = db.define('review', {
       max: 5
     }
   },
+  title: {
+    type: Sequelize.STRING
+  },
   comment: {
     type: Sequelize.TEXT
+  },
+  date: {
+    type: Sequelize.DATE
   }
 })
 

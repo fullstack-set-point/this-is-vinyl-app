@@ -1,5 +1,6 @@
 'use strict'
 
+const faker = require('faker')
 const db = require('../server/db')
 const {
   Cart,
@@ -12,16 +13,7 @@ const {
   User
 } = require('../server/db/models')
 
-const cartData = [{}]
-
-const cartItemData = [
-  {
-    productId: 2,
-    quantity: 1
-  }
-]
-
-const categoryData = [
+const categories = [
   {
     name: 'Rock'
   },
@@ -42,337 +34,92 @@ const categoryData = [
   },
   {
     name: 'Pop'
+  },
+  {
+    name: 'Metal'
+  },
+  {
+    name: 'Folk'
+  },
+  {
+    name: 'Classical'
   }
 ]
 
-const orderData = [
-  {
-    total: 21,
-    orderDate: new Date(2019, 2, 1),
-    orderStatus: 'Created'
-  },
-  {
-    total: 10.5,
-    orderDate: new Date(2019, 1, 1),
-    orderStatus: 'Processing'
+const products = []
+for (let i = 0; i < 1000; i++) {
+  let product = {
+    album: faker.lorem.words(),
+    artist: faker.name.findName(),
+    year: faker.random.number({min: 1920, max: 2020}),
+    price: faker.finance.amount(10, 30, 2),
+    quantity: faker.random.number(100),
+    photo: faker.image.image()
   }
-]
+  products.push(product)
+}
 
-const orderItemData = [
-  {
-    price: 10.5,
-    quantity: 2
-  },
-  {
-    price: 10.5,
-    quantity: 1
-  },
-  {
-    price: 10.5,
-    quantity: 1
+const users = []
+for (let i = 0; i < 50; i++) {
+  let user = {
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    imgUrl: faker.image.avatar(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+    isAdmin: faker.random.boolean(),
+    isAuth: faker.random.boolean(),
+    address: faker.address.streetAddress(),
+    city: faker.address.city(),
+    state: faker.address.state(),
+    zip: faker.address.zipCode()
   }
-]
+  users.push(user)
+}
 
-const productData = [
-  {
-    album: 'Thriller',
-    artist: 'Michael Jackson',
-    year: 1982,
-    price: 10.5,
-    quantity: 100,
-    photo:
-      'https://cdn.pastemagazine.com/www/blogs/lists/2012/01/30/3_80sAlbums_Thriller.jpeg'
-  },
-  {
-    album: 'Hotel California',
-    artist: 'Eagles',
-    year: 1976,
-    price: 10.5,
-    quantity: 100,
-    photo:
-      'https://cdn.pastemagazine.com/www/articles/2018/08/21/eagles-hotel-ca.jpg'
-  },
-  {
-    album: 'Come on Over',
-    artist: 'Shania Twain',
-    year: 1997,
-    price: 10.5,
-    quantity: 100,
-    photo:
-      'https://cdn.pastemagazine.com/www/articles/2018/08/21/shania-come-on-over.jpg'
-  },
-  {
-    album: 'Led Zeppelin IV',
-    artist: 'Led Zeppelin',
-    year: 1971,
-    price: 12,
-    quantity: 100,
-    photo:
-      'https://cdn.pastemagazine.com/www/blogs/lists/assets_c/2012/05/220px-LedZeppelinFourSymbols-thumb-250x250-67364.jpg'
-  },
-  {
-    album: 'Rumours',
-    artist: 'Fleetwood Mac',
-    year: 1977,
-    price: 11,
-    quantity: 100,
-    photo:
-      'https://cdn.pastemagazine.com/www/blogs/lists/assets_c/2012/05/220px-FMacRumours-thumb-250x250-67340.png'
-  },
-  {
-    album: 'Back in Black',
-    artist: 'AC/DC',
-    year: 1980,
-    price: 10,
-    quantity: 100,
-    photo:
-      'https://cdn.pastemagazine.com/www/blogs/lists/2012/01/30/20_80sAlbums_BackinBlack.jpeg'
-  },
-  {
-    album: 'Dark Aide of the Moon',
-    artist: 'Pink Floyd',
-    year: 1973,
-    price: 12,
-    quantity: 100,
-    photo:
-      'https://cdn.pastemagazine.com/www/articles/2018/08/21/pink-floyd-dark-side.jpg'
-  },
-  {
-    album: '1',
-    artist: 'The Beatles',
-    year: 2000,
-    price: 14,
-    quantity: 100,
-    photo: 'https://cdn.pastemagazine.com/www/articles/2018/08/21/beatles-1.jpg'
-  },
-  {
-    album: 'Legend',
-    artist: 'Bob Marley & The Wailers',
-    year: 1984,
-    price: 11,
-    quantity: 100,
-    photo:
-      'https://cdn.pastemagazine.com/www/articles/2018/08/21/bob-marley-legend.jpg'
-  },
-  {
-    album: 'American Gangster',
-    artist: 'Jay-Z',
-    year: 2007,
-    price: 10,
-    quantity: 100,
-    photo:
-      'https://img.discogs.com/cBMfQ_IUhOYzyw70lBHgSXoiPEI=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-1133742-1200816129.jpeg.jpg'
-  },
-  {
-    album: 'Freedom of Choice',
-    artist: 'Devo',
-    year: 1980,
-    price: 8,
-    quantity: 100,
-    photo:
-      'https://img.discogs.com/MCwJenZVU40HRlDUqUqQJAOPDRw=/fit-in/591x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-17377-1278376145.jpeg.jpg'
-  },
-  {
-    album: 'True Blue',
-    artist: 'Madonna',
-    year: 1986,
-    price: 9,
-    quantity: 100,
-    photo:
-      'https://img.discogs.com/cbJuSllK1fmn5bCO5OIjNVy4so8=/fit-in/600x597/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-597222-1290446870.jpeg.jpg'
+const reviews = []
+for (let i = 0; i < 50; i++) {
+  let review = {
+    rating: faker.random.number(5),
+    title: faker.lorem.sentence(),
+    comment: faker.lorem.paragraph(),
+    date: faker.date.past()
   }
-]
+  reviews.push(review)
+}
 
-const reviewData = [
-  {
-    rating: 4,
-    comment: 'Great album.'
-  },
-  {
-    rating: 1,
-    comment: 'Horrible.'
-  },
-  {
-    rating: 5,
-    comment: 'Amazing.'
-  },
-  {
-    rating: 2,
-    comment: 'Meh.'
+const orders = []
+for (let i = 0; i < 50; i++) {
+  let order = {
+    total: faker.finance.amount(10, 200, 2),
+    orderDate: faker.date.past(),
+    orderStatus: faker.random.arrayElement([
+      'Created',
+      'Processing',
+      'Completed',
+      'Cancelled'
+    ])
   }
-]
+  orders.push(order)
+}
 
-const userData = [
-  {
-    firstName: 'Chancelor',
-    lastName: 'Bennett',
-    imgUrl: 'https://robohash.org/2',
-    email: 'acidrap@email.com',
-    password: '123',
-    isAdmin: false,
-    address: '123 Clark St.',
-    city: 'Chicago',
-    state: 'IL',
-    zip: '60614'
-  },
-  {
-    firstName: 'Anthony',
-    lastName: 'Kiedis',
-    imgUrl: 'https://robohash.org/3',
-    email: 'cantstop@email.com',
-    password: '666',
-    isAdmin: false,
-    address: '88 Wilshire Blvd.',
-    city: 'Los Angeles',
-    state: 'CA',
-    zip: '90210'
-  },
-  {
-    firstName: 'Jerry',
-    lastName: 'Garcia',
-    imgUrl: 'https://robohash.org/4',
-    email: 'gratefuldead@email.com',
-    password: '975',
-    isAdmin: true,
-    address: '145 S. Van Ness St.',
-    city: 'San Francisco',
-    state: 'CA',
-    zip: '94110'
-  },
-  {
-    firstName: 'Jack',
-    lastName: 'White',
-    imgUrl: 'https://robohash.org/5',
-    email: 'thirdman@email.com',
-    password: 'password',
-    isAdmin: false,
-    address: '456 Broadway Ave.',
-    city: 'Nashville',
-    state: 'TN',
-    zip: '32011'
-  },
-  {
-    firstName: 'Jon',
-    lastName: 'Bon Jovi',
-    imgUrl: 'https://robohash.org/6',
-    email: 'livingonaprayer@email.com',
-    password: 'idk',
-    isAdmin: false,
-    address: '900 Wall St.',
-    city: 'New York',
-    state: 'NY',
-    zip: '10001'
-  },
-  {
-    firstName: 'Eddie',
-    lastName: 'Vetter',
-    imgUrl: 'https://robohash.org/7',
-    email: 'pearljam@email.com',
-    password: 'secret',
-    isAdmin: true,
-    address: '22 Pike St.',
-    city: 'Seattle',
-    state: 'WA',
-    zip: '98101'
-  },
-  {
-    firstName: 'Dave',
-    lastName: 'Grohl',
-    imgUrl: 'https://robohash.org/8',
-    email: 'learntofly@email.com',
-    password: 'foobar',
-    isAdmin: true,
-    address: '1000 Pennsyvlania Blvd.',
-    city: 'Washington',
-    state: 'DC',
-    zip: '2019'
-  },
-  {
-    firstName: 'Paul',
-    lastName: 'McCartney',
-    imgUrl: 'https://robohash.org/9',
-    email: 'beatles@email.com',
-    password: 'ringosucks',
-    isAdmin: false,
-    address: '1 Abbey Rd.',
-    city: 'London',
-    state: 'UK',
-    zip: '93472'
-  }
-]
+const orderItems = []
+const cartItems = []
+const carts = []
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
   const promiseForInsertedData = await Promise.all([
-    Cart.bulkCreate(cartData, {returning: true}),
-    CartItem.bulkCreate(cartItemData, {returning: true}),
-    Category.bulkCreate(categoryData, {returning: true}),
-    Order.bulkCreate(orderData, {returning: true}),
-    OrderItem.bulkCreate(orderItemData, {returning: true}),
-    Product.bulkCreate(productData, {returning: true}),
-    Review.bulkCreate(reviewData, {returning: true}),
-    User.bulkCreate(userData, {returning: true})
-  ])
-
-  const [
-    cart,
-    cartItem,
-    category,
-    order,
-    orderItem,
-    product,
-    review,
-    user
-  ] = await promiseForInsertedData
-  const [cart1] = cart
-  const [cartItem1] = cartItem
-  const [rock, reggae, country, jazz, rap, electronic, pop] = category
-  const [order1, order2] = order
-  const [orderItem1, orderItem2, orderItem3] = orderItem
-  const [
-    thriller,
-    hotelCalifornia,
-    comeOnOver,
-    zeppelin,
-    rumours,
-    backInBlack,
-    darkSide,
-    one,
-    legend,
-    gangster,
-    freedom,
-    trueBlue
-  ] = product
-  const [review1, review2, review3, review4] = review
-  const [user1, user2] = user
-
-  await Promise.all([
-    thriller.setReviews([review1, review2]),
-    hotelCalifornia.setReviews(review3),
-    comeOnOver.setReviews(review4),
-    thriller.setCategories([rock, pop]),
-    hotelCalifornia.setCategories(rock),
-    comeOnOver.setCategories([country, pop]),
-    zeppelin.setCategories(rock),
-    rumours.setCategories(rock),
-    backInBlack.setCategories(rock),
-    darkSide.setCategories(rock),
-    one.setCategories(rock),
-    legend.setCategories([reggae, jazz]),
-    gangster.setCategories(rap),
-    freedom.setCategories([rock, pop, electronic]),
-    trueBlue.setCategories([pop, electronic]),
-    orderItem1.setOrder(order1),
-    orderItem2.setOrder(order1),
-    orderItem3.setOrder(order2),
-    order1.setUser(user1),
-    order2.setUser(user1),
-    user1.setReviews([review1, review3, review4]),
-    user2.setReviews(review2),
-    user1.setCart(cart1),
-    cartItem1.setCart(cart1)
+    Cart.bulkCreate(carts, {returning: true}),
+    CartItem.bulkCreate(cartItems, {returning: true}),
+    Category.bulkCreate(categories, {returning: true}),
+    Order.bulkCreate(orders, {returning: true}),
+    OrderItem.bulkCreate(orderItems, {returning: true}),
+    Product.bulkCreate(products, {returning: true}),
+    Review.bulkCreate(reviews, {returning: true}),
+    User.bulkCreate(users, {returning: true})
   ])
 
   console.log(`seeded ${promiseForInsertedData.length} tables`)
