@@ -11,7 +11,8 @@ const User = db.define('user', {
   },
   imgUrl: {
     type: Sequelize.STRING,
-    defaultValue: 'https://robohash.org/1'
+    defaultValue:
+      'https://www.betwext.com/wp-content/uploads/2018/09/blank-profile-picture-973460_640.png'
   },
   email: {
     type: Sequelize.STRING,
