@@ -12,6 +12,7 @@ import ViewCart from './components/ViewCart'
 import SingleUserOrders from './components/SingleUserOrders'
 import SingleUserOrder from './components/SingleUserOrder'
 import Checkout from './components/Checkout'
+import ReviewForm from './components/ReviewForm'
 
 /**
  * COMPONENT
@@ -29,6 +30,7 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/albums" component={AllAlbums} />
         <Route exact path="/albums/:albumId" component={SingleAlbum} />
+        <Route exact path="/albums/:albumId/review" component={ReviewForm} />
         <Route exact path="/users/:userId" component={SingleUser} />
         <Route exact path="/users/:userId/cart" component={ViewCart} />
         <Route

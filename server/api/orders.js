@@ -101,10 +101,12 @@ router.post('/', async (req, res, next) => {
         // get product price
         const price = item.product.price
         const productName = item.product.album
+        const productId = item.product.id
         return OrderItem.create({
           price,
           quantity: item.quantity,
           productName,
+          productId,
           orderId: newOrder.id
         })
       })

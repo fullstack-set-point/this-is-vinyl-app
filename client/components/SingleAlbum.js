@@ -138,7 +138,10 @@ class SingleAlbum extends Component {
                         <Rating icon="star" defaultRating={1} maxRating={5} />
                       )}
                     </Segment>
-                    <Segment>Comment: {review.comment}</Segment>
+                    <Segment>
+                      <Header as="h4">{review.title}</Header>
+                      <p>{review.comment}</p>
+                    </Segment>
                   </Segment.Group>
                 ))}
               </div>
