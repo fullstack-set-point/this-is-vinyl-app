@@ -203,7 +203,7 @@ for (let i = 0; i < 50; i++) {
     email: faker.internet.email(),
     password: faker.internet.password(),
     isAdmin: faker.random.boolean(),
-    isAuth: faker.random.boolean(),
+    isAuth: true,
     address: faker.address.streetAddress(),
     city: faker.address.city(),
     state: faker.address.state(),
