@@ -17,7 +17,8 @@ class ReviewForm extends Component {
     this.state = {
       title: '',
       rating: 0,
-      comment: ''
+      comment: '',
+      complete: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -38,6 +39,9 @@ class ReviewForm extends Component {
     const userId = this.props.user.id
     const body = {title, rating, comment, albumId, userId}
     this.props.createReview(body)
+    this.setState({
+      complete: true
+    })
   }
 
   render() {
@@ -49,6 +53,14 @@ class ReviewForm extends Component {
       {key: '5', text: '5', value: 5}
     ]
     const {title, comment} = this.state
+    if (this.state.complete)
+      return (
+        <Container>
+          <Header as="h2">Review Form</Header>
+          <Divider />
+          <h4>Review Submitted!</h4>
+        </Container>
+      )
     return (
       <Container>
         <Header as="h2">Review Form</Header>
