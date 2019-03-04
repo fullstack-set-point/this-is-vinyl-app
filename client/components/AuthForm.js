@@ -22,6 +22,7 @@ const AuthForm = props => {
               name="email"
               type="email"
               placeholder="email"
+              required
             />
             <Form.Input
               icon="lock"
@@ -30,6 +31,7 @@ const AuthForm = props => {
               name="password"
               type="password"
               placeholder="password"
+              required
             />
 
             <Button primary type="submit">

@@ -59,7 +59,34 @@ for (let i = 0; i < 1000; i++) {
   products.push(product)
 }
 
-const users = []
+const users = [
+  {
+    firstName: 'John',
+    lastName: 'Lennon',
+    imageUrl: faker.image.avatar(),
+    email: 'jlennon@email.com',
+    password: '123',
+    isAdmin: true,
+    isAuth: true,
+    address: '123 Penny Lane',
+    city: 'Strawberry Fields',
+    state: 'CA',
+    zip: '99999'
+  },
+  {
+    firstName: 'George',
+    lastName: 'Harrison',
+    imageUrl: faker.image.avatar(),
+    email: 'gharrison@email.com',
+    password: '456',
+    isAdmin: false,
+    isAuth: true,
+    address: '999 Penny Lane',
+    city: 'Strawberry Fields',
+    state: 'CA',
+    zip: '99999'
+  }
+]
 for (let i = 0; i < 50; i++) {
   let user = {
     firstName: faker.name.firstName(),
