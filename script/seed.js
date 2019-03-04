@@ -214,34 +214,42 @@ for (let i = 0; i < 50; i++) {
 
 const reviews = [
   {
+    title: 'Best of the best',
     rating: 4,
     comment: 'Great album.'
   },
   {
+    title: 'Smh',
     rating: 1,
     comment: 'Horrible.'
   },
   {
+    title: 'Amazing',
     rating: 5,
-    comment: 'Amazing.'
+    comment: 'Just wow.'
   },
   {
+    title: 'Meh',
     rating: 2,
-    comment: 'Meh.'
+    comment: 'Not her best'
   },
   {
+    title: 'Fave',
     rating: 4,
     comment: 'One of the best.'
   },
   {
+    title: 'My favorite album of all time!',
     rating: 5,
-    comment: 'My favorite album of all time!'
+    comment: 'Worth every penny!'
   },
   {
+    title: 'I want my money back',
     rating: 1,
     comment: 'Such a disappointment.'
   },
   {
+    title: 'Do not waste your time',
     rating: 3,
     comment: 'They have better albums.'
   }
