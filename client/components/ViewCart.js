@@ -74,10 +74,10 @@ class ViewCart extends Component {
                         history.push(`/albums/${cartItem.productId}`)
                       }
                     >
-                      {cartItem.product.album}
+                      {cartItem.product.title}
                     </Table.Cell>
 
-                    <Table.Cell>{cartItem.product.artist}</Table.Cell>
+                    <Table.Cell>{cartItem.product.description}</Table.Cell>
                     <Table.Cell>{cartItem.quantity}</Table.Cell>
                     <Table.Cell>
                       ${cartItem.product.price.toFixed(2)} x {cartItem.quantity}
