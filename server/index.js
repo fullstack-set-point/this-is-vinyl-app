@@ -78,9 +78,6 @@ const createApp = () => {
   // // set a cookie
   // app.use(function (req, res, next) {
   //   // check if client sent cookie
-  //   console.log("REQ.SESSIONID", req.sessionID)
-  //   console.log('COOKIES???????? ', req.cookies)
-  //   console.log('REQ.USER IN APP.USE ???????? ', req.user)
   //   if (!req.cookies['connect.sid']) {
   //     const cookie = req.cookies.session_id_cookie
   //     if (cookie === undefined) {
