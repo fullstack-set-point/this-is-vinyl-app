@@ -8,14 +8,13 @@ import {
   Dropdown,
   Menu,
   Icon,
-  Checkbox,
   Container,
   Divider,
   Header,
   Segment,
   ButtonGroup
 } from 'semantic-ui-react'
-import {fetchAlbums} from '../store/album'
+import {fetchAlbums, updateAlbumThunk} from '../store/album'
 
 class AdminAlbums extends React.Component {
   constructor(props) {
@@ -25,9 +24,16 @@ class AdminAlbums extends React.Component {
       albumsPerPage: 65
     }
     this.handlePageChange = this.handlePageChange.bind(this)
+    this.updateCategories = this.updateCategories.bind(this)
   }
+
   componentDidMount() {
     this.props.fetchAlbums()
+  }
+
+  updateCategories(album, {value}) {
+    album.categories = value
+    this.props.updateAlbum(album.id, album)
   }
 
   handlePageChange(event) {
@@ -64,7 +70,10 @@ class AdminAlbums extends React.Component {
       {key: 'jazz', text: 'Jazz', value: 'jazz'},
       {key: 'rap', text: 'Rap', value: 'rap'},
       {key: 'electronic', text: 'Electronic', value: 'electronic'},
-      {key: 'pop', text: 'Pop', value: 'pop'}
+      {key: 'pop', text: 'Pop', value: 'pop'},
+      {key: 'metal', text: 'Metal', value: 'metal'},
+      {key: 'folk', text: 'Folk', value: 'folk'},
+      {key: 'classical', text: 'Classical', value: 'classical'}
     ]
 
     return (
@@ -80,7 +89,6 @@ class AdminAlbums extends React.Component {
               <Table.HeaderCell>Year</Table.HeaderCell>
               <Table.HeaderCell>Price</Table.HeaderCell>
               <Table.HeaderCell>Inventory</Table.HeaderCell>
-              <Table.HeaderCell>Available</Table.HeaderCell>
               <Table.HeaderCell>Categories</Table.HeaderCell>
               <Table.HeaderCell>Edit</Table.HeaderCell>
               <Table.HeaderCell>View</Table.HeaderCell>
@@ -99,22 +107,24 @@ class AdminAlbums extends React.Component {
                   <Table.Cell>${album.price}</Table.Cell>
                   <Table.Cell>{album.quantity}</Table.Cell>
                   <Table.Cell>
-                    <Checkbox toggle />
-                  </Table.Cell>
-                  <Table.Cell>
                     <Dropdown
-                      // placeholder={album.categories.map(category => {
-                      //   return (
-                      //     <a key ={category.id} className='ui label' value={category.name}>
-                      //       {category.name}
-                      //       <i className='delete icon'></i>
-                      //     </a>
-                      //   )
-                      // })}
+                      placeholder={album.categories.map(category => {
+                        return (
+                          <a
+                            key={category.id}
+                            className="ui label"
+                            value={category.name}
+                          >
+                            {category.name}
+                            <i className="delete icon" />
+                          </a>
+                        )
+                      })}
                       fluid
                       multiple
                       selection
                       options={options}
+                      // onChange={() => this.updateCategories(album)}
                     />
                   </Table.Cell>
                   <Table.Cell>
@@ -146,7 +156,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchAlbums: () => dispatch(fetchAlbums())
+  fetchAlbums: () => dispatch(fetchAlbums()),
+  updateAlbum: (albumId, album) => dispatch(updateAlbumThunk(albumId, album))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminAlbums)
