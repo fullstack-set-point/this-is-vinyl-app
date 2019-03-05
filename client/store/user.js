@@ -194,15 +194,6 @@ export const fetchOrderThunk = (userId, orderId) => {
 
 // AUTHENTICATION THUNKS CREATORS
 
-// export const me = () => async dispatch => {
-//   try {
-//     const res = await axios.get('/auth/me')
-//     console.log("res.data: >>>>>>>>>", res.data)
-//     dispatch(loginUser(res.data || initialState.user))
-//   } catch (err) {
-//     console.error(err)
-//   }
-// }
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
