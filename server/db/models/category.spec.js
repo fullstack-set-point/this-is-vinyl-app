@@ -1,6 +1,6 @@
 const chai = require('chai')
 const expect = chai.expect
-import Category from './category'
+import Category from './Category'
 
 describe('Category model', () => {
   describe('Validations', () => {
