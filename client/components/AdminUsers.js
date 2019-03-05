@@ -12,9 +12,14 @@ import {
   Divider,
   Header
 } from 'semantic-ui-react'
-import {fetchUsersThunk, deleteUserThunk} from '../store/user'
+import {fetchUsersThunk, deleteUserThunk, updateUserThunk} from '../store/user'
 
 class AdminUsers extends React.Component {
+  constructor(props) {
+    super(props)
+    this.updateStatus = this.updateStatus.bind(this)
+  }
+
   componentDidMount() {
     this.props.fetchUsers()
   }
@@ -23,12 +28,17 @@ class AdminUsers extends React.Component {
     this.props.deleteUser(userId)
   }
 
+  updateStatus(user, {value}) {
+    user.isAdmin = value
+    this.props.updateUser(user.id, user)
+  }
+
   render() {
     const {users} = this.props
 
     const options = [
-      {text: 'Admin', value: 'admin'},
-      {text: 'Customer', value: 'customer'}
+      {text: 'Admin', value: true},
+      {text: 'Customer', value: false}
     ]
 
     return (
@@ -42,7 +52,6 @@ class AdminUsers extends React.Component {
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell>Email</Table.HeaderCell>
               <Table.HeaderCell>Status</Table.HeaderCell>
-              <Table.HeaderCell>Password</Table.HeaderCell>
               <Table.HeaderCell>Delete</Table.HeaderCell>
               <Table.HeaderCell>View</Table.HeaderCell>
             </Table.Row>
@@ -65,10 +74,8 @@ class AdminUsers extends React.Component {
                           fluid
                           selection
                           options={options}
+                          // onChange={() => this.updateStatus(user)}
                         />
-                      </Table.Cell>
-                      <Table.Cell>
-                        <Button color="yellow">Reset</Button>
                       </Table.Cell>
                       <Table.Cell>
                         <Button
@@ -88,24 +95,6 @@ class AdminUsers extends React.Component {
                 })
               : null}
           </Table.Body>
-          <Table.Footer>
-            <Table.Row>
-              <Table.HeaderCell colSpan="7">
-                <Menu floated="right" pagination>
-                  <Menu.Item as="a" icon>
-                    <Icon name="chevron left" />
-                  </Menu.Item>
-                  <Menu.Item as="a">1</Menu.Item>
-                  <Menu.Item as="a">2</Menu.Item>
-                  <Menu.Item as="a">3</Menu.Item>
-                  <Menu.Item as="a">4</Menu.Item>
-                  <Menu.Item as="a" icon>
-                    <Icon name="chevron right" />
-                  </Menu.Item>
-                </Menu>
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Footer>
         </Table>
       </Container>
     )
@@ -118,7 +107,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchUsers: () => dispatch(fetchUsersThunk()),
-  deleteUser: userId => dispatch(deleteUserThunk(userId))
+  deleteUser: userId => dispatch(deleteUserThunk(userId)),
+  updateUser: (userId, user) => dispatch(updateUserThunk(userId, user))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminUsers)

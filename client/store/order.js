@@ -6,6 +6,7 @@ import {runInNewContext} from 'vm'
  */
 const FETCH_ORDERS = 'FETCH_ORDERS'
 const CREATE_ORDER = 'CREATE_ORDER'
+const UPDATE_ORDER = 'UPDATE_ORDER'
 
 /**
  * INITIAL STATE
@@ -24,6 +25,12 @@ const gotOrders = orders => ({
 
 const createOrder = order => ({
   type: CREATE_ORDER,
+  order
+})
+
+const updateOrder = (orderId, order) => ({
+  type: UPDATE_ORDER,
+  orderId,
   order
 })
 
@@ -47,6 +54,18 @@ export const createOrderThunk = body => async dispatch => {
     console.error(err)
   }
 }
+
+export const updateOrderThunk = (orderId, order) => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.put(`/api/orders/${orderId}`, order)
+      dispatch(updateOrder(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
 /**
  * REDUCER
  */
@@ -56,6 +75,13 @@ export default function(state = initialState, action) {
       return {...state, orders: action.orders}
     case CREATE_ORDER:
       return {...state, orders: [...state.orders, action.order]}
+    case UPDATE_ORDER:
+      return {
+        ...state,
+        orders: [...state.orders].map(order => {
+          return order.id === action.orderId ? (order = action.order) : order
+        })
+      }
     default:
       return state
   }

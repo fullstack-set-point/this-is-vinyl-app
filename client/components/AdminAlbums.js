@@ -8,20 +8,60 @@ import {
   Dropdown,
   Menu,
   Icon,
-  Checkbox,
   Container,
   Divider,
-  Header
+  Header,
+  Segment,
+  ButtonGroup
 } from 'semantic-ui-react'
-import {fetchAlbums} from '../store/album'
+import {fetchAlbums, updateAlbumThunk} from '../store/album'
 
 class AdminAlbums extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentPage: 1,
+      albumsPerPage: 65
+    }
+    this.handlePageChange = this.handlePageChange.bind(this)
+    this.updateCategories = this.updateCategories.bind(this)
+  }
+
   componentDidMount() {
     this.props.fetchAlbums()
   }
 
+  updateCategories(album, {value}) {
+    album.categories = value
+    this.props.updateAlbum(album.id, album)
+  }
+
+  handlePageChange(event) {
+    this.setState({
+      currentPage: Number(event.target.id)
+    })
+  }
+
   render() {
     const {albums} = this.props
+    const {currentPage, albumsPerPage} = this.state
+
+    const indexOfLastAlbum = currentPage * albumsPerPage
+    const indexOfFirstAlbum = indexOfLastAlbum - albumsPerPage
+    const currentAlbums = albums.slice(indexOfFirstAlbum, indexOfLastAlbum)
+
+    const pageNumbers = []
+    for (let i = 1; i <= Math.ceil(albums.length / albumsPerPage); i++) {
+      pageNumbers.push(i)
+    }
+
+    const renderPageNumbers = pageNumbers.map(number => {
+      return (
+        <Button key={number} id={number} onClick={this.handlePageChange}>
+          {number}
+        </Button>
+      )
+    })
 
     const options = [
       {key: 'rock', text: 'Rock', value: 'rock'},
@@ -30,7 +70,10 @@ class AdminAlbums extends React.Component {
       {key: 'jazz', text: 'Jazz', value: 'jazz'},
       {key: 'rap', text: 'Rap', value: 'rap'},
       {key: 'electronic', text: 'Electronic', value: 'electronic'},
-      {key: 'pop', text: 'Pop', value: 'pop'}
+      {key: 'pop', text: 'Pop', value: 'pop'},
+      {key: 'metal', text: 'Metal', value: 'metal'},
+      {key: 'folk', text: 'Folk', value: 'folk'},
+      {key: 'classical', text: 'Classical', value: 'classical'}
     ]
 
     return (
@@ -46,14 +89,13 @@ class AdminAlbums extends React.Component {
               <Table.HeaderCell>Year</Table.HeaderCell>
               <Table.HeaderCell>Price</Table.HeaderCell>
               <Table.HeaderCell>Inventory</Table.HeaderCell>
-              <Table.HeaderCell>Available</Table.HeaderCell>
               <Table.HeaderCell>Categories</Table.HeaderCell>
               <Table.HeaderCell>Edit</Table.HeaderCell>
               <Table.HeaderCell>View</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {albums.map(album => {
+            {currentAlbums.map(album => {
               return (
                 <Table.Row key={album.id}>
                   <Table.Cell>
@@ -65,22 +107,24 @@ class AdminAlbums extends React.Component {
                   <Table.Cell>${album.price}</Table.Cell>
                   <Table.Cell>{album.quantity}</Table.Cell>
                   <Table.Cell>
-                    <Checkbox toggle />
-                  </Table.Cell>
-                  <Table.Cell>
                     <Dropdown
-                      // placeholder={album.categories.map(category => {
-                      //   return (
-                      //     <a key ={category.id} className='ui label' value={category.name}>
-                      //       {category.name}
-                      //       <i className='delete icon'></i>
-                      //     </a>
-                      //   )
-                      // })}
+                      placeholder={album.categories.map(category => {
+                        return (
+                          <a
+                            key={category.id}
+                            className="ui label"
+                            value={category.name}
+                          >
+                            {category.name}
+                            <i className="delete icon" />
+                          </a>
+                        )
+                      })}
                       fluid
                       multiple
                       selection
                       options={options}
+                      // onChange={() => this.updateCategories(album)}
                     />
                   </Table.Cell>
                   <Table.Cell>
@@ -97,25 +141,11 @@ class AdminAlbums extends React.Component {
               )
             })}
           </Table.Body>
-          <Table.Footer>
-            <Table.Row>
-              <Table.HeaderCell colSpan="10">
-                <Menu floated="right" pagination>
-                  <Menu.Item as="a" icon>
-                    <Icon name="chevron left" />
-                  </Menu.Item>
-                  <Menu.Item as="a">1</Menu.Item>
-                  <Menu.Item as="a">2</Menu.Item>
-                  <Menu.Item as="a">3</Menu.Item>
-                  <Menu.Item as="a">4</Menu.Item>
-                  <Menu.Item as="a" icon>
-                    <Icon name="chevron right" />
-                  </Menu.Item>
-                </Menu>
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Footer>
         </Table>
+        <Segment textAlign="center">
+          <ButtonGroup>{renderPageNumbers}</ButtonGroup>
+        </Segment>
+        <Divider />
       </Container>
     )
   }
@@ -126,7 +156,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchAlbums: () => dispatch(fetchAlbums())
+  fetchAlbums: () => dispatch(fetchAlbums()),
+  updateAlbum: (albumId, album) => dispatch(updateAlbumThunk(albumId, album))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminAlbums)
