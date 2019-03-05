@@ -37,3 +37,12 @@ router.get('/categories/:categoryId', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  try {
+    await Product.create(req.body)
+    res.sendStatus(201)
+  } catch (err) {
+    next(err)
+  }
+})

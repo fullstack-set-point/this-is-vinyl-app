@@ -6,6 +6,7 @@ import axios from 'axios'
 const GET_ALBUMS = 'GET_ALBUMS'
 const GET_ALBUM = 'GET_ALBUM'
 const GET_ALBUMS_BY_CATEGORY = 'GET_ALBUMS_BY_CATEGORY'
+const NEW_ALBUM = 'NEW_ALBUM'
 
 /**
  * INITIAL STATE
@@ -28,6 +29,11 @@ const gotAlbum = album => ({
 const gotAlbumsByCategory = albums => ({
   type: GET_ALBUMS_BY_CATEGORY,
   albums
+})
+
+const newAlbum = album => ({
+  type: NEW_ALBUM,
+  album
 })
 
 /**
@@ -58,6 +64,14 @@ export const fetchAlbumsByCategory = categoryId => {
   }
 }
 
+export const createAlbum = body => {
+  return async dispatch => {
+    const {data} = await axios.post('/api/albums', body)
+    const action = newAlbum(data)
+    dispatch(action)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -69,6 +83,8 @@ export default function(state = initialState, action) {
       return {...state, selectedAlbum: action.album}
     case GET_ALBUMS_BY_CATEGORY:
       return {...state, albums: action.albums}
+    case NEW_ALBUM:
+      return {...state, albums: [...state.albums, action.album]}
     default:
       return state
   }
