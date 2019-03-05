@@ -23,9 +23,9 @@ class AdminUsers extends React.Component {
     this.props.deleteUser(userId)
   }
 
-  updateStatus(event, userId, user) {
-    user.isAdmin = event.target.value
-    console.log(userId, user)
+  updateStatus(user, {value}) {
+    user.isAdmin = value
+    console.log(user, value)
     // this.props.updateUser(userId, user)
   }
 
@@ -48,7 +48,6 @@ class AdminUsers extends React.Component {
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell>Email</Table.HeaderCell>
               <Table.HeaderCell>Status</Table.HeaderCell>
-              <Table.HeaderCell>Password</Table.HeaderCell>
               <Table.HeaderCell>Delete</Table.HeaderCell>
               <Table.HeaderCell>View</Table.HeaderCell>
             </Table.Row>
@@ -72,12 +71,9 @@ class AdminUsers extends React.Component {
                           selection
                           options={options}
                           onChange={() => {
-                            this.updateStatus(event, user.id, user)
+                            this.updateStatus(user)
                           }}
                         />
-                      </Table.Cell>
-                      <Table.Cell>
-                        <Button color="yellow">Reset</Button>
                       </Table.Cell>
                       <Table.Cell>
                         <Button
@@ -99,7 +95,7 @@ class AdminUsers extends React.Component {
           </Table.Body>
           <Table.Footer>
             <Table.Row>
-              <Table.HeaderCell colSpan="7">
+              <Table.HeaderCell colSpan="6">
                 <Menu floated="right" pagination>
                   <Menu.Item as="a" icon>
                     <Icon name="chevron left" />

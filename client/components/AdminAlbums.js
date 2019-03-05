@@ -29,7 +29,10 @@ class AdminAlbums extends React.Component {
       {key: 'jazz', text: 'Jazz', value: 'jazz'},
       {key: 'rap', text: 'Rap', value: 'rap'},
       {key: 'electronic', text: 'Electronic', value: 'electronic'},
-      {key: 'pop', text: 'Pop', value: 'pop'}
+      {key: 'pop', text: 'Pop', value: 'pop'},
+      {key: 'metal', text: 'Metal', value: 'metal'},
+      {key: 'folk', text: 'Folk', value: 'folk'},
+      {key: 'classical', text: 'Classical', value: 'classical'}
     ]
 
     return (
@@ -64,14 +67,18 @@ class AdminAlbums extends React.Component {
                   <Table.Cell>{album.quantity}</Table.Cell>
                   <Table.Cell>
                     <Dropdown
-                      // placeholder={album.categories.map(category => {
-                      //   return (
-                      //     <a key ={category.id} className='ui label' value={category.name}>
-                      //       {category.name}
-                      //       <i className='delete icon'></i>
-                      //     </a>
-                      //   )
-                      // })}
+                      placeholder={album.categories.map(category => {
+                        return (
+                          <a
+                            key={category.id}
+                            className="ui label"
+                            value={category.name}
+                          >
+                            {category.name}
+                            <i className="delete icon" />
+                          </a>
+                        )
+                      })}
                       fluid
                       multiple
                       selection
