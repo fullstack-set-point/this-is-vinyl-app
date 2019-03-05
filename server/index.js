@@ -61,46 +61,51 @@ const createApp = () => {
       secret: process.env.SESSION_SECRET || 'my best friend is Cody',
       store: sessionStore,
       resave: false,
-      saveUninitialized: false,
-      cookie: {
-        cookieName: 'session_id_cookie',
-        value: '',
-        maxAge: 259200000
-      }
+      saveUninitialized: false
+      // cookie: {
+      //   cookieName: 'session_id_cookie',
+      //   value: '',
+      //   maxAge: 259200000
+      // }
     })
   )
   app.use(passport.initialize())
   app.use(passport.session())
 
-  // cookie setup
-
-  // need cookieParser middleware before we can do anything with cookies
-  app.use(cookieParser())
-
-  // set a cookie
-  app.use(function(req, res, next) {
-    // check if client sent cookie
-    const cookie = req.cookies.session_id_cookie
-    if (cookie === undefined) {
-      // if no cookie: set a new cookie
-      res
-        .cookie('session_id_cookie', req.sessionID, {
-          maxAge: 259200000,
-          httpOnly: true
-        })
-        .send()
-      console.log('cookie created successfully')
-    } else {
-      // yes, cookie was already present
-      req.sessionID = cookie
-      console.log('cookie exists', cookie)
-    }
-    next() // <-- important!
-  })
-
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
+
+  // cookie setup
+
+  // need cookieParser middleware before we can do anything with cookies
+  // app.use(cookieParser())
+
+  // // set a cookie
+  // app.use(function (req, res, next) {
+  //   // check if client sent cookie
+  //   console.log("REQ.SESSIONID", req.sessionID)
+  //   console.log('COOKIES???????? ', req.cookies)
+  //   console.log('REQ.USER IN APP.USE ???????? ', req.user)
+  //   if (!req.cookies['connect.sid']) {
+  //     const cookie = req.cookies.session_id_cookie
+  //     if (cookie === undefined) {
+  //       // if no cookie: set a new cookie
+  //       res
+  //         .cookie('session_id_cookie', req.sessionID, {
+  //           maxAge: 259200000,
+  //           httpOnly: true
+  //         })
+  //       // .send()
+  //       console.log('cookie created successfully')
+  //     } else {
+  //       // yes, cookie was already present
+  //       req.sessionID = cookie
+  //       console.log('cookie exists', cookie)
+  //     }
+  //   }
+  //   next() // <-- important!
+  // })
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))

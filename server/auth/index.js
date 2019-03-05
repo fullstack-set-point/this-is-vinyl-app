@@ -19,55 +19,55 @@ router.post('/login', async (req, res, next) => {
       console.log('Incorrect password for user:', req.body.email)
       res.status(401).send('Wrong username and/or password')
     } else {
-      // get the unauth'ed users cartId
-      const currentGuest = await User.findOne({
-        where: {
-          email: req.sessionID
-        },
-        attributes: ['cartId']
-      })
-      // set the logged in user's cartId to the unauth cartId
-      const updatedVals = {
-        isAuth: true,
-        cartId: currentGuest.cartId
-      }
-      // if user already had a cart
-      if (user.cartId) {
-        // get items from cart
-        const existingCartItems = await CartItem.findAll({
-          where: {
-            cartId: user.cartId
-          }
-        })
-        //map through existingCartItems and update the cartId to currentGuest.cartId
-        const updateItems = async () => {
-          await asyncForEach(existingCartItems, async cartItem => {
-            await CartItem.update(
-              {
-                cartId: currentGuest.cartId
-              },
-              {
-                where: {
-                  cartId: user.cartId
-                },
-                returning: true
-              }
-            )
-          })
-        }
-        updateItems()
-      }
-      const loggedInUser = await User.update(updatedVals, {
-        where: {
-          id: user.id
-        },
-        returning: true
-      })
-      const removeUnauthUser = await User.destroy({
-        where: {
-          email: req.sessionID
-        }
-      })
+      // // get the unauth'ed users cartId
+      // const currentGuest = await User.findOne({
+      //   where: {
+      //     email: req.sessionID
+      //   },
+      //   attributes: ['cartId']
+      // })
+      // // set the logged in user's cartId to the unauth cartId
+      // const updatedVals = {
+      //   isAuth: true,
+      //   cartId: currentGuest.cartId
+      // }
+      // // if user already had a cart
+      // if (user.cartId) {
+      //   // get items from cart
+      //   const existingCartItems = await CartItem.findAll({
+      //     where: {
+      //       cartId: user.cartId
+      //     }
+      //   })
+      //   //map through existingCartItems and update the cartId to currentGuest.cartId
+      //   const updateItems = async () => {
+      //     await asyncForEach(existingCartItems, async cartItem => {
+      //       await CartItem.update(
+      //         {
+      //           cartId: currentGuest.cartId
+      //         },
+      //         {
+      //           where: {
+      //             cartId: user.cartId
+      //           },
+      //           returning: true
+      //         }
+      //       )
+      //     })
+      //   }
+      //   updateItems()
+      // }
+      // const loggedInUser = await User.update(updatedVals, {
+      //   where: {
+      //     id: user.id
+      //   },
+      //   returning: true
+      // })
+      // const removeUnauthUser = await User.destroy({
+      //   where: {
+      //     email: req.sessionID
+      //   }
+      // })
       req.login(user, err => (err ? next(err) : res.json(user)))
     }
   } catch (err) {
