@@ -8,7 +8,6 @@ import {
   Dropdown,
   Menu,
   Icon,
-  Checkbox,
   Container,
   Divider,
   Header
@@ -46,7 +45,6 @@ class AdminAlbums extends React.Component {
               <Table.HeaderCell>Year</Table.HeaderCell>
               <Table.HeaderCell>Price</Table.HeaderCell>
               <Table.HeaderCell>Inventory</Table.HeaderCell>
-              <Table.HeaderCell>Available</Table.HeaderCell>
               <Table.HeaderCell>Categories</Table.HeaderCell>
               <Table.HeaderCell>Edit</Table.HeaderCell>
               <Table.HeaderCell>View</Table.HeaderCell>
@@ -64,9 +62,6 @@ class AdminAlbums extends React.Component {
                   <Table.Cell>{album.year}</Table.Cell>
                   <Table.Cell>${album.price}</Table.Cell>
                   <Table.Cell>{album.quantity}</Table.Cell>
-                  <Table.Cell>
-                    <Checkbox toggle />
-                  </Table.Cell>
                   <Table.Cell>
                     <Dropdown
                       // placeholder={album.categories.map(category => {
@@ -99,7 +94,7 @@ class AdminAlbums extends React.Component {
           </Table.Body>
           <Table.Footer>
             <Table.Row>
-              <Table.HeaderCell colSpan="10">
+              <Table.HeaderCell colSpan="9">
                 <Menu floated="right" pagination>
                   <Menu.Item as="a" icon>
                     <Icon name="chevron left" />

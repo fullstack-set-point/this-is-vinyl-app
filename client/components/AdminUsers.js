@@ -12,7 +12,7 @@ import {
   Divider,
   Header
 } from 'semantic-ui-react'
-import {fetchUsersThunk, deleteUserThunk} from '../store/user'
+import {fetchUsersThunk, deleteUserThunk, updateUserThunk} from '../store/user'
 
 class AdminUsers extends React.Component {
   componentDidMount() {
@@ -23,12 +23,18 @@ class AdminUsers extends React.Component {
     this.props.deleteUser(userId)
   }
 
+  updateStatus(event, userId, user) {
+    user.isAdmin = event.target.value
+    console.log(userId, user)
+    // this.props.updateUser(userId, user)
+  }
+
   render() {
     const {users} = this.props
 
     const options = [
-      {text: 'Admin', value: 'admin'},
-      {text: 'Customer', value: 'customer'}
+      {text: 'Admin', value: true},
+      {text: 'Customer', value: false}
     ]
 
     return (
@@ -65,6 +71,9 @@ class AdminUsers extends React.Component {
                           fluid
                           selection
                           options={options}
+                          onChange={() => {
+                            this.updateStatus(event, user.id, user)
+                          }}
                         />
                       </Table.Cell>
                       <Table.Cell>
@@ -118,7 +127,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchUsers: () => dispatch(fetchUsersThunk()),
-  deleteUser: userId => dispatch(deleteUserThunk(userId))
+  deleteUser: userId => dispatch(deleteUserThunk(userId)),
+  updateUser: (userId, user) => dispatch(updateUserThunk(userId, user))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminUsers)

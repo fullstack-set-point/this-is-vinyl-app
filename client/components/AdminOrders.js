@@ -11,7 +11,7 @@ import {
   Menu,
   Icon
 } from 'semantic-ui-react'
-import {fetchOrders} from '../store/order'
+import {fetchOrders, updateOrderThunk} from '../store/order'
 
 class AdminOrders extends React.Component {
   constructor(props) {
@@ -26,6 +26,12 @@ class AdminOrders extends React.Component {
   formatDate(date) {
     const formattedDate = date.split('T')
     return formattedDate[0]
+  }
+
+  updateStatus(event, orderId, order) {
+    order.orderStatus = event.target.value
+    console.log(orderId, order)
+    // this.props.updateOrder(orderId, order)
   }
 
   render() {
@@ -71,6 +77,7 @@ class AdminOrders extends React.Component {
                       fluid
                       selection
                       options={options}
+                      onChange={() => this.updateStatus(event, order.id, order)}
                     />
                   </Table.Cell>
                   <Table.Cell>
@@ -111,7 +118,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchOrders: () => dispatch(fetchOrders())
+  fetchOrders: () => dispatch(fetchOrders()),
+  updateOrder: (orderId, order) => dispatch(updateOrderThunk(orderId, order))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminOrders)
