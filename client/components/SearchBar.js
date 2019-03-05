@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 import {Search} from 'semantic-ui-react'
 
 class SearchBar extends Component {
@@ -46,7 +47,6 @@ class SearchBar extends Component {
         results={results}
         value={value}
         placeholder="Search..."
-        {...this.props}
       />
     )
   }
@@ -58,4 +58,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(SearchBar)
+export default withRouter(connect(mapStateToProps)(SearchBar))
