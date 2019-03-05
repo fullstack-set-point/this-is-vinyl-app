@@ -17,6 +17,7 @@ class AdminOrders extends React.Component {
   constructor(props) {
     super(props)
     this.formatDate = this.formatDate.bind(this)
+    this.updateStatus = this.updateStatus.bind(this)
   }
 
   componentDidMount() {
@@ -28,10 +29,9 @@ class AdminOrders extends React.Component {
     return formattedDate[0]
   }
 
-  updateStatus(event, orderId, order) {
-    order.orderStatus = event.target.value
-    console.log(orderId, order)
-    // this.props.updateOrder(orderId, order)
+  updateStatus(order, {value}) {
+    order.orderStatus = value
+    this.props.updateOrder(order.id, order)
   }
 
   render() {
@@ -77,7 +77,7 @@ class AdminOrders extends React.Component {
                       fluid
                       selection
                       options={options}
-                      onChange={() => this.updateStatus(event, order.id, order)}
+                      // onChange={() => this.updateStatus(order)}
                     />
                   </Table.Cell>
                   <Table.Cell>

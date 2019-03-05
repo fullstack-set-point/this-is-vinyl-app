@@ -12,11 +12,21 @@ import {
   Divider,
   Header
 } from 'semantic-ui-react'
-import {fetchAlbums} from '../store/album'
+import {fetchAlbums, updateAlbumThunk} from '../store/album'
 
 class AdminAlbums extends React.Component {
+  constructor(props) {
+    super(props)
+    this.updateCategories = this.updateCategories.bind(this)
+  }
+
   componentDidMount() {
     this.props.fetchAlbums()
+  }
+
+  updateCategories(album, {value}) {
+    album.categories = value
+    this.props.updateAlbum(album.id, album)
   }
 
   render() {
@@ -83,6 +93,7 @@ class AdminAlbums extends React.Component {
                       multiple
                       selection
                       options={options}
+                      // onChange={() => this.updateCategories(album)}
                     />
                   </Table.Cell>
                   <Table.Cell>
@@ -128,7 +139,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchAlbums: () => dispatch(fetchAlbums())
+  fetchAlbums: () => dispatch(fetchAlbums()),
+  updateAlbum: (albumId, album) => dispatch(updateAlbumThunk(albumId, album))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminAlbums)

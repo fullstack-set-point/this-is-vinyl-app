@@ -15,6 +15,11 @@ import {
 import {fetchUsersThunk, deleteUserThunk, updateUserThunk} from '../store/user'
 
 class AdminUsers extends React.Component {
+  constructor(props) {
+    super(props)
+    this.updateStatus = this.updateStatus.bind(this)
+  }
+
   componentDidMount() {
     this.props.fetchUsers()
   }
@@ -25,8 +30,7 @@ class AdminUsers extends React.Component {
 
   updateStatus(user, {value}) {
     user.isAdmin = value
-    console.log(user, value)
-    // this.props.updateUser(userId, user)
+    this.props.updateUser(user.id, user)
   }
 
   render() {
@@ -70,9 +74,7 @@ class AdminUsers extends React.Component {
                           fluid
                           selection
                           options={options}
-                          onChange={() => {
-                            this.updateStatus(user)
-                          }}
+                          // onChange={() => this.updateStatus(user)}
                         />
                       </Table.Cell>
                       <Table.Cell>
