@@ -33,7 +33,7 @@ class Admin extends React.Component {
         )
       },
       {
-        menuItem: {key: 'orders', icon: 'add', content: 'Add New Album'},
+        menuItem: {key: 'newAlbum', icon: 'add', content: 'Add New Album'},
         render: () => (
           <Tab.Pane attached={false}>
             <NewAlbumForm />

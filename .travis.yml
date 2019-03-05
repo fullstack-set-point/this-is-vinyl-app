@@ -17,11 +17,11 @@ before_script:
   - psql -c 'create database "this-is-vinyl-app-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
 # before_deploy:
-#   - npm run build-client # make the bundle
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
 # deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: grace-shopper # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: this-is-vinyl-app # see README
+  api_key:
+    secure: "L69+w6gQ+4X38zj31GQEIrJOK3jZBmTwp3Sl8NfzrdNDGCKMAvY/hr8hBmhFXcJenkPq0aHUfwwFBNQ136hLCcvMHuLArrWDySF44w7r5hzegMLMaaiT/0eVynVYZ0e6D7K2Z0bXHjG7lsStaIwQqD1+3mj2+cjqm8g7+lOKUjg00S5kRJTg1x8Giq3omZcbmID/VHUqEFVLJG8Ap+CqTy2Y9g509iNrKnfQGCHgk0iuv8QGcoi/v+215PjU7YGdIM7o9D+A6mjZeEwQ55OKGAqMk6Oj6rIPcI3PcSetOnricHgpCv5p2b7XBo2ZSRYm7ZpJXbbRk+wN1QkT1myBna14Q3rPpMfVGm2e7qcco9yy4Z+Qvv4TTLy8br5PTf9HtMLGJpBU0YnE+COHNsQY8ufY2dRK3CHSkfEfviOh2Cxaif74IJM6CaNXBDSnjxGBc/TNdAQWZC2ZG+uA8CZol0U+HoygACnxGNIK+aUVOYeg5OdR8ohIuvMgtCFcrFDrIgr2hwho05TxtUpK9ViKF+cL1hjuFWy8USV/Rm2pVGiswvF3X1ZxNjzcc+9V0VX+2efxHO4kk46YoCw+QpSnJtrCitqQ/+WF3OYmCaFB3vSNd4XEvkM0BV3kmrq/Lo189TIcIFVrvCj9qTg/qsk/ifmghNpyl1c4PhemBaFNwDk=" # see README
