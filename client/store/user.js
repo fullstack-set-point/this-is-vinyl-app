@@ -192,50 +192,30 @@ export const fetchOrderThunk = (userId, orderId) => {
   }
 }
 
-// export const createUnauthUserThunk = () => {
-//   return async dispatch => {
-//     try {
-//       const { data } = await axios.post('/api/users')
-//       dispatch(createUnauthUser(data))
-//     } catch (err) {
-//       console.error(err)
-//     }
-//   }
-// }
-
 // AUTHENTICATION THUNKS CREATORS
 
-export const me = () => async dispatch => {
-  try {
-    const res = await axios.get('/auth/me')
-    dispatch(loginUser(res.data || initialState.user))
-  } catch (err) {
-    console.error(err)
-  }
-}
 // export const me = () => async dispatch => {
 //   try {
 //     const res = await axios.get('/auth/me')
-//     if (res.data) {
-//       dispatch(loginUser(res.data))
-//     } else {
-//       const {data} = await axios.post('/api/users')
-//       dispatch(createUnauthUser(data))
-//     }
-//   } catch (err) {
-//     console.error(err)
-//   }
-// }
-
-// ATTEMPTING TO FIX THE CREATE UNAUTH USER
-// export const me = () => async dispatch => {
-//   try {
-//     const res = await axios.get('/auth/me')
+//     console.log("res.data: >>>>>>>>>", res.data)
 //     dispatch(loginUser(res.data || initialState.user))
 //   } catch (err) {
 //     console.error(err)
 //   }
 // }
+export const me = () => async dispatch => {
+  try {
+    const res = await axios.get('/auth/me')
+    if (res.data) {
+      dispatch(loginUser(res.data))
+    } else {
+      const {data} = await axios.post('/api/users')
+      dispatch(createUnauthUser(data))
+    }
+  } catch (err) {
+    console.error(err)
+  }
+}
 
 export const auth = (email, password, method) => async dispatch => {
   let res
@@ -306,7 +286,7 @@ export default (state = initialState, action) => {
     case FETCH_ORDER:
       return {...state, order: action.order}
     case CREATE_UNAUTH_USER:
-      return {...state, users: [...state.users, action.user], user: action.user}
+      return {...state, user: action.user}
     default:
       return state
   }

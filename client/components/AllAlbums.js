@@ -29,7 +29,10 @@ class AllAlbums extends Component {
   componentDidMount() {
     this.props.fetchAlbums()
     const user = this.props.user.user
-    this.props.fetchUser(user)
+    if (user.id && user.isAuth) {
+      // added this to stop it from erroring on load with no user present - might remove
+      this.props.fetchUser(user)
+    }
   }
 
   async handleCategoryClick(event) {

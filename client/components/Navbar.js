@@ -83,7 +83,7 @@ class NavBar extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    isLoggedIn: !!state.user.user.id,
+    isLoggedIn: !!state.user.user.id && !!state.user.user.isAuth,
     user: state.user.user,
     userCartItems: state.user.cartItems
   }

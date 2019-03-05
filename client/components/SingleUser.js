@@ -10,8 +10,13 @@ import {
   Button
 } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
+import {fetchUserThunk} from '../store/user'
 
 class SingleUser extends React.Component {
+  componentDidMount() {
+    this.props.fetchUser(this.props.user)
+  }
+
   render() {
     const {user} = this.props
 
@@ -60,4 +65,10 @@ const mapStateToProps = state => ({
   user: state.user.user
 })
 
-export default connect(mapStateToProps)(SingleUser)
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchUser: user => dispatch(fetchUserThunk(user))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleUser)
