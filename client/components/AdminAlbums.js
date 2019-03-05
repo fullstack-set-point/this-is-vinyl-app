@@ -11,17 +11,51 @@ import {
   Checkbox,
   Container,
   Divider,
-  Header
+  Header,
+  Segment,
+  ButtonGroup
 } from 'semantic-ui-react'
 import {fetchAlbums} from '../store/album'
 
 class AdminAlbums extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentPage: 1,
+      albumsPerPage: 65
+    }
+    this.handlePageChange = this.handlePageChange.bind(this)
+  }
   componentDidMount() {
     this.props.fetchAlbums()
   }
 
+  handlePageChange(event) {
+    this.setState({
+      currentPage: Number(event.target.id)
+    })
+  }
+
   render() {
     const {albums} = this.props
+    const {currentPage, albumsPerPage} = this.state
+
+    const indexOfLastAlbum = currentPage * albumsPerPage
+    const indexOfFirstAlbum = indexOfLastAlbum - albumsPerPage
+    const currentAlbums = albums.slice(indexOfFirstAlbum, indexOfLastAlbum)
+
+    const pageNumbers = []
+    for (let i = 1; i <= Math.ceil(albums.length / albumsPerPage); i++) {
+      pageNumbers.push(i)
+    }
+
+    const renderPageNumbers = pageNumbers.map(number => {
+      return (
+        <Button key={number} id={number} onClick={this.handlePageChange}>
+          {number}
+        </Button>
+      )
+    })
 
     const options = [
       {key: 'rock', text: 'Rock', value: 'rock'},
@@ -53,7 +87,7 @@ class AdminAlbums extends React.Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {albums.map(album => {
+            {currentAlbums.map(album => {
               return (
                 <Table.Row key={album.id}>
                   <Table.Cell>
@@ -97,25 +131,11 @@ class AdminAlbums extends React.Component {
               )
             })}
           </Table.Body>
-          <Table.Footer>
-            <Table.Row>
-              <Table.HeaderCell colSpan="10">
-                <Menu floated="right" pagination>
-                  <Menu.Item as="a" icon>
-                    <Icon name="chevron left" />
-                  </Menu.Item>
-                  <Menu.Item as="a">1</Menu.Item>
-                  <Menu.Item as="a">2</Menu.Item>
-                  <Menu.Item as="a">3</Menu.Item>
-                  <Menu.Item as="a">4</Menu.Item>
-                  <Menu.Item as="a" icon>
-                    <Icon name="chevron right" />
-                  </Menu.Item>
-                </Menu>
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Footer>
         </Table>
+        <Segment textAlign="center">
+          <ButtonGroup>{renderPageNumbers}</ButtonGroup>
+        </Segment>
+        <Divider />
       </Container>
     )
   }
