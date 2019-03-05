@@ -44,43 +44,21 @@ router.post('/', async (req, res, next) => {
     } else if (!req.body.email) {
       //else if there's no email/user, create a guest user with sessionID as email
       const email = req.sessionID
-      // const password = req.sessionID
-      const user = await User.create({
-        email: email
-        // password: password
-      })
       const newCart = await Cart.create() //and give them a cart
-      const updateUser = await User.update(
-        {
-          cartId: newCart.id
-        },
-        {
-          where: {
-            id: user.id
-          },
-          returning: true,
-          plain: true
-        }
-      )
+      const user = await User.create({
+        email: email,
+        cartId: newCart.id
+      })
       res.json(user)
     } else {
-      //else if given an email and password, create a user instance with this info
+      const newCart = await Cart.create()
       const {email, password} = req.body
-      const isAuth = true
-      const user = await User.create(email, password, isAuth)
-      const newCart = await Cart.create() //and give them a cart
-      const updateUser = await User.update(
-        {
-          cartId: newCart.id
-        },
-        {
-          where: {
-            id: user.id
-          },
-          returning: true,
-          plain: true
-        }
-      )
+      const user = await User.create({
+        cartId: newCart.id,
+        email,
+        password,
+        isAuth: true
+      })
       res.json(user)
     }
   } catch (err) {
