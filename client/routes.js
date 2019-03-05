@@ -13,6 +13,7 @@ import SingleUserOrders from './components/SingleUserOrders'
 import SingleUserOrder from './components/SingleUserOrder'
 import Checkout from './components/Checkout'
 import ReviewForm from './components/ReviewForm'
+import UpdateAlbumForm from './components/UpdateAlbumForm'
 
 /**
  * COMPONENT
@@ -55,6 +56,11 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/admin" component={Admin} />
+            <Route
+              exact
+              path="/albums/:albumId/update"
+              component={UpdateAlbumForm}
+            />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

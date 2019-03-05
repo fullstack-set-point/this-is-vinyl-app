@@ -84,7 +84,9 @@ class AdminAlbums extends React.Component {
                     />
                   </Table.Cell>
                   <Table.Cell>
-                    <Button color="yellow">Edit</Button>
+                    <Link to={`/albums/${album.id}/update`}>
+                      <Button color="yellow">Edit</Button>
+                    </Link>
                   </Table.Cell>
                   <Table.Cell>
                     <Link to={`/albums/${album.id}`}>

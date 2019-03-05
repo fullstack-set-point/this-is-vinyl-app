@@ -7,6 +7,7 @@ const GET_ALBUMS = 'GET_ALBUMS'
 const GET_ALBUM = 'GET_ALBUM'
 const GET_ALBUMS_BY_CATEGORY = 'GET_ALBUMS_BY_CATEGORY'
 const NEW_ALBUM = 'NEW_ALBUM'
+const UPDATE_ALBUM = 'UPDATE_ALBUM'
 
 /**
  * INITIAL STATE
@@ -33,6 +34,11 @@ const gotAlbumsByCategory = albums => ({
 
 const newAlbum = album => ({
   type: NEW_ALBUM,
+  album
+})
+
+const updateAlbum = album => ({
+  type: UPDATE_ALBUM,
   album
 })
 
@@ -72,6 +78,14 @@ export const createAlbum = body => {
   }
 }
 
+export const updateAlbumThunk = body => {
+  return async dispatch => {
+    const {data} = await axios.put('/api/albums', body)
+    const action = updateAlbum(data)
+    dispatch(action)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -85,6 +99,18 @@ export default function(state = initialState, action) {
       return {...state, albums: action.albums}
     case NEW_ALBUM:
       return {...state, albums: [...state.albums, action.album]}
+    case UPDATE_ALBUM:
+      return {
+        ...state,
+        albums: [
+          ...state.albums.map((album, index) => {
+            if (index !== action.index) {
+              return album
+            }
+            return [...album, action.album]
+          })
+        ]
+      }
     default:
       return state
   }

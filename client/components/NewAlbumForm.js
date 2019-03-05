@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Container, Header, Divider, Form} from 'semantic-ui-react'
 import {createAlbum} from '../store/album'
 
-class AlbumForm extends Component {
+class NewAlbumForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -39,14 +39,14 @@ class AlbumForm extends Component {
     if (this.state.complete)
       return (
         <Container>
-          <Header as="h2">New Album Form</Header>
+          <Header as="h2">New Album</Header>
           <Divider />
           <h4>Album Added!</h4>
         </Container>
       )
     return (
       <Container>
-        <Header as="h2">New Album Form</Header>
+        <Header as="h2">New Album</Header>
         <Divider />
         <Form onSubmit={this.handleSubmit}>
           <Form.Input
@@ -113,4 +113,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(AlbumForm)
+export default connect(null, mapDispatchToProps)(NewAlbumForm)
