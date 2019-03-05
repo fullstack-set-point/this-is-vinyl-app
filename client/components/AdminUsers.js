@@ -53,7 +53,6 @@ class AdminUsers extends React.Component {
               <Table.HeaderCell>Email</Table.HeaderCell>
               <Table.HeaderCell>Status</Table.HeaderCell>
               <Table.HeaderCell>Delete</Table.HeaderCell>
-              <Table.HeaderCell>View</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -84,11 +83,6 @@ class AdminUsers extends React.Component {
                         >
                           Delete
                         </Button>
-                      </Table.Cell>
-                      <Table.Cell>
-                        <Link to={`/users/${user.id}`}>
-                          <Button color="blue">View</Button>
-                        </Link>
                       </Table.Cell>
                     </Table.Row>
                   )
