@@ -46,3 +46,21 @@ router.post('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.put('/', async (req, res, next) => {
+  try {
+    const title = req.body.title
+    const description = req.body.description
+    const year = req.body.year
+    const price = req.body.price
+    const quantity = req.body.quantity
+    const image = req.body.image
+    const body = {title, description, year, price, quantity, image}
+    const id = req.body.albumId
+    const album = await Product.findById(id)
+    await album.update(body)
+    res.sendStatus(201)
+  } catch (err) {
+    next(err)
+  }
+})

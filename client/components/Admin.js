@@ -3,7 +3,7 @@ import {Tab, Button, Container} from 'semantic-ui-react'
 import AdminAlbums from './AdminAlbums'
 import AdminOrders from './AdminOrders'
 import AdminUsers from './AdminUsers'
-import AlbumForm from './AlbumForm'
+import NewAlbumForm from './NewAlbumForm'
 
 class Admin extends React.Component {
   render() {
@@ -36,7 +36,7 @@ class Admin extends React.Component {
         menuItem: {key: 'orders', icon: 'add', content: 'Add New Album'},
         render: () => (
           <Tab.Pane attached={false}>
-            <AlbumForm />
+            <NewAlbumForm />
           </Tab.Pane>
         )
       }
