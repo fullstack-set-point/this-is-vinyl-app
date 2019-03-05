@@ -67,7 +67,7 @@ class ReviewForm extends Component {
         <Divider />
         <Header as="h4">Review for:</Header>
         <p>
-          {this.props.album.album} by {this.props.album.artist}
+          {this.props.album.title} by {this.props.album.description}
         </p>
         <Form onSubmit={this.handleSubmit}>
           <Form.Input

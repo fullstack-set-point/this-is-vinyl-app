@@ -5,8 +5,7 @@ const stripe = require('stripe')(STRIPE_SECRET)
 router.post('/', async (req, res) => {
   try {
     let {status} = await stripe.charges.create({
-      name,
-      amount: 2000,
+      amount: req.body.amount,
       currency: 'usd',
       description: 'charge',
       source: req.body

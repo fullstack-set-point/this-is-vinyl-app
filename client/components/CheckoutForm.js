@@ -13,7 +13,8 @@ class CheckoutForm extends Component {
       address: '',
       city: '',
       state: '',
-      zip: ''
+      zip: '',
+      amount: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -29,7 +30,23 @@ class CheckoutForm extends Component {
   }
 
   async handleSubmit(event) {
-    const {firstName, lastName, email, address, city, state, zip} = this.state
+    let subtotal = 0
+    this.props.cartItems.map(item => {
+      subtotal += item.product.price * item.quantity
+    })
+    this.setState({
+      amount: subtotal
+    })
+    const {
+      firstName,
+      lastName,
+      email,
+      address,
+      city,
+      state,
+      zip,
+      amount
+    } = this.state
     const cartItems = this.props.cartItems
     const userId = this.props.userId
     const body = {
@@ -50,7 +67,8 @@ class CheckoutForm extends Component {
     let response = await fetch('/charge', {
       method: 'POST',
       headers: {'Content-Type': 'text/plain'},
-      body: token.id
+      body: token.id,
+      amount
     })
 
     if (response.ok) this.setState({complete: true})
@@ -122,7 +140,7 @@ class CheckoutForm extends Component {
                 subtotal += item.product.price * item.quantity
                 return (
                   <p key={item.id}>
-                    {item.product.album} x {item.quantity}
+                    {item.product.title} x {item.quantity}
                   </p>
                 )
               })

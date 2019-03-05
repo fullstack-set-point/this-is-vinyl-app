@@ -100,7 +100,7 @@ router.post('/', async (req, res, next) => {
       cartItems.map(item => {
         // get product price
         const price = item.product.price
-        const productName = item.product.album
+        const productName = item.product.title
         const productId = item.product.id
         return OrderItem.create({
           price,
