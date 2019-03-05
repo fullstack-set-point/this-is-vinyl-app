@@ -204,19 +204,28 @@ export const fetchOrderThunk = (userId, orderId) => {
 // }
 
 // AUTHENTICATION THUNKS CREATORS
+
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
-    if (res.data) {
-      dispatch(loginUser(res.data))
-    } else {
-      const {data} = await axios.post('/api/users')
-      dispatch(createUnauthUser(data))
-    }
+    dispatch(loginUser(res.data || initialState.user))
   } catch (err) {
     console.error(err)
   }
 }
+// export const me = () => async dispatch => {
+//   try {
+//     const res = await axios.get('/auth/me')
+//     if (res.data) {
+//       dispatch(loginUser(res.data))
+//     } else {
+//       const {data} = await axios.post('/api/users')
+//       dispatch(createUnauthUser(data))
+//     }
+//   } catch (err) {
+//     console.error(err)
+//   }
+// }
 
 // ATTEMPTING TO FIX THE CREATE UNAUTH USER
 // export const me = () => async dispatch => {
