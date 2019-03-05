@@ -155,7 +155,7 @@ const products = [
       'https://img.discogs.com/cbJuSllK1fmn5bCO5OIjNVy4so8=/fit-in/600x597/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-597222-1290446870.jpeg.jpg'
   }
 ]
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 1000; i++) {
   let product = {
     title: faker.lorem.words(),
     description: faker.name.findName(),
@@ -195,7 +195,7 @@ const users = [
     zip: '99999'
   }
 ]
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 20; i++) {
   let user = {
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),

@@ -3,13 +3,27 @@ import _ from 'lodash'
 import {connect} from 'react-redux'
 import {fetchAlbums, fetchAlbumsByCategory} from '../store/album'
 import {fetchUserThunk} from '../store/user'
-import {Card, Image, Grid, Container} from 'semantic-ui-react'
+import {
+  Card,
+  Image,
+  Grid,
+  Container,
+  Button,
+  ButtonGroup,
+  Divider,
+  Segment
+} from 'semantic-ui-react'
 import CategoryFilter from './CategoryFilter'
 
 class AllAlbums extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      currentPage: 1,
+      albumsPerPage: 65
+    }
     this.handleCategoryClick = this.handleCategoryClick.bind(this)
+    this.handlePageChange = this.handlePageChange.bind(this)
   }
 
   componentDidMount() {
@@ -26,9 +40,33 @@ class AllAlbums extends Component {
     await this.props.fetchAlbumsByCategory(id)
   }
 
+  handlePageChange(event) {
+    this.setState({
+      currentPage: Number(event.target.id)
+    })
+  }
+
   render() {
     const {history} = this.props
     const {albums} = this.props
+    const {currentPage, albumsPerPage} = this.state
+
+    const indexOfLastAlbum = currentPage * albumsPerPage
+    const indexOfFirstAlbum = indexOfLastAlbum - albumsPerPage
+    const currentAlbums = albums.slice(indexOfFirstAlbum, indexOfLastAlbum)
+
+    const pageNumbers = []
+    for (let i = 1; i <= Math.ceil(albums.length / albumsPerPage); i++) {
+      pageNumbers.push(i)
+    }
+
+    const renderPageNumbers = pageNumbers.map(number => {
+      return (
+        <Button key={number} id={number} onClick={this.handlePageChange}>
+          {number}
+        </Button>
+      )
+    })
 
     return (
       <Container>
@@ -39,7 +77,7 @@ class AllAlbums extends Component {
           {albums ? (
             <Grid.Column width={14}>
               <Card.Group doubling itemsPerRow={4} stackable>
-                {_.map(albums, album => (
+                {_.map(currentAlbums, album => (
                   <Card key={album.id}>
                     <Image
                       size="medium"
@@ -61,6 +99,10 @@ class AllAlbums extends Component {
             </Grid.Column>
           ) : null}
         </Grid>
+        <Segment textAlign="center">
+          <ButtonGroup>{renderPageNumbers}</ButtonGroup>
+        </Segment>
+        <Divider />
       </Container>
     )
   }
